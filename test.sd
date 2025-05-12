@@ -1,0 +1,90 @@
+
+
+type Vehicle {
+  meta init();
+
+  // signal bus, can be connected to with "on", always callable.
+  bus step(delta: float) -> void;
+
+  // extensible method
+  open testMethod(a: int) -> void
+}
+
+impl Vehicle {
+  meta init() {
+    prt("Running..");
+  }
+
+  // step is abstract 
+
+  testMethod(a) {
+    prt("Default definition...")
+  }
+}
+
+shard Motor {
+    pub speed: float;
+}
+
+impl Motor for Vehicle {
+    meta init() {
+       prt("Motor running..");
+    }
+    
+    // on keyword expands method.
+    on step(delta) {
+      speed += 1.0 * delta;
+    }
+}
+
+
+shard Wings {
+  pub altitude: float;
+}
+
+impl Wings for Vehicle {
+    meta init() {
+       prt("Wings running")
+    }
+
+    on step(delta) {
+        altitude += 1 * delta;
+    }
+}
+
+type Airplane from Vehicle, Wings, Motor 
+
+type Ship from Vehicle {
+    testMethod(a) {
+        prt("Overidden method")
+    }
+}
+
+shard Location {
+    x: float,
+    y: float,
+
+    open combine() -> float
+}
+
+shard Location3D from Location {
+    z: float
+
+    open combine() -> float
+}
+
+type GameObjectBase {
+  friendlyName: string
+}
+
+type GameObject2D from Location 
+type GameObject3D from Location3D
+
+
+type GameCar from GameObject3D 
+{
+    meta compose() {
+        Motor() as motor1
+        Motor() as motor2
+    }
+}
