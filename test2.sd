@@ -1,8 +1,8 @@
 pub type Vehicle {
-  meta init();
+  meta init()
 
   // signal bus, can be connected to with "on", always callable.
-  bus step(delta: float) -> void;
+  bus step(delta: float) -> void
 
   // extensible method
   open testMethod(a: int) -> void
