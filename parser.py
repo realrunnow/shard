@@ -2,221 +2,186 @@ from ast_nodes import *
 from lexer import TokenTypes, Token
 
 class Parser:
+    # Token type sets for better organization and checking
+    MODIFIER_TOKENS = {
+        # Access modifiers
+        TokenTypes.PUB, TokenTypes.PRIV, TokenTypes.INTERNAL, TokenTypes.OPEN,
+        # Variable mutability
+        TokenTypes.CONST, TokenTypes.MUT,
+        # Method purity
+        TokenTypes.PURE, TokenTypes.IMPURE,
+        # Special modifiers
+        TokenTypes.META, TokenTypes.BUS, TokenTypes.ON,
+    }
+
+    TOP_LEVEL_TOKENS = {
+        TokenTypes.TYPE,
+        TokenTypes.SHARD,
+        TokenTypes.IDENT,
+    }
+
     def __init__(self, lexer):
         self.lexer = lexer
         self.current_token = self.lexer.get_next_token()
 
-    ###
-    # UTILITY METHODS
-    ###
+    def error(self, message):
+        raise SyntaxError(f"⚠️  Error at line {self.current_token.line}: {message}")
+
     def eat(self, token_type=None):
         if token_type and self.current_token.type != token_type:
-            raise SyntaxError(f"Expected {token_type.name}, got {self.current_token.type.name} at line {self.current_token.line}")
+            self.error(f"Expected {token_type.name}, got {self.current_token.type.name}")
         self.current_token = self.lexer.get_next_token()
 
-    def peek(self, ahead = 0):
+    def peek(self, ahead=0):
         return self.lexer.peek(ahead)
 
-
-    ###
-    # UTILITY PARSERS
-    ###
     def parse_modifiers(self):
+        """Parse a sequence of modifiers and return them as a list"""
         modifiers = []
-        while self.current_token.type in (
-            # access modifiers
-            TokenTypes.PUB, TokenTypes.PRIV, TokenTypes.INTERNAL, TokenTypes.OPEN,
-
-            # variable mutability
-            TokenTypes.CONST, TokenTypes.MUT, 
-
-            # method purity
-            TokenTypes.PURE, TokenTypes.IMPURE,
-
-            # for methods / functions
-            TokenTypes.META, TokenTypes.BUS, TokenTypes.ON,
-        ):
+        while self.current_token.type in self.MODIFIER_TOKENS:
             modifier = self.current_token.type
-
-            # if token is PRIV do not add it, as it will be automatically added.
-            if modifier != TokenTypes.PRIV :
+            # Only add non-PRIV modifiers as PRIV is default
+            if modifier != TokenTypes.PRIV:
                 modifiers.append(modifier)
-
             self.eat()
 
-        # add PRIV by default
-        if modifiers.count <= 0:
-             modifiers.append(TokenTypes.PRIV.name)
+        # Add PRIV by default if no access modifier specified
+        if not any(mod in {TokenTypes.PUB, TokenTypes.PRIV, TokenTypes.INTERNAL} for mod in modifiers):
+            modifiers.append(TokenTypes.PRIV)
 
         return modifiers
 
     def parse_type(self):
+        """Parse a type identifier"""
         if self.current_token.type != TokenTypes.IDENT:
-            raise SyntaxError(f"Expected type identifier at line {self.current_token.line}")
-        
+            self.error("Expected type identifier")
         type_name = self.current_token.value
         self.eat()
-
         return type_name
-    
 
-    ###
-    # LOGIC PARSERS
-    ###
     def parse_variable(self, modifiers):
-        ## var_identifier
+        """Parse a variable declaration"""
         name = self.current_token.value
         self.eat(TokenTypes.IDENT)
 
-        ## : type
+        # Parse optional type annotation
         type_name = None
         if self.current_token.type == TokenTypes.COLON:
             self.eat()
-
             type_name = self.parse_type()
 
-        ## = value (optional)
+        # Parse optional initializer
         value = None
         if self.current_token.type == TokenTypes.ASSIGN:
             self.eat()
-
             value = self.current_token.value
             self.eat()
 
         return VariableDef(modifiers, name, type_name, value)
 
-    def parse_function_header(self, modifiers):
-        ## fn_idenfifier
-        name = self.current_token.value
-        self.eat(TokenTypes.IDENT)
-
-        ## (<param_modifiers> parse_variable_output, ...)
-        self.eat(TokenTypes.LPAREN)
+    def parse_parameter_list(self):
+        """Parse a comma-separated list of parameters"""
         params = []
+        self.eat(TokenTypes.LPAREN)
+        
         while self.current_token.type != TokenTypes.RPAREN:
             if params:
                 self.eat(TokenTypes.COMMA)
             
-            paraneter_modifiers = self.parse_modifiers()
-
-            param = self.parse_variable(paraneter_modifiers)
+            param_modifiers = self.parse_modifiers()
+            param = self.parse_variable(param_modifiers)
             params.append(param)
             
         self.eat(TokenTypes.RPAREN)
+        return params
 
+    def parse_function_header(self, modifiers):
+        """Parse a function declaration header"""
+        name = self.current_token.value
+        self.eat(TokenTypes.IDENT)
 
-        ## -> return_type (optional)
+        params = self.parse_parameter_list()
+
+        # Parse optional return type
         return_type = None
         if self.current_token.type == TokenTypes.ARROW:
             self.eat()
             return_type = self.parse_type()
 
-            
         return FunctionDef(modifiers, name, params, return_type)
 
-
-
-    ###
-    # CONSTRUCT PARSERS
-    ###
-    def parse_object_definition(self, modifiers):
-        ## object_name
-        name = self.current_token.value
-        self.eat(TokenTypes.IDENT)
-
-        ## from object_parent (optional)
-        parent = None
-        if self.current_token.type == TokenTypes.FROM:
-            self.eat()
-
-            parent = self.parse_type()
-
-        ## { 
-        ##    <function_modifiers> parse_function_header_ouput
-        ##    <variable_modifiers> parse_variable_ouput
-        ##    ...
-        ## }
+    def parse_object_body(self):
+        """Parse the body of an object/type/shard definition"""
         self.eat(TokenTypes.LBRACE)
         members = []
+        
         while self.current_token.type != TokenTypes.RBRACE:
             member_modifiers = self.parse_modifiers()
 
             if self.current_token.type != TokenTypes.IDENT:
-                raise SyntaxError(f"Expected identifier at line {self.current_token.line}, got {self.current_token.type}")
+                self.error("Expected identifier")
             
-            peek = self.lexer.peek()
-
-            if peek == '(':
+            # Look ahead to determine if this is a function or variable
+            is_function = self.peek() == '('
+            
+            if is_function:
                 members.append(self.parse_function_header(member_modifiers))
             else:
                 members.append(self.parse_variable(member_modifiers))
+                
         self.eat(TokenTypes.RBRACE)
+        return members
 
-        
+    def parse_object_definition(self, modifiers):
+        """Parse an object definition (type/shard)"""
+        name = self.current_token.value
+        self.eat(TokenTypes.IDENT)
+
+        # Parse optional parent
+        parent = None
+        if self.current_token.type == TokenTypes.FROM:
+            self.eat()
+            parent = self.parse_type()
+
+        members = self.parse_object_body()
         return ObjectDef(modifiers, name, parent, members)
-    
 
-
-    def parse_type_definition(self, modifiers):
-        ## type
-        self.eat(TokenTypes.TYPE)
-
-        ## parse_object_outpu
-        return self.parse_object_definition(modifiers)
-
-    def parse_shard_definition(self, modifiers):
-        ## shard
-        self.eat(TokenTypes.SHARD)
-
-        ## parse_object_output
-        return self.parse_object_definition(modifiers)
-
-    def parse_function(self, modifiers):
-        ## parse_function_header_ouput
-        return self.parse_function_header(modifiers)
-
-
-
-    ###
-    # GENERAL PARSERS
-    ###
     def parse_top_level(self):
-        ## parse_modifiers_output
+        """Parse a top-level declaration"""
         modifiers = self.parse_modifiers()
 
-        ## parse_type_output
         if self.current_token.type == TokenTypes.TYPE:
-            return self.parse_type_definition(modifiers)
+            self.eat(TokenTypes.TYPE)
+            return self.parse_object_definition(modifiers)
         
-        ## parse_shard_output
         elif self.current_token.type == TokenTypes.SHARD:
-            return self.parse_shard_definition(modifiers)
+            self.eat(TokenTypes.SHARD)
+            return self.parse_object_definition(modifiers)
         
         elif self.current_token.type == TokenTypes.IDENT:
-            peek = self.peek(1)
-            if peek == '(':
-                ## parse_function_header_output
-                return self.parse_function(modifiers)
+            is_function = self.peek() == '('
+            if is_function:
+                return self.parse_function_header(modifiers)
             else:
-                ## parse_variable_output
                 return self.parse_variable(modifiers)
         else:
-            raise SyntaxError(f"Unexpected top-level token: {self.current_token.type.name}")
+            self.error(f"Unexpected token {self.current_token.type.name}")
 
     def parse_program(self):
+        """Parse the entire program"""
         program = Program(top_level=[])
         while self.current_token.type != TokenTypes.EOF:
             try:
                 item = self.parse_top_level()
                 program.top_level.append(item)
             except SyntaxError as e:
-                raise SyntaxError(f"⚠️  Error at line {self.current_token.line}: {e}")
-                self.synchronize()
+                print(e)  # Log the error
+                self.synchronize()  # Skip to next valid point
         return program
 
     def synchronize(self):
-        while self.current_token.type not in (
-            TokenTypes.TYPE, TokenTypes.SHARD,
-            TokenTypes.IDENT, TokenTypes.EOF
-        ):
+        """Skip tokens until we find a safe point to resume parsing"""
+        while self.current_token.type not in self.TOP_LEVEL_TOKENS:
+            if self.current_token.type == TokenTypes.EOF:
+                break
             self.eat()

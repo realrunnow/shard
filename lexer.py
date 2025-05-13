@@ -73,9 +73,57 @@ class TokenTypes(Enum):
     ASSIGN = 'ASSIGN'  # =
     NOT = 'NOT'       # !
 
+# Constants for token patterns
+COMPOUND_OPERATORS = {
+    '==': TokenTypes.EQ,
+    '!=': TokenTypes.NE,
+    '<=': TokenTypes.LE,
+    '>=': TokenTypes.GE,
+    '->': TokenTypes.ARROW,
+}
 
+KEYWORDS = {
+    'pub': TokenTypes.PUB,
+    'priv': TokenTypes.PRIV,
+    'internal': TokenTypes.INTERNAL,
+    'open': TokenTypes.OPEN,
+    'const': TokenTypes.CONST,
+    'mut': TokenTypes.MUT,
+    'pure': TokenTypes.PURE,
+    'impure': TokenTypes.IMPURE,
+    'meta': TokenTypes.META,
+    'bus': TokenTypes.BUS,
+    'on': TokenTypes.ON,
+    'type': TokenTypes.TYPE,
+    'shard': TokenTypes.SHARD,
+    'impl': TokenTypes.IMPL,
+    'for': TokenTypes.FOR,
+    'from': TokenTypes.FROM,
+    'if': TokenTypes.IF,
+    'else': TokenTypes.ELSE,
+    'elif': TokenTypes.ELIF,
+    'switch': TokenTypes.SWITCH,
+    'case': TokenTypes.CASE,
+    'while': TokenTypes.WHILE,
+    'return': TokenTypes.RETURN,
+}
 
-
+SINGLE_CHAR_TOKENS = {
+    '+': TokenTypes.PLUS,
+    '-': TokenTypes.MINUS,
+    '*': TokenTypes.TIMES,
+    '=': TokenTypes.ASSIGN,
+    '!': TokenTypes.NOT,
+    '<': TokenTypes.LT,
+    '>': TokenTypes.GT,
+    '(': TokenTypes.LPAREN,
+    ')': TokenTypes.RPAREN,
+    '{': TokenTypes.LBRACE,
+    '}': TokenTypes.RBRACE,
+    ',': TokenTypes.COMMA,
+    ';': TokenTypes.EOL,
+    ':': TokenTypes.COLON,
+}
 
 class Lexer:
     def __init__(self, text):
@@ -101,7 +149,7 @@ class Lexer:
             return ''
         return self.text[pos]
 
-    def get_next_token(self):
+    def skip_whitespace_and_comments(self):
         while self.pos < len(self.text):
             char = self.peek()
 
@@ -110,13 +158,13 @@ class Lexer:
                 continue
 
             if char == '/':
-                self.advance()
-                if self.peek() == '/':
-                    self.advance()
+                next_char = self.peek(1)
+                if next_char == '/':
                     while self.peek() not in ('', '\n'):
                         self.advance()
                     continue
-                elif self.peek() == '*':
+                elif next_char == '*':
+                    self.advance()
                     self.advance()
                     depth = 1
                     while depth > 0:
@@ -131,126 +179,92 @@ class Lexer:
                         else:
                             self.advance()
                     continue
-                else:
-                    return Token(TokenTypes.DIVIDE, '/', self.line, self.column)
+                return
+            return
 
-            for pattern, token_type in [
-                ('==', TokenTypes.EQ),
-                ('!=', TokenTypes.NE),
-                ('<=', TokenTypes.LE),
-                ('>=', TokenTypes.GE),
-                ('->', TokenTypes.ARROW),
-            ]:
-                if self.text[self.pos:].startswith(pattern):
-                    token = Token(token_type, pattern, self.line, self.column)
-                    self.pos += len(pattern)
-                    self.column += len(pattern)
-                    return token
+    def get_next_token(self):
+        self.skip_whitespace_and_comments()
+        
+        if self.pos >= len(self.text):
+            return Token(TokenTypes.EOF, None, self.line, self.column)
 
-            if char.isalpha() or char == '_':
-                start = self.pos
-                while self.peek().isalnum() or self.peek() == '_':
-                    self.advance()
-                value = self.text[start:self.pos]
-                keyword_map = {
-                    'pub': TokenTypes.PUB,
-                    'priv': TokenTypes.PRIV,
-                    'internal': TokenTypes.INTERNAL,
-                    'open': TokenTypes.OPEN,
-                    'const': TokenTypes.CONST,
-                    'mut': TokenTypes.MUT,
-                    'pure': TokenTypes.PURE,
-                    'impure': TokenTypes.IMPURE,
-                    'meta': TokenTypes.META,
-                    'bus': TokenTypes.BUS,
-                    'on': TokenTypes.ON,
-                    'type': TokenTypes.TYPE,
-                    'shard': TokenTypes.SHARD,
-                    'impl': TokenTypes.IMPL,
-                    'for': TokenTypes.FOR,
-                    'from': TokenTypes.FROM,
-                    'if': TokenTypes.IF,
-                    'else': TokenTypes.ELSE,
-                    'elif': TokenTypes.ELIF,
-                    'switch': TokenTypes.SWITCH,
-                    'case': TokenTypes.CASE,
-                    'while': TokenTypes.WHILE,
-                    'return': TokenTypes.RETURN,
-                }
-                token_type = keyword_map.get(value, TokenTypes.IDENT)
-                return Token(token_type, value, self.line, self.column)
+        char = self.peek()
 
-            if char.isdigit():
-                start = self.pos
-                while self.peek().isdigit():
-                    self.advance()
-                integer_part = self.text[start:self.pos]
-                if self.peek() == '.':
-                    self.advance()
-                    start_decimal = self.pos
-                    while self.peek().isdigit():
-                        self.advance()
-                    decimal_part = self.text[start_decimal:self.pos]
-                    num_str = integer_part + '.' + decimal_part
-                    return Token(TokenTypes.FLOAT, float(num_str), self.line, self.column)
-                else:
-                    return Token(TokenTypes.INT, int(integer_part), self.line, self.column)
+        # Check for compound operators
+        for pattern, token_type in COMPOUND_OPERATORS.items():
+            if self.text[self.pos:].startswith(pattern):
+                token = Token(token_type, pattern, self.line, self.column)
+                self.pos += len(pattern)
+                self.column += len(pattern)
+                return token
 
+        # Handle identifiers and keywords
+        if char.isalpha() or char == '_':
+            start = self.pos
+            while self.peek().isalnum() or self.peek() == '_':
+                self.advance()
+            value = self.text[start:self.pos]
+            token_type = KEYWORDS.get(value, TokenTypes.IDENT)
+            return Token(token_type, value, self.line, self.column)
+
+        # Handle numbers
+        if char.isdigit():
+            return self._handle_number()
+
+        # Handle strings
+        if char == '"':
+            return self._handle_string()
+
+        # Handle single character tokens
+        if char in SINGLE_CHAR_TOKENS:
+            token_type = SINGLE_CHAR_TOKENS[char]
+            self.advance()
+            return Token(token_type, char, self.line, self.column)
+
+        if char == '/':
+            self.advance()
+            return Token(TokenTypes.DIVIDE, '/', self.line, self.column)
+
+        raise SyntaxError(f"Invalid character '{char}' at line {self.line}, column {self.column}")
+
+    def _handle_number(self):
+        start = self.pos
+        while self.peek().isdigit():
+            self.advance()
+        
+        if self.peek() != '.':
+            return Token(TokenTypes.INT, int(self.text[start:self.pos]), self.line, self.column)
+            
+        self.advance()  # consume dot
+        start_decimal = self.pos
+        while self.peek().isdigit():
+            self.advance()
+        return Token(TokenTypes.FLOAT, float(self.text[start:self.pos]), self.line, self.column)
+
+    def _handle_string(self):
+        self.advance()  # consume opening quote
+        value = []
+        while True:
+            char = self.peek()
             if char == '"':
+                break
+            if char == '\n':
+                raise SyntaxError(f"Unterminated string at {self.line}:{self.column}")
+            self.advance()
+            if char == '\\':
+                escape_map = {
+                    'n': '\n',
+                    't': '\t',
+                    '"': '"',
+                    '\\': '\\',
+                    '0': '\0'
+                }
+                next_char = self.peek()
+                if next_char == '':
+                    raise SyntaxError(f"Unterminated escape sequence at {self.line}:{self.column}")
                 self.advance()
-                value = []
-                while True:
-                    char = self.peek()
-                    if char == '"':
-                        break
-                    if char == '\n':
-                        raise Exception(f"Unterminated string at {self.line}:{self.column}")
-                    self.advance()
-                    if char == '\\':
-                        next_char = self.peek()
-                        if next_char == '':
-                            raise Exception(f"Unterminated escape sequence at {self.line}:{self.column}")
-                        self.advance()
-                        if next_char == 'n':
-                            value.append('\n')
-                        elif next_char == 't':
-                            value.append('\t')
-                        elif next_char == '"':
-                            value.append('"')
-                        elif next_char == '\\':
-                            value.append('\\')
-                        elif next_char == '0':
-                            value.append('\0')
-                        else:
-                            value.append('\\')
-                            value.append(next_char)
-                    else:
-                        value.append(char)
-                self.advance()
-                return Token(TokenTypes.STRING, ''.join(value), self.line, self.column)
-
-            char_map = {
-                '+': TokenTypes.PLUS,
-                '-': TokenTypes.MINUS,
-                '*': TokenTypes.TIMES,
-                '=': TokenTypes.ASSIGN,
-                '!': TokenTypes.NOT,
-                '<': TokenTypes.LT,
-                '>': TokenTypes.GT,
-                '(': TokenTypes.LPAREN,
-                ')': TokenTypes.RPAREN,
-                '{': TokenTypes.LBRACE,
-                '}': TokenTypes.RBRACE,
-                ',': TokenTypes.COMMA,
-                ';': TokenTypes.EOL,
-                ':': TokenTypes.COLON,
-            }
-
-            if char in char_map:
-                token_type = char_map[char]
-                self.advance()
-                return Token(token_type, char, self.line, self.column)
-
-            raise Exception(f"Unknown character '{char}' at line {self.line}, column {self.column}")
-
-        return Token(TokenTypes.EOF, None, self.line, self.column)
+                value.append(escape_map.get(next_char, next_char))
+            else:
+                value.append(char)
+        self.advance()  # consume closing quote
+        return Token(TokenTypes.STRING, ''.join(value), self.line, self.column)
