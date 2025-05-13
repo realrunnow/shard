@@ -1,0 +1,22 @@
+// Simple test file for the Shard parser
+
+type Vehicle {
+  meta init() {
+    print("Initializing vehicle");
+  }
+}
+
+shard Motor {
+  pub speed: float;
+}
+
+impl Motor for Vehicle {
+  meta init() {
+    print("Motor initialized");
+  }
+}
+
+method1(a: bool = true) -> float {
+  print("Method1 called");
+  return 1.0;
+} 

@@ -1,0 +1,15 @@
+// Minimal test
+
+type Test {
+  // Empty type
+  func1();  // Empty parameter list
+  x: int;   // Field declaration
+  
+  func2() {
+    print("Inside func2");
+  }
+}
+
+method1() {
+  print("test");
+} 

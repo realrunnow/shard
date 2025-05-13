@@ -4,6 +4,15 @@ from .base import Declaration, Statement, Expression, SourceLocation
 from ..lexer.tokens import TokenTypes
 
 @dataclass
+class Parameter(Declaration):
+    """Parameter in a function definition"""
+    modifiers: List[TokenTypes]
+    name: str
+    param_type: Optional[str]
+    default_value: Optional[Expression]
+    location: Optional[SourceLocation] = None
+
+@dataclass
 class VariableDef(Declaration):
     """Variable definition node"""
     modifiers: List[TokenTypes]
@@ -17,7 +26,7 @@ class FunctionDef(Declaration):
     """Function definition node"""
     modifiers: List[TokenTypes]
     name: str
-    params: List['VariableDef']
+    params: List['Parameter']
     return_type: Optional[str]
     body: Optional[List[Statement]]
     location: Optional[SourceLocation] = None

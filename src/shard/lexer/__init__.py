@@ -1,4 +1,4 @@
-from .tokens import Token, TokenTypes
 from .lexer import Lexer
+from .tokens import TokenTypes, Token
 
-__all__ = ['Lexer', 'Token', 'TokenTypes'] 
+__all__ = ['Lexer', 'TokenTypes', 'Token'] 

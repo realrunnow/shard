@@ -1,0 +1,22 @@
+// Empty parameter test
+
+type Test {
+  init() {
+    print("Constructor");
+  }
+  
+  method1() -> float {
+    return 1.0;
+  }
+  
+  x: int;
+  y: float;
+}
+
+shard Component {
+  run() {
+    print("Running component");
+  }
+}
+
+Example() as instance; 

@@ -1,9 +1,10 @@
+from typing import List, Optional, Union, Any
 from ..ast_nodes import (
     Node, Program, ImplDef, TypeDef, ShardDef,
     Statement, Expression, FunctionDef, VariableDef,
     ComponentInstantiation, Literal, Identifier,
     FunctionCall, BinaryOp, AssignmentExpr, MemberAccess,
-    ExpressionStatement, ReturnStatement
+    ExpressionStatement, ReturnStatement, Parameter
 )
 from ..lexer.tokens import TokenTypes
 
@@ -14,25 +15,41 @@ def indent(text: str, level: int = 1) -> str:
 
 class AltASTEncoder:
     @staticmethod
-    def encode_modifiers(modifiers):
-        return " ".join(mod.name for mod in modifiers) if modifiers else ""
+    def encode_modifiers(modifiers: List[TokenTypes]) -> str:
+        """Format modifiers as a string"""
+        return " ".join(m.name for m in modifiers)
 
     @staticmethod
     def encode_variable(var: VariableDef, level=0):
-        parts = []
-        # Add modifiers and name
-        mods = AltASTEncoder.encode_modifiers(var.modifiers)
-        parts.append(f"{mods + ' ' if mods else ''}{var.name}")
+        modifiers_str = AltASTEncoder.encode_modifiers(var.modifiers)
         
-        # Add type if exists
+        # Handle type annotation
+        type_str = ""
         if var.type_name:
-            parts.append(f": {var.type_name}")
+            type_str = f": {var.type_name}"
             
-        # Add value if exists
-        if var.value is not None:
-            parts.append(f" = {AltASTEncoder.encode_expression(var.value)}")
+        # Handle initializer
+        value_str = ""
+        if var.value:
+            value_str = f" = {AltASTEncoder.encode_expression(var.value)}"
             
-        return indent("".join(parts), level)
+        return indent(f"{modifiers_str} {var.name}{type_str}{value_str}", level)
+
+    @staticmethod
+    def encode_parameter(param: Parameter, level=0):
+        modifiers_str = AltASTEncoder.encode_modifiers(param.modifiers)
+        
+        # Handle type annotation
+        type_str = ""
+        if param.param_type:
+            type_str = f": {param.param_type}"
+            
+        # Handle default value
+        value_str = ""
+        if param.default_value:
+            value_str = f" = {AltASTEncoder.encode_expression(param.default_value)}"
+            
+        return indent(f"{modifiers_str} {param.name}{type_str}{value_str}", level)
 
     @staticmethod
     def encode_expression(expr: Expression) -> str:
@@ -58,33 +75,23 @@ class AltASTEncoder:
 
     @staticmethod
     def encode_function(func: FunctionDef, level=0):
-        parts = []
-        # Add modifiers and name
-        mods = AltASTEncoder.encode_modifiers(func.modifiers)
-        parts.append(f"{mods + ' ' if mods else ''}{func.name}")
+        modifiers_str = " ".join(m.name for m in func.modifiers)
         
-        # Add parameters
-        params_str = ", ".join(AltASTEncoder.encode_variable(param, 0) for param in func.params)
-        parts.append(f"({params_str})")
+        # Format parameters
+        params_str = ", ".join(AltASTEncoder.encode_parameter(param, 0) for param in func.params)
         
-        # Add return type if exists
+        # Handle return type
+        return_type_str = ""
         if func.return_type:
-            parts.append(f" -> {func.return_type}")
+            return_type_str = f" -> {func.return_type}"
             
-        # Add body if exists
-        if func.body:
-            parts.append(" {")
-            # Special handling for meta blocks to ensure component instantiations are encoded correctly
-            body_str = "\n".join(
-                AltASTEncoder.encode_component_instantiation(stmt, level + 1) 
-                if isinstance(stmt, ComponentInstantiation)
-                else AltASTEncoder.encode_statement(stmt, level + 1) 
-                for stmt in func.body
-            )
-            parts.append("\n" + body_str)
-            parts.append("\n" + "    " * level + "}")
+        # Function without body
+        if not func.body:
+            return indent(f"{modifiers_str} {func.name}({params_str}){return_type_str}", level)
             
-        return indent("".join(parts), level)
+        # Function with body
+        body_str = "\n".join(indent(AltASTEncoder.encode(stmt, 0), 3) for stmt in func.body)
+        return indent(f"{modifiers_str} {func.name}({params_str}){return_type_str} {{\n{body_str}\n{' ' * 4 * level}}}", level)
 
     @staticmethod
     def encode_object(obj: TypeDef | ShardDef, level=0):

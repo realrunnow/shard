@@ -1,11 +1,11 @@
 from typing import List, Optional, Set, Union
 from .statement_parser import StatementParser
 from ..lexer.tokens import TokenTypes
-from ..ast_nodes.base import Expression
 from ..ast_nodes import (
     TypeDef, ShardDef, ImplDef, FunctionDef,
-    VariableDef
+    VariableDef, Parameter, Expression
 )
+from ..ast_nodes.declarations import *
 
 class DeclarationParser(StatementParser):
     """Parser component for handling top-level declarations"""
@@ -62,17 +62,23 @@ class DeclarationParser(StatementParser):
             types.append(self.parse_type())
         return types
 
-    def parse_parameter(self) -> VariableDef:
-        """Parse a single parameter in a function declaration"""
+    def parse_parameter(self) -> Parameter:
+        """Parse a parameter in a function declaration"""
         location = self.get_location()
         modifiers = self.parse_modifiers()
         
+        # Parameter must be an identifier
         if self.current_token.type != TokenTypes.IDENT:
-            self.error("Expected parameter name")
+            # If it's a STRING token, it's likely a string literal inside a function body
+            # This is a special case for handling common mistakes in syntax
+            if self.current_token.type == TokenTypes.STRING:
+                self.error("String literals cannot be used as parameter names")
+            else:
+                self.error("Expected parameter name")
             
         name = self.current_token.value
         self.eat(TokenTypes.IDENT)
-
+        
         # Parse optional type annotation
         type_name = None
         if self.current_token.type == TokenTypes.COLON:
@@ -80,37 +86,46 @@ class DeclarationParser(StatementParser):
             type_name = self.parse_type()
             
         # Parse optional default value
-        value = None
+        default_value = None
         if self.current_token.type == TokenTypes.ASSIGN:
             self.eat(TokenTypes.ASSIGN)
-            value = self.parse_expression()
+            default_value = self.parse_expression()
             
-        return VariableDef(
+        # Create Parameter instead of VariableDef
+        return Parameter(
             modifiers=modifiers,
             name=name,
-            type_name=type_name,
-            value=value,
+            param_type=type_name,
+            default_value=default_value,
             location=location
         )
 
-    def parse_parameter_list(self, is_declaration: bool = True) -> List[Union[VariableDef, Expression]]:
-        """Parse a parameter list"""
+    def parse_parameter_list(self, is_declaration: bool = True) -> List[Union[Parameter, Expression]]:
+        """Parse a comma-separated list of parameters or expressions"""
         params = []
         self.eat(TokenTypes.LPAREN)
         
-        if self.current_token.type != TokenTypes.RPAREN:
-            if is_declaration:
-                # Parse declaration parameters
+        # Handle empty parameter list
+        if self.current_token.type == TokenTypes.RPAREN:
+            self.eat(TokenTypes.RPAREN)
+            return params
+            
+        if is_declaration:
+            # Parse declaration parameters (for function declarations)
+            params.append(self.parse_parameter())
+            
+            # Parse remaining parameters
+            while self.current_token.type == TokenTypes.COMMA:
+                self.eat(TokenTypes.COMMA)
                 params.append(self.parse_parameter())
-                while self.current_token.type == TokenTypes.COMMA:
-                    self.eat(TokenTypes.COMMA)
-                    params.append(self.parse_parameter())
-            else:
-                # Parse function call arguments
+        else:
+            # Parse expressions (for function calls)
+            params.append(self.parse_expression())
+            
+            # Parse remaining arguments
+            while self.current_token.type == TokenTypes.COMMA:
+                self.eat(TokenTypes.COMMA)
                 params.append(self.parse_expression())
-                while self.current_token.type == TokenTypes.COMMA:
-                    self.eat(TokenTypes.COMMA)
-                    params.append(self.parse_expression())
             
         self.eat(TokenTypes.RPAREN)
         return params
@@ -124,8 +139,15 @@ class DeclarationParser(StatementParser):
             
         name = self.current_token.value
         self.eat(self.current_token.type)
-
-        params = self.parse_parameter_list(is_declaration=True)
+        
+        # Handle function declarations with empty parameter lists: init()
+        if self.current_token.type == TokenTypes.LPAREN and self.peek().type == TokenTypes.RPAREN:
+            self.eat(TokenTypes.LPAREN)
+            self.eat(TokenTypes.RPAREN)
+            params = []
+        else:
+            # Normal parameter list
+            params = self.parse_parameter_list(is_declaration=True)
 
         # Parse optional return type
         return_type = None
@@ -138,6 +160,7 @@ class DeclarationParser(StatementParser):
         if self.current_token.type == TokenTypes.LBRACE:
             body = self.parse_block()
         else:
+            # Only expect semicolon for function declarations without a body
             self.expect_semicolon()
 
         return FunctionDef(
@@ -166,6 +189,7 @@ class DeclarationParser(StatementParser):
         if self.current_token.type == TokenTypes.LBRACE:
             members = self.parse_block()
         else:
+            # Only expect semicolon for type declarations without a body
             self.expect_semicolon()
             
         return TypeDef(
@@ -193,6 +217,7 @@ class DeclarationParser(StatementParser):
         if self.current_token.type == TokenTypes.LBRACE:
             members = self.parse_block()
         else:
+            # Only expect semicolon for shard declarations without a body
             self.expect_semicolon()
             
         return ShardDef(
@@ -217,7 +242,11 @@ class DeclarationParser(StatementParser):
         type_name = None
         if self.current_token.type == TokenTypes.COLON:
             self.eat(TokenTypes.COLON)
-            type_name = self.parse_type()
+            # We expect a type name (identifier)
+            if self.current_token.type != TokenTypes.IDENT:
+                self.error(f"Expected type name, got {self.current_token.type.name}")
+            type_name = self.current_token.value  
+            self.eat(TokenTypes.IDENT)
 
         # Parse optional initializer
         value = None
@@ -257,21 +286,29 @@ class DeclarationParser(StatementParser):
         type_name = self.current_token.value
         self.eat(TokenTypes.IDENT)
         
-        # Parse optional trait being implemented
-        trait_name = None
+        # Handle for_type if present
+        for_type = None
         if self.current_token.type == TokenTypes.FOR:
             self.eat(TokenTypes.FOR)
+            
             if self.current_token.type != TokenTypes.IDENT:
-                self.error("Expected trait name after 'for'")
-            trait_name = self.current_token.value
+                self.error("Expected type name after 'for'")
+                
+            for_type = self.current_token.value
             self.eat(TokenTypes.IDENT)
             
-        body = self.parse_block()
-        
+        # Parse body if present
+        body = None
+        if self.current_token.type == TokenTypes.LBRACE:
+            body = self.parse_block()
+        else:
+            # Only expect semicolon for impl declarations without a body
+            self.expect_semicolon()
+            
         return ImplDef(
             modifiers=modifiers,
             target_type=type_name,
-            for_type=trait_name,
+            for_type=for_type,
             members=body,
             location=location
         ) 

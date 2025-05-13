@@ -8,6 +8,7 @@ class SourceLocation:
     column: int
     length: int
     file: str
+    position: int
 
 class BaseParser:
     """Base parser class with common utilities and error handling"""
@@ -35,7 +36,8 @@ class BaseParser:
             line=self.lexer.line,
             column=self.lexer.column,
             length=len(str(self.current_token.value)),
-            file=self.current_file
+            file=self.current_file,
+            position=self.lexer.pos
         )
 
     def eat(self, token_type: Optional[TokenTypes] = None) -> Token:

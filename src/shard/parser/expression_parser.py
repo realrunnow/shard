@@ -89,11 +89,22 @@ class ExpressionParser(BaseParser):
         self.eat(TokenTypes.LPAREN)
         args = []
         
-        if self.current_token.type != TokenTypes.RPAREN:
+        # Handle empty argument list
+        if self.current_token.type == TokenTypes.RPAREN:
+            self.eat(TokenTypes.RPAREN)
+            return FunctionCall(
+                function=func_expr,
+                arguments=args,
+                location=location
+            )
+            
+        # Parse first argument
+        args.append(self.parse_expression())
+        
+        # Parse remaining arguments
+        while self.current_token.type == TokenTypes.COMMA:
+            self.eat(TokenTypes.COMMA)
             args.append(self.parse_expression())
-            while self.current_token.type == TokenTypes.COMMA:
-                self.eat(TokenTypes.COMMA)
-                args.append(self.parse_expression())
                 
         self.eat(TokenTypes.RPAREN)
         return FunctionCall(
