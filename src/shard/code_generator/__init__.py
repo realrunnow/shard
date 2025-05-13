@@ -52,9 +52,9 @@ class CodeGenerator:
         self.asm.append(f"{func.name}:")
         self.asm.append("push %ebp")
         self.asm.append("mov %esp, %ebp")
-        
+
         self.enter_scope()
-        
+
         # Reserve space for local variables
         for stmt in func.body:
             if isinstance(stmt, VariableDeclaration):
@@ -69,7 +69,7 @@ class CodeGenerator:
         self.asm.append(".Lend:")
         self.asm.append("leave")
         self.asm.append("ret")
-        
+
         self.exit_scope()
         self.current_offset = 0
 

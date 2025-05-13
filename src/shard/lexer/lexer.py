@@ -1,77 +1,7 @@
-from enum import Enum
+from enum import Enum, auto
 from dataclasses import dataclass
+from .tokens import TokenTypes, Token
 
-
-@dataclass
-class Token:
-    type: 'TokenTypes'
-    value: object
-    line: int
-    column: int
-
-    def __repr__(self):
-        return f"Token({self.type.name}, {repr(self.value)}, line={self.line}, col={self.column})"
-
-
-# Unified token types
-class TokenTypes(Enum):
-    EOF = 'EOF'
-    EOL = 'EOL'
-    IDENT = 'IDENT'
-
-    INT = 'INT'
-    FLOAT = 'FLOAT'
-    STRING = 'STRING'
-
-    # Modifiers
-    PUB = 'PUB'
-    PRIV = 'PRIV'
-    INTERNAL = 'INTERNAL'
-    OPEN = 'OPEN'
-    CONST = 'CONST'
-    MUT = 'MUT'
-    PURE = 'PURE'
-    IMPURE = 'IMPURE'
-    META = 'META'
-    BUS = 'BUS'
-    ON = 'ON'
-
-    # Language constructs
-    TYPE = 'TYPE'
-    SHARD = 'SHARD'
-    IMPL = 'IMPL'
-    FOR = 'FOR'
-    FROM = 'FROM'
-    IF = 'IF'
-    ELSE = 'ELSE'
-    ELIF = 'ELIF'
-    SWITCH = 'SWITCH'
-    CASE = 'CASE'
-    WHILE = 'WHILE'
-    RETURN = 'RETURN'
-
-    # Punctuation
-    LPAREN = 'LPAREN'
-    RPAREN = 'RPAREN'
-    LBRACE = 'LBRACE'
-    RBRACE = 'RBRACE'
-    COLON = 'COLON'
-    COMMA = 'COMMA'
-    ARROW = 'ARROW'  # ->
-
-    # Operators
-    PLUS = 'PLUS'
-    MINUS = 'MINUS'
-    TIMES = 'TIMES'
-    DIVIDE = 'DIVIDE'
-    EQ = 'EQ'     # ==
-    NE = 'NE'     # !=
-    LT = 'LT'     # <
-    GT = 'GT'     # >
-    LE = 'LE'     # <=
-    GE = 'GE'     # >=
-    ASSIGN = 'ASSIGN'  # =
-    NOT = 'NOT'       # !
 
 # Constants for token patterns
 COMPOUND_OPERATORS = {
@@ -80,6 +10,10 @@ COMPOUND_OPERATORS = {
     '<=': TokenTypes.LE,
     '>=': TokenTypes.GE,
     '->': TokenTypes.ARROW,
+    '+=': TokenTypes.PLUS_ASSIGN,
+    '-=': TokenTypes.MINUS_ASSIGN,
+    '*=': TokenTypes.TIMES_ASSIGN,
+    '/=': TokenTypes.DIVIDE_ASSIGN,
 }
 
 KEYWORDS = {
@@ -106,12 +40,16 @@ KEYWORDS = {
     'case': TokenTypes.CASE,
     'while': TokenTypes.WHILE,
     'return': TokenTypes.RETURN,
+    'as': TokenTypes.AS,
+    'true': TokenTypes.BOOL,
+    'false': TokenTypes.BOOL,
 }
 
 SINGLE_CHAR_TOKENS = {
     '+': TokenTypes.PLUS,
     '-': TokenTypes.MINUS,
     '*': TokenTypes.TIMES,
+    '/': TokenTypes.DIVIDE,
     '=': TokenTypes.ASSIGN,
     '!': TokenTypes.NOT,
     '<': TokenTypes.LT,
@@ -121,8 +59,9 @@ SINGLE_CHAR_TOKENS = {
     '{': TokenTypes.LBRACE,
     '}': TokenTypes.RBRACE,
     ',': TokenTypes.COMMA,
-    ';': TokenTypes.EOL,
+    ';': TokenTypes.SEMICOLON,
     ':': TokenTypes.COLON,
+    '.': TokenTypes.DOT,
 }
 
 class Lexer:
@@ -144,43 +83,38 @@ class Lexer:
         return char
 
     def peek(self, ahead=0):
+        """Look ahead at characters without consuming them"""
         pos = self.pos + ahead
         if pos >= len(self.text):
             return ''
         return self.text[pos]
 
     def skip_whitespace_and_comments(self):
+        """Skip whitespace and comments in the input text"""
         while self.pos < len(self.text):
-            char = self.peek()
-
-            if char.isspace():
-                self.advance()
-                continue
-
-            if char == '/':
-                next_char = self.peek(1)
-                if next_char == '/':
-                    while self.peek() not in ('', '\n'):
-                        self.advance()
-                    continue
-                elif next_char == '*':
-                    self.advance()
-                    self.advance()
-                    depth = 1
-                    while depth > 0:
-                        if self.peek() == '/' and self.peek(1) == '*':
-                            self.advance()
-                            self.advance()
-                            depth += 1
-                        elif self.peek() == '*' and self.peek(1) == '/':
-                            self.advance()
-                            self.advance()
-                            depth -= 1
-                        else:
-                            self.advance()
-                    continue
-                return
-            return
+            if self.text[self.pos].isspace():
+                if self.text[self.pos] == '\n':
+                    self.line += 1
+                    self.column = 1
+                else:
+                    self.column += 1
+                self.pos += 1
+            elif self.text[self.pos:].startswith('//'):
+                # Skip single-line comment
+                while self.pos < len(self.text) and self.text[self.pos] != '\n':
+                    self.pos += 1
+            elif self.text[self.pos:].startswith('/*'):
+                # Skip multi-line comment
+                self.pos += 2
+                while self.pos < len(self.text) and not self.text[self.pos:].startswith('*/'):
+                    if self.text[self.pos] == '\n':
+                        self.line += 1
+                        self.column = 1
+                    self.pos += 1
+                if self.pos < len(self.text):
+                    self.pos += 2  # Skip the closing */
+            else:
+                break
 
     def get_next_token(self):
         self.skip_whitespace_and_comments()
@@ -188,12 +122,16 @@ class Lexer:
         if self.pos >= len(self.text):
             return Token(TokenTypes.EOF, None, self.line, self.column)
 
+        # Store current position info for error messages
+        line = self.line
+        column = self.column
+        
         char = self.peek()
 
         # Check for compound operators
         for pattern, token_type in COMPOUND_OPERATORS.items():
             if self.text[self.pos:].startswith(pattern):
-                token = Token(token_type, pattern, self.line, self.column)
+                token = Token(token_type, pattern, line, column)
                 self.pos += len(pattern)
                 self.column += len(pattern)
                 return token
@@ -201,11 +139,15 @@ class Lexer:
         # Handle identifiers and keywords
         if char.isalpha() or char == '_':
             start = self.pos
+            start_col = self.column
             while self.peek().isalnum() or self.peek() == '_':
                 self.advance()
             value = self.text[start:self.pos]
             token_type = KEYWORDS.get(value, TokenTypes.IDENT)
-            return Token(token_type, value, self.line, self.column)
+            # Special handling for boolean literals
+            if token_type == TokenTypes.BOOL:
+                value = value == 'true'
+            return Token(token_type, value, line, start_col)
 
         # Handle numbers
         if char.isdigit():
@@ -219,37 +161,34 @@ class Lexer:
         if char in SINGLE_CHAR_TOKENS:
             token_type = SINGLE_CHAR_TOKENS[char]
             self.advance()
-            return Token(token_type, char, self.line, self.column)
+            return Token(token_type, char, line, column)
 
-        if char == '/':
-            self.advance()
-            return Token(TokenTypes.DIVIDE, '/', self.line, self.column)
-
-        raise SyntaxError(f"Invalid character '{char}' at line {self.line}, column {self.column}")
+        raise SyntaxError(f"Invalid character '{char}' at line {line}, column {column}")
 
     def _handle_number(self):
         start = self.pos
+        start_col = self.column
         while self.peek().isdigit():
             self.advance()
         
         if self.peek() != '.':
-            return Token(TokenTypes.INT, int(self.text[start:self.pos]), self.line, self.column)
+            return Token(TokenTypes.INTEGER, int(self.text[start:self.pos]), self.line, start_col)
             
         self.advance()  # consume dot
-        start_decimal = self.pos
         while self.peek().isdigit():
             self.advance()
-        return Token(TokenTypes.FLOAT, float(self.text[start:self.pos]), self.line, self.column)
+        return Token(TokenTypes.FLOAT, float(self.text[start:self.pos]), self.line, start_col)
 
     def _handle_string(self):
+        start_col = self.column
         self.advance()  # consume opening quote
         value = []
         while True:
             char = self.peek()
             if char == '"':
                 break
-            if char == '\n':
-                raise SyntaxError(f"Unterminated string at {self.line}:{self.column}")
+            if char == '\n' or char == '':
+                raise SyntaxError(f"Unterminated string at line {self.line}, column {start_col}")
             self.advance()
             if char == '\\':
                 escape_map = {
@@ -261,10 +200,10 @@ class Lexer:
                 }
                 next_char = self.peek()
                 if next_char == '':
-                    raise SyntaxError(f"Unterminated escape sequence at {self.line}:{self.column}")
+                    raise SyntaxError(f"Unterminated escape sequence at line {self.line}, column {self.column}")
                 self.advance()
                 value.append(escape_map.get(next_char, next_char))
             else:
                 value.append(char)
         self.advance()  # consume closing quote
-        return Token(TokenTypes.STRING, ''.join(value), self.line, self.column)
+        return Token(TokenTypes.STRING, ''.join(value), self.line, start_col)

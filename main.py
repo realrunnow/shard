@@ -1,24 +1,23 @@
 import sys
 import argparse
-from lexer import Lexer, TokenTypes
-from parser import Parser
-from code_generator import CodeGenerator
-from ast_nodes import *
-from encoders.json_encoder import encode_ast_as_json
-from encoders.alt_encoder import encode_ast_as_alt
-from encoders.token_encoder import encode_tokens
+from src.shard.lexer import Lexer
+from src.shard.lexer.tokens import TokenTypes
+from src.shard.parser import Parser
+from src.shard.encoders.json_encoder import ASTJsonEncoder, encode_ast_as_json
+from src.shard.encoders.token_encoder import encode_token, encode_tokens
+from src.shard.encoders.alt_encoder import encode_ast_as_alt
 
 def main():
     # Set up argument parser
-    parser = argparse.ArgumentParser(description='Shard compiler')
-    parser.add_argument('file', help='The source file to compile')
-    parser.add_argument('--print_tokens', action='store_true', help='Print tokens after lexical analysis')
-    parser.add_argument('--print_json_ast', action='store_true', help='Print AST in JSON format')
-    parser.add_argument('--print_alt_ast', action='store_true', help='Print AST in alternative format')
+    arg_parser = argparse.ArgumentParser(description='Shard compiler')
+    arg_parser.add_argument('file', help='The source file to compile')
+    arg_parser.add_argument('--print_tokens', action='store_true', help='Print tokens after lexical analysis')
+    arg_parser.add_argument('--print_ast', action='store_true', help='Print AST in JSON format')
+    arg_parser.add_argument('--print_alt', action='store_true', help='Print AST in alternative readable format')
     
-    args = parser.parse_args()
+    args = arg_parser.parse_args()
 
-    print("=== Aether Compiler ===")
+    print("=== Shard Compiler ===")
     
     print(f"[1] Reading source code from: {args.file}")
     
@@ -42,12 +41,13 @@ def main():
     lexer = Lexer(input_text)
     print("    ✓ Lexer initialized\n")
 
-    print("[2.5] Tokenizing source code...")
-    tokens = []
     if args.print_tokens:
+        print("[2.5] Tokenizing source code...")
         # Only collect tokens if we need to print them
+        tokens = []
+        token_lexer = Lexer(input_text)  # Create a separate lexer for token printing
         while True:
-            token = lexer.get_next_token()
+            token = token_lexer.get_next_token()
             tokens.append(token)
             if token.type == TokenTypes.EOF:
                 break
@@ -59,10 +59,8 @@ def main():
             value = ''
             if token.value is not None:
                 value = str(token.value)
-            print(f"    {token.line:<4} | {token.column:<4} | {token.type:<8} | {value}")
+            print(f"    {token.line:<4} | {token.column:<6} | {token.type.name:<8} | {value}")
         print()
-        # Reset lexer for parsing
-        lexer = Lexer(input_text)
 
     print("[3] Initializing parser...")
     parser = Parser(lexer)
@@ -70,18 +68,20 @@ def main():
 
     print("[4] Parsing Abstract Syntax Tree (AST)...")
     try:
-        ast = parser.parse_program()
+        ast = parser.parse()
         print("    ✓ AST generated\n")
     except SyntaxError as e:
-        print(f"Error: {e}")
+        print(f"Error during parsing: {e}")
         sys.exit(1)
 
-    # Print AST in requested format(s)
-    if args.print_json_ast:
+    # Print AST if requested
+    if args.print_ast:
         print("\nAST (JSON format):")
-        print(encode_ast_as_json(ast))
-
-    if args.print_alt_ast:
+        import json
+        print(json.dumps(ast, cls=ASTJsonEncoder, indent=2))
+        
+    # Print alternative AST format if requested
+    if args.print_alt:
         print("\nAST (Alternative format):")
         print(encode_ast_as_alt(ast))
 
