@@ -1,10 +1,8 @@
 import sys
 import argparse
 from src.shard.lexer import Lexer
-from src.shard.lexer.tokens import TokenTypes
 from src.shard.parser import Parser
 from src.shard.encoders.json_encoder import ASTJsonEncoder, encode_ast_as_json
-from src.shard.encoders.token_encoder import encode_token, encode_tokens
 from src.shard.encoders.alt_encoder import encode_ast_as_alt
 
 def main():
@@ -89,5 +87,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-    
