@@ -59,4 +59,3 @@ Counter(step = 5) as myCounter;
 
 // Another component instantiation
 TestType() as myTest; 
-

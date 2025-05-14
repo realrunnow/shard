@@ -1,0 +1,16 @@
+name: Gemini 2.5 Flash Pro
+version: 1.0.1
+schema: v1
+
+models:
+  - name: Gemini 2.5 Flash Pro
+    provider: gemini
+    model: gemini-2.5-flash-preview-04-17
+    apiKey: AIzaSyC7jm2-im5sxuOcjJAZIyJfLXy4kbuGU_I
+    roles:
+      - chat
+      - edit
+      - apply
+    defaultCompletionOptions:
+      contextLength: 1048576
+      maxTokens: 8192

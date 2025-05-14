@@ -1,0 +1,16 @@
+name: LLama
+version: 1.0.2
+schema: v1
+
+models:
+  - name: LLama
+    provider: openrouter
+    model: meta-llama/llama-3.2-11b-vision-instruct:free
+    apiKey: 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
+    roles:
+      - autocomplete
+      - chat
+      - edit
+      - apply
+    defaultCompletionOptions:
+      contextLength: 256000

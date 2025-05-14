@@ -3,8 +3,9 @@ from ..ast_nodes import (
     Node, Program, ImplDef, TypeDef, ShardDef,
     Statement, Expression, FunctionDef, VariableDef,
     ComponentInstantiation, Literal, Identifier,
-    FunctionCall, BinaryOp, AssignmentExpr,
-    ExpressionStatement, ReturnStatement
+    FunctionCall, BinaryOp, AssignmentExpr, MemberAccess,
+    ExpressionStatement, ReturnStatement, Parameter,
+    If, While, UnaryOp
 )
 from ..lexer.tokens import TokenTypes
 
@@ -19,8 +20,12 @@ class ASTJsonEncoder(json.JSONEncoder):
                 if v is not None:  # Only include non-None values
                     if k == "modifiers":
                         result[k] = [mod.name for mod in v]
+                    elif k == "operator" and isinstance(v, TokenTypes):
+                        result[k] = v.name
+                    elif k == "literal_type" and isinstance(v, TokenTypes):
+                        result[k] = v.name
                     elif isinstance(v, list):
-                        result[k] = [self.default(item) if isinstance(item, Node) else item for item in v]
+                        result[k] = [self.default(item) if isinstance(item, (Node, TokenTypes)) else item for item in v]
                     elif isinstance(v, (Node, TokenTypes)):
                         result[k] = self.default(v)
                     else:
