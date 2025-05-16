@@ -4,13 +4,20 @@ import { TokenTypes } from "../tokens/token_types";
 export const PATTERNS:  Record<string, TokenTypes> = {
     '==': TokenTypes.EQ,
     '!=': TokenTypes.NE,
+
+    'and': TokenTypes.AND, 
+    'or': TokenTypes.OR, 
+
     '<=': TokenTypes.LE,
     '>=': TokenTypes.GE,
     '->': TokenTypes.ARROW,
     '+=': TokenTypes.PLUS_ASSIGN,
     '-=': TokenTypes.MINUS_ASSIGN,
-    '*=': TokenTypes.TIMES_ASSIGN,
+    '*=': TokenTypes.MULTIPLY_ASSIGN,
     '/=': TokenTypes.DIVIDE_ASSIGN,
+
+
+
 
     'pub': TokenTypes.PUB,
     'priv': TokenTypes.PRIV,
@@ -41,7 +48,7 @@ export const PATTERNS:  Record<string, TokenTypes> = {
 
     '+': TokenTypes.PLUS,
     '-': TokenTypes.MINUS,
-    '*': TokenTypes.TIMES,
+    '*': TokenTypes.MULTIPLY,
     '/': TokenTypes.DIVIDE,
     '=': TokenTypes.ASSIGN,
     '!': TokenTypes.NOT,

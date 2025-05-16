@@ -16,8 +16,13 @@ const PATTERNS_KEYS = Object.keys(PATTERNS).sort((a, b) => b.length - a.length)
  */
 export class Lexer implements TokenTableVisitor {
 
+    private text: string
+    constructor(text:string) {
+        this.text = text
+    }
+
     ///// tokentable helper
-    private tokenTable: TokenTable = new TokenTable("")
+    private tokenTable!: TokenTable
     private getText(): string {
         return this.tokenTable.getText();
     }
@@ -36,6 +41,7 @@ export class Lexer implements TokenTableVisitor {
     ///// leocation meta
     private sourceLocation: SourceLocation = new SourceLocation();
     private nextLine(): void {
+        this.setColumn(1);
         this.sourceLocation.line++;
     }
 
@@ -96,7 +102,13 @@ export class Lexer implements TokenTableVisitor {
     
             if (currentRemainder.startsWith(end)) {
                 this.addToken(tokenType, accumulatedString);
-                this.nextColumn(end.length);
+                if(end == "\n") {
+                    this.nextColumn(end.length);
+                    this.addToken(TokenTypes.EOL, "");
+                    this.nextLine()
+                } else {
+                    this.nextColumn(end.length);
+                }
                 return true;
             }
     
@@ -123,7 +135,6 @@ export class Lexer implements TokenTableVisitor {
             if (this.isEOL()) {
                 this.addToken(TokenTypes.EOL, "")
 
-                this.setColumn(0);
                 this.nextLine();
 
                 this.nextColumn();
@@ -265,6 +276,7 @@ export class Lexer implements TokenTableVisitor {
 
     public visit(table: TokenTable): void {
         this.tokenTable = table
+        this.tokenTable.setText(this.text)
         this.tokenize();
     }
 }

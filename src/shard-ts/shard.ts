@@ -1,4 +1,6 @@
+import { Program } from "./ast/nodes/nodes"
 import { Lexer } from "./lexer/lexer"
+import { Parser } from "./parser/parser"
 import { TokenTable } from "./tokens/token_table"
 
 
@@ -68,15 +70,19 @@ TestType() as myTest;
 long comment line 2
 long comment line 3*/` 
 
-var tokens = new TokenTable(text)
-var lexer = new Lexer()
+
+var text2 = `
+impl Ident {
+}
+`
+
+var tokens = new TokenTable()
+var lexer = new Lexer(text)
 
 tokens.accept(lexer)
 
-const pad = (str: string, len: number) => str.padEnd(len, ' ');
 
-console.log("--------")
-    
+const pad = (str: string, len: number) => str.padEnd(len, ' ');
 console.log(        
 "| " + pad("Type", 10) + 
 "| " + pad("Value", 20) + 
@@ -84,8 +90,11 @@ console.log(
 "| " + pad("Column", 8) + 
 "| File"
 )
-
-
 for(const token of tokens.getTokens()) {
     console.log(token.toString())
 }
+
+var parser = new Parser()
+tokens.accept(parser)
+
+

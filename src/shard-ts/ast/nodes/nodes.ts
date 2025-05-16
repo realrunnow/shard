@@ -228,6 +228,7 @@ export class Literal extends Expression {
 }
 
 export enum BinaryOperator {
+  Assign = '=',
   Add = '+',
   Subtract = '-',
   Multiply = '*',

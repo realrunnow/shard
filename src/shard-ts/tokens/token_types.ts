@@ -3,26 +3,42 @@ export enum TokenTypes {
     TYPE,
     SHARD,
     IMPL,
+    ENUM,
+
+    // helper keywords
     FROM,
+    AS,
+
+    // dual keyword
     FOR,
+
+    // if statement
     IF,
     ELSE,
     ELIF,
+
+    // switch statement
     SWITCH,
     CASE,
+
+    // while loop
     WHILE,
+    CONTINUE, 
+    BREAK,
     RETURN,
-    AS,
 
     // Modifiers
     PUB,
     PRIV,
     INTERNAL,
     OPEN,
+
     CONST,
     MUT,
+
     PURE,
     IMPURE,
+    
     META,
     BUS,
     ON,
@@ -30,12 +46,14 @@ export enum TokenTypes {
     // Operators
     PLUS,
     MINUS,
-    TIMES,
+    MULTIPLY,
     DIVIDE,
+
+
     ASSIGN,
     PLUS_ASSIGN,
     MINUS_ASSIGN,
-    TIMES_ASSIGN,
+    MULTIPLY_ASSIGN,
     DIVIDE_ASSIGN,
     EQ,
     NE,
@@ -44,6 +62,8 @@ export enum TokenTypes {
     LE,
     GE,
     NOT,
+    AND,
+    OR,
 
     // Punctuation
     LPAREN,
