@@ -1,0 +1,1 @@
+// reduces types, shards and implementations into classes.

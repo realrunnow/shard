@@ -1,0 +1,2 @@
+// reduces variables
+// checks variables

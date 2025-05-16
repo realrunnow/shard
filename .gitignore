@@ -1,4 +1,7 @@
-/__pycache__
-/logs
+# Ignore all __pycache__ directories recursively
+**/__pycache__
 
-/tests/complex.sd
+# Existing entries
+/logs
+/.continue
+/node_modules

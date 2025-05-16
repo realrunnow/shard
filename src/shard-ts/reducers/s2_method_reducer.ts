@@ -1,0 +1,1 @@
+// reduces methods in each scope from signatures to definitons and etc + checks their availability.

@@ -1,4 +1,8 @@
-// Complex test file for the Shard parser
+import { Lexer } from "./lexer/lexer"
+import { TokenTable } from "./tokens/token_table"
+
+
+var text = `// Complex test file for the Shard parser
 // Tests all the parser features we've fixed
 
 // Type with empty parameter functions, typed fields and string literals
@@ -58,4 +62,30 @@ process(data: string, options: bool = true) -> int {
 Counter(step = 5) as myCounter;
 
 // Another component instantiation
-TestType() as myTest; 
+TestType() as myTest;
+
+/* Long comment line 1
+long comment line 2
+long comment line 3*/` 
+
+var tokens = new TokenTable(text)
+var lexer = new Lexer()
+
+tokens.accept(lexer)
+
+const pad = (str: string, len: number) => str.padEnd(len, ' ');
+
+console.log("--------")
+    
+console.log(        
+"| " + pad("Type", 10) + 
+"| " + pad("Value", 20) + 
+"| " + pad("Line", 6) + 
+"| " + pad("Column", 8) + 
+"| File"
+)
+
+
+for(const token of tokens.getTokens()) {
+    console.log(token.toString())
+}
