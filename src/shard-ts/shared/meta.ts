@@ -5,3 +5,4 @@ export class SourceLocation {
         public file: string = ""
     ) {}
 }
+
