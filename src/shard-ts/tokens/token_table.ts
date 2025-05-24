@@ -34,14 +34,22 @@ export class TokenTable {
     }
 
     private lookAhead(offset: number = 0, skipSkippables: boolean = true): Token {
-        let pos = this.position + offset;
-    
+        let pos = this.position;
+        let currentOffset = 0;
+
         while (pos < this.tokens.length) {
             const token = this.tokens[pos];
-            if (!skipSkippables || !SKIPPABLE_TOKENS.has(token.type)) {
-                return token;
+            if (skipSkippables && SKIPPABLE_TOKENS.has(token.type)) {
+                pos++;
+            } else {
+                if (currentOffset >= offset) {
+                    return token;
+                }
+                
+                pos++;
+                currentOffset++
             }
-            pos++;
+       
         }
     
         // At this point, we've gone past the end of the token list

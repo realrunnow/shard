@@ -7,6 +7,10 @@ export abstract class ASTNode {
   ) {}
 }
 
+export abstract class Expression extends ASTNode {}
+
+
+
 // Modifiers
 export type AccessModifier = 'pub' | 'priv' | 'internal' | 'open';
 export type VarModifier = 'const' | 'mut';
@@ -61,7 +65,7 @@ export class ShardDeclaration extends Declaration {
 export class ImplDeclaration extends Declaration {
   constructor(
     public target: Identifier,
-    public forType: Identifier,
+    public forType: Identifier | null,
     modifiers: Modifiers,
     public members: CallableDefinition[],
     start: SourceLocation,
@@ -138,7 +142,7 @@ export class VariableDeclaration extends Declaration {
 export class Parameter {
   constructor(
     public name: Identifier,
-    public typeAnnotation: TypeNode | null,
+    public typeAnnotation: TypeIdentifier | null,
     public defaultValue: Expression | null,
     public start: SourceLocation,
     public end: SourceLocation
@@ -196,16 +200,49 @@ export class IfStatement extends Statement {
   }
 }
 
-export class IfBranch {
+
+
+export class IfBranch extends Statement {
   constructor(
     public condition: Expression | null, // null = else
-    public block: BlockStatement
-  ) {}
+    public block: BlockStatement,
+    start: SourceLocation,
+    end: SourceLocation
+  ) {
+    super(start, end);
+  }
 }
+
+export class WhileStatement extends Statement {
+  constructor(
+    public condition: Expression,
+    public block: BlockStatement,
+    start: SourceLocation,
+    end: SourceLocation
+  ) {
+    super(start, end);
+  }
+}
+
+export class ForStatement extends Statement {
+  constructor(
+    public variable: Identifier,
+    public iterable: Expression,
+    public block: BlockStatement,
+    start: SourceLocation,
+    end: SourceLocation
+  ) {
+    super(start, end);
+  }
+}
+
+
+
+
+
 
 // === Expressions ===
 
-export abstract class Expression extends ASTNode {}
 
 export class Identifier extends Expression {
   constructor(
@@ -217,28 +254,64 @@ export class Identifier extends Expression {
   }
 }
 
-export class Literal extends Expression {
+export class TypeIdentifier extends Identifier {
   constructor(
-    public value: string | number | boolean | null,
+    public name: string,
+    start: SourceLocation,
+    end: SourceLocation
+  ) {
+    super(name, start, end);
+  }
+}
+
+
+export enum UnaryOperator {
+  Negate,
+  Not,
+  IncPrefix,
+  DecPrefix,
+  IncPostfix,
+  DecPostfix
+}
+
+export enum BinaryOperator {
+  Add,
+  Subtract,
+  Multiply,
+  Divide,
+  Modulo,
+  Power,
+  Equals,
+  NotEquals,
+  LessThan,
+  GreaterThan,
+  LessThanOrEqual,
+  GreaterThanOrEqual,
+  And,
+  Or,
+  Assign,
+  AddAssign,
+  SubtractAssign,
+  MultiplyAssign,
+  DivideAssign
+}
+
+export class Literal extends Expression {
+  constructor(public value: number | string | boolean, start: SourceLocation, end: SourceLocation) {
+    super(start, end);
+  }
+}
+
+export class UnaryExpression extends Expression {
+  constructor(
+    public operator: UnaryOperator,
+    public operand: Expression,
+    public isPostfix: boolean = false,
     start: SourceLocation,
     end: SourceLocation
   ) {
     super(start, end);
   }
-}
-
-export enum BinaryOperator {
-  Assign = '=',
-  Add = '+',
-  Subtract = '-',
-  Multiply = '*',
-  Divide = '/',
-  Equals = '==',
-  NotEquals = '!=',
-  LessThan = '<',
-  GreaterThan = '>',
-  And = '&&',
-  Or = '||',
 }
 
 export class BinaryExpression extends Expression {
@@ -253,10 +326,11 @@ export class BinaryExpression extends Expression {
   }
 }
 
-export class CallExpression extends Expression {
+export class ConditionalExpression extends Expression {
   constructor(
-    public callee: Expression,
-    public args: Expression[],
+    public condition: Expression,
+    public thenBranch: Expression,
+    public elseBranch: Expression,
     start: SourceLocation,
     end: SourceLocation
   ) {
@@ -264,12 +338,21 @@ export class CallExpression extends Expression {
   }
 }
 
-// Component(step = 5) as myCounter;
-export class InstantiationExpression extends Expression {
+export class CallParameter extends Expression { 
   constructor(
-    public component: Identifier,
-    public args: Record<string, Expression>,
-    public alias: Identifier | null,
+    public name: Identifier,
+    public value: Expression,
+    start: SourceLocation,
+    end: SourceLocation
+  ) {
+    super(start, end);
+  }
+}
+
+export class FunctionCallExpression extends Expression {
+  constructor(
+    public name: Identifier,
+    public args: Expression[],
     start: SourceLocation,
     end: SourceLocation
   ) {

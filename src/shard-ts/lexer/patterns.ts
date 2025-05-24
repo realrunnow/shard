@@ -30,9 +30,13 @@ export const PATTERNS:  Record<string, TokenTypes> = {
     'meta': TokenTypes.META,
     'bus': TokenTypes.BUS,
     'on': TokenTypes.ON,
+
+    'enum': TokenTypes.ENUM,
     'type': TokenTypes.TYPE,
     'shard': TokenTypes.SHARD,
     'impl': TokenTypes.IMPL,
+    
+
     'for': TokenTypes.FOR,
     'from': TokenTypes.FROM,
     'if': TokenTypes.IF,
@@ -61,4 +65,6 @@ export const PATTERNS:  Record<string, TokenTypes> = {
     ',': TokenTypes.COMMA,
     ':': TokenTypes.COLON,
     '.': TokenTypes.DOT,
+    ';': TokenTypes.SEMICOLON,
+
 };

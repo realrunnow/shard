@@ -1,0 +1,226 @@
+class Parser
+	method consumeBinaryOperator 
+		variable token
+	method isBinaryOperator
+	method isCallableStart
+	method isIfStart
+	method isInstantiationStart
+	method isVariableDeclarationStart
+		variable peek
+		variable peek2
+	method parseArguments
+		variable args
+		property args
+		property end
+		variable rParenToken
+	method parseAssignmentExpression
+		variable left
+		variable right
+	method parseBinaryExpression
+		variable left
+		variable operator
+		variable right
+	method parseBlockStatement
+		variable statements
+	method parseCallableDefinition
+		variable body
+		variable name
+		variable params
+		variable returnType
+
+	method parseExpression
+	method parseGroupExpression
+		variable expr
+	method parseIdentifier
+		variable token
+	method parseIdentifierExpression
+		variable args
+		variable end
+		variable ident
+	method parseIfStatement
+		variable branches
+		variable condition
+		variable elifBlock
+		variable elifCondition
+		variable elseBlock
+		variable thenBlock
+
+	method parseInstantiationExpression
+		variable alias
+		variable args
+		variable component
+		variable key
+		variable value
+	method parseLiteral
+		variable token
+		variable value
+	method parseModifiers
+		variable modifiers
+			property access
+	method parseParameter
+		variable defaultValue
+		variable name
+		variable typeAnnotation
+	method parseParameters
+		variable param
+		variable params
+	method parsePrimaryExpression
+		variable token
+
+	method parseReturnStatement
+		variable token
+		variable value
+	method parseReturnType
+
+	method parseStatement
+		variable expr
+
+
+
+	method parseTypeNode
+
+	method parseVariableDeclaration
+		variable initializer
+		variable name
+		variable typeAnnotation
+
+
+
+
+
+
+	### EXPR PARSER
+	
+
+
+    ### CODE BODY PARSER
+
+	method block
+		<method_call>
+		parameter assignement or value etc
+	method while	
+		while (EXPR) {
+			<block>
+		}
+	method if
+		if (expr) {
+			<block>
+		} ?elif (expr) {
+			<block>
+		} else {
+			<block>
+		}
+
+
+	method method_call
+		<ident>(<value> or <ident> = <value>) 
+
+
+    method expr
+		<binary_expr> or <unary_expr> or <ident> or <value>
+
+	method binary_expr
+		<node> <op> <node>
+
+	method unary_expr
+		<op> <node>
+
+
+
+
+
+
+
+    ### HELPER PARSERS
+    method modifiers
+        pub, priv, internal, open
+        mut, const
+        impure, pure
+        bus, on, meta
+
+	method assignement_expr()
+        <op> <expr>
+
+
+
+
+
+
+    ### PROPERTY PARSER
+	mtthod value_ident
+        <ident> 
+
+	method property_signature
+		<modifiers> <value_signature> ?<assignement_expr>
+
+	method parameter_signature
+		<value_signature> ?<assignement_expr>
+
+
+
+
+
+ 
+
+
+
+
+
+
+    ### FUNCTION PARSER
+    method fun_signature
+        <ident>(<parameter_signature>)
+
+    method method_signature
+        <modifiers> <fun_decl>
+
+    method method_with_body
+        <method_decl> <code_body>
+
+
+
+
+
+
+
+    ### MAIN PARSERS
+	method type_def
+        <modifiers> type <type_ident> ?:/ from <type_ident> 
+        {
+            <method_signature>
+            <property_signature>
+        }
+
+	method shard_def
+        <modifiers> shard <type_ident> ?:/ from <type_ident> 
+        {
+            <method_signature>
+            <property_signature>
+        }
+
+	method enum_def
+        <modifiers> enum <type_ident> {
+            <ident> ?:/ = <static_expr>
+        }
+
+    method impl_def
+        <modifiers> impl -:/ <type_ident>  
+                         -:/ <type_ident> for <type_ident>    
+        {
+            <method_with_body> 
+        }
+ 
+     
+
+
+
+	method parseProgram 
+     -> goes through tokens and generates the program node.
+     : enum_def, type_def, shard_def, impl_def, property_signature, method_with_body
+
+
+
+	 note - method signature optionalness
+
+
+	method visit

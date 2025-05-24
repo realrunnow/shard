@@ -1,38 +1,13 @@
-import { Program } from "./ast/nodes/nodes"
+import { serializeIndented } from "./ast/encoders/compact";
+import { serialize } from "./ast/encoders/json";
+import { ASTNode, BinaryExpression, BinaryOperator, BlockStatement, CallableDeclaration, CallableDefinition, ConditionalExpression, EnumDeclaration, Expression, ExpressionStatement, FunctionCallExpression, Identifier, IfStatement, ImplDeclaration, Literal, Modifiers, Program, ShardDeclaration, TypeDeclaration, TypeIdentifier, UnaryExpression, UnaryOperator, VariableDeclaration, WhileStatement } from "./ast/nodes/nodes"
 import { Lexer } from "./lexer/lexer"
 import { Parser } from "./parser/parser"
 import { SourceLocation } from "./shared/meta";
 import { TokenTable } from "./tokens/token_table"
 
-function serialize<T>(obj: T): any {
-  if (obj === null || typeof obj !== 'object') return obj;
-
-  if (Array.isArray(obj)) {
-      return obj.map(item => serialize(item));
-  }
-
-  // Special case: SourceLocation
-  if (obj instanceof SourceLocation) {
-      return `${obj.line}:${obj.column}:${obj.file}`;
-  }
 
 
-  const isClassInstance = obj.constructor && obj.constructor.name !== 'Object';
-  const result: any = {};
-
-  // Add className only if needed (skip for plain objects)
-  if (isClassInstance) {
-      result.className = obj.constructor.name;
-  }
-
-  for (const key in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, key)) {
-          result[key] = serialize((obj as any)[key]);
-      }
-  }
-
-  return result;
-}
 
 
 
@@ -106,10 +81,25 @@ long comment line 3*/`
 
 
 var text2 = `
-pub type Ident {
-  // comment
-  // comment
+pub value: i32
+enum DIh {
+  DIH;
+  DIH;
+
 }
+pub shard Ident {
+  // comment
+  // comment
+  pub init(param:i32) -> i32
+  pub value: i32
+}
+impl String for Ident {
+  pub init(param:i32) -> i32 {
+    var: bool 
+    var: bool 
+  }
+}
+
 `
 
 var tokens = new TokenTable()
@@ -135,4 +125,7 @@ tokens.accept(parser)
 
 
 
-console.log(JSON.stringify(serialize(parser.program), null, 2));
+//console.log(JSON.stringify(serialize(parser.program), null, 2));
+console.log(text2);
+
+console.log(serializeIndented(parser.program));

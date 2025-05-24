@@ -1,0 +1,191 @@
+### PSEUDOCODE FOR PARSING THE GRAMMAR
+
+# Main entry point for parsing the entire program
+method parseProgram():
+    nodes = []
+    while tokens remain:
+        modifiers = parseModifiers()
+        if next token is 'enum':
+            nodes.append(parseEnumDef(modifiers))
+        elif next token is 'type':
+            nodes.append(parseTypeDef(modifiers))
+        elif next token is 'shard':
+            nodes.append(parseShardDef(modifiers))
+        elif next token is 'impl':
+            nodes.append(parseImplDef(modifiers))
+        else:
+            rewind(modifiers)  # Reset tokens if no modifiers matched
+            if canParseMethodDef():
+                nodes.append(parseMethodDef([]))
+            elif canParsePropertyDef():
+                nodes.append(parsePropertyDef([]))
+            else:
+                error("Unknown declaration")
+    return Program(nodes)
+
+# Parses modifiers like pub, mut, etc.
+method parseModifiers():
+    modifiers = []
+    while current token is modifier (pub, priv, mut, etc.):
+        modifiers.append(eat token)
+    return modifiers
+
+# Parses identifier expressions
+method parseValueIdent():
+    ident = eat IDENT
+    return new ValueIdent(ident)
+
+# Parses assignment expressions (e.g., = 42, += x)
+method parseAssignmentExpr():
+    op = eat ASSIGN_OP
+    expr = parseExpr()
+    return new AssignmentExpr(op, expr)
+
+# Parses value declarations (e.g., x: int, y: string = "hello")
+method parseValueDecl():
+    ident = parseValueIdent()
+    eat ':'
+    type = parseTypeIdent()
+    assign_expr = parseAssignmentExpr() if next token is ASSIGN_OP else None
+    return new ValueDecl(ident, type, assign_expr)
+
+# Parses function parameters (e.g., x: int = 42)
+method parseParam():
+    value_ident = parseValueIdent()
+    default = parseAssignmentExpr() if next token is ASSIGN_OP else None
+    return new Param(value_ident, default)
+
+# Parses property definitions (e.g., pub x: int)
+method parsePropertyDef(modifiers=None):
+    if modifiers is None:
+        modifiers = parseModifiers()
+    value_decl = parseValueDecl()
+    return new PropertyDef(modifiers, value_decl)
+
+# Parses function declarations (e.g., foo(a: int, b: int))
+method parseFunDecl():
+    name = eat IDENT
+    eat '('
+    params = parseCommaList(parseParam)  # List of Param nodes
+    eat ')'
+    return new FunDecl(name, params)
+
+# Parses method declarations (e.g., pub mut fun foo(x: int))
+method parseMethodDecl():
+    modifiers = parseModifiers()
+    fun_decl = parseFunDecl()
+    return new MethodDecl(modifiers, fun_decl)
+
+# Parses method definitions (e.g., pub fun foo() { ... })
+method parseMethodDef():
+    method_decl = parseMethodDecl()
+    code_body = parseCodeBody()
+    return new MethodDef(method_decl, code_body)
+
+# Parses type definitions (e.g., type Point { x: int, y: int })
+method parseTypeDef(modifiers):
+    eat 'type'
+    name = parseTypeIdent()
+    base = parseBaseClause()  # Parses 'from ParentType' if present
+    eat '{'
+    members = []
+    while next token != '}':
+        member_modifiers = parseModifiers()
+        if lookahead indicates method (next token is IDENT followed by '('):
+            members.append(parseMethodDecl(member_modifiers))
+        else:
+            members.append(parsePropertyDef(member_modifiers))
+    eat '}'
+    return new TypeDef(modifiers, name, base, members)
+
+# Parses shard definitions (similar to type definitions)
+method parseShardDef(modifiers):
+    eat 'shard'
+    name = parseTypeIdent()
+    base = parseBaseClause()
+    eat '{'
+    members = parseTypeMembers()
+    eat '}'
+    return new ShardDef(modifiers, name, base, members)
+
+# Parses enum definitions (e.g., enum Color { RED, GREEN, BLUE })
+method parseEnumDef(modifiers):
+    eat 'enum'
+    name = parseTypeIdent()
+    eat '{'
+    variants = []
+    while next token != '}':
+        variant_modifiers = parseModifiers()
+        ident = eat IDENT
+        value = parseEnumValue()  # Parses '= 42' if present
+        variants.append(EnumVariant(variant_modifiers, ident, value))
+        eat ',' if next token is ','
+    eat '}'
+    return new EnumDef(modifiers, name, variants)
+
+# Parses implementation blocks (e.g., impl MyType { ... })
+method parseImplDef(modifiers):
+    eat 'impl'
+    trait = parseTypeIdent() if next token is TRAIT_NAME else None
+    if next token == 'for':
+        eat 'for'
+        target_type = parseTypeIdent()
+    else:
+        target_type = parseTypeIdent()  # Implementation for the type itself
+    eat '{'
+    methods = parseCommaList(parseMethodDef)
+    eat '}'
+    return new ImplDef(modifiers, trait, target_type, methods)
+
+# Parses code bodies (e.g., { x = 1; y = 2; })
+method parseCodeBody():
+    eat '{'
+    statements = []
+    while next token != '}':
+        statements.append(parseStatement())
+    eat '}'
+    return new CodeBody(statements)
+
+# Parses type identifiers (e.g., int, List<String>)
+method parseTypeIdent():
+    // Handles complex types like generics if needed
+    ident = eat IDENT
+    return new TypeIdent(ident)
+
+# Helper for parsing comma-separated lists
+method parseCommaList(parser_func):
+    items = []
+    if next token != ')':
+        items.append(parser_func())
+        while next token == ',':
+            eat ','
+            items.append(parser_func())
+    return items
+
+# Parses base class clause (e.g., from BaseClass)
+method parseBaseClause():
+    if next token == 'from':
+        eat 'from'
+        return parseTypeIdent()
+    return None
+
+### EXAMPLE COMMENTED PARSERS
+// Parsing a property definition: pub myvar: int = 42
+method parsePropertyDef():
+    // 1. Parse modifiers: pub
+    // 2. Parse value declaration: myvar: int
+    // 3. Parse assignment: = 42
+    modifiers = parseModifiers()
+    ident = parseValueIdent()  // 'myvar'
+    eat(':')
+    type = parseTypeIdent()  // 'int'
+    assign = parseAssignmentExpr() if next token is ASSIGN_OP else None
+    return PropertyDef(modifiers, ident, type, assign)
+
+// Parsing a method definition: fun greet(name: string) { print(name) }
+method parseMethodDef():
+    // 1. Parse method declaration: greet(name: string)
+    // 2. Parse code body: { print(name) }
+    method_decl = parseMethodDecl()
+    code_body = parseCodeBody()
+    return MethodDef(method_decl, code_body)

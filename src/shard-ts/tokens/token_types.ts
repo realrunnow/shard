@@ -48,13 +48,20 @@ export enum TokenTypes {
     MINUS,
     MULTIPLY,
     DIVIDE,
+    MODULO,
+    EXPONENT,
 
+    INC,
+    DEC,
+
+    QUESTION_MARK,
 
     ASSIGN,
     PLUS_ASSIGN,
     MINUS_ASSIGN,
     MULTIPLY_ASSIGN,
     DIVIDE_ASSIGN,
+
     EQ,
     NE,
     LT,
