@@ -11,7 +11,8 @@ import {
   UnaryExpression,
   UnaryOperator,
   ConditionalExpression,
-  FunctionCallExpression
+  FunctionCallExpression,
+  MemberExpression
 } from "../ast/nodes/nodes";
 import { SourceLocation } from "../shared/meta";
 import { Token } from "../tokens/token";
@@ -119,6 +120,70 @@ export class Parser implements TokenTableVisitor {
   // SECTION Expression parsing
   // ─────────────────────────────────────────────────────────────────────────────
 
+  // Define operator precedence and associativity
+  private operatorPrecedence: Map<TokenTypes, { precedence: number, rightAssociative: boolean }> = new Map([
+    // Assignment (lowest precedence)
+    [TokenTypes.ASSIGN, { precedence: 1, rightAssociative: true }],
+    [TokenTypes.PLUS_ASSIGN, { precedence: 1, rightAssociative: true }],
+    [TokenTypes.MINUS_ASSIGN, { precedence: 1, rightAssociative: true }],
+    [TokenTypes.MULTIPLY_ASSIGN, { precedence: 1, rightAssociative: true }],
+    [TokenTypes.DIVIDE_ASSIGN, { precedence: 1, rightAssociative: true }],
+    
+    // Conditional
+    [TokenTypes.QUESTION_MARK, { precedence: 2, rightAssociative: true }],
+    
+    // Logical OR
+    [TokenTypes.OR, { precedence: 3, rightAssociative: false }],
+    
+    // Logical AND
+    [TokenTypes.AND, { precedence: 4, rightAssociative: false }],
+    
+    // Equality
+    [TokenTypes.EQ, { precedence: 5, rightAssociative: false }],
+    [TokenTypes.NE, { precedence: 5, rightAssociative: false }],
+    
+    // Relational
+    [TokenTypes.LT, { precedence: 6, rightAssociative: false }],
+    [TokenTypes.GT, { precedence: 6, rightAssociative: false }],
+    [TokenTypes.LE, { precedence: 6, rightAssociative: false }],
+    [TokenTypes.GE, { precedence: 6, rightAssociative: false }],
+    
+    // Additive
+    [TokenTypes.PLUS, { precedence: 7, rightAssociative: false }],
+    [TokenTypes.MINUS, { precedence: 7, rightAssociative: false }],
+    
+    // Multiplicative
+    [TokenTypes.MULTIPLY, { precedence: 8, rightAssociative: false }],
+    [TokenTypes.DIVIDE, { precedence: 8, rightAssociative: false }],
+    [TokenTypes.MODULO, { precedence: 8, rightAssociative: false }],
+    
+    // Exponentiation (highest precedence)
+    [TokenTypes.EXPONENT, { precedence: 9, rightAssociative: true }],
+  ]);
+
+  // Map token types to binary operators
+  private tokenToBinaryOperator: Map<TokenTypes, BinaryOperator> = new Map([
+    [TokenTypes.PLUS, BinaryOperator.Add],
+    [TokenTypes.MINUS, BinaryOperator.Subtract],
+    [TokenTypes.MULTIPLY, BinaryOperator.Multiply],
+    [TokenTypes.DIVIDE, BinaryOperator.Divide],
+    [TokenTypes.MODULO, BinaryOperator.Modulo],
+    [TokenTypes.EXPONENT, BinaryOperator.Power],
+    [TokenTypes.EQ, BinaryOperator.Equals],
+    [TokenTypes.NE, BinaryOperator.NotEquals],
+    [TokenTypes.LT, BinaryOperator.LessThan],
+    [TokenTypes.GT, BinaryOperator.GreaterThan],
+    [TokenTypes.LE, BinaryOperator.LessThanOrEqual],
+    [TokenTypes.GE, BinaryOperator.GreaterThanOrEqual],
+    [TokenTypes.AND, BinaryOperator.And],
+    [TokenTypes.OR, BinaryOperator.Or],
+    [TokenTypes.ASSIGN, BinaryOperator.Assign],
+    [TokenTypes.PLUS_ASSIGN, BinaryOperator.AddAssign],
+    [TokenTypes.MINUS_ASSIGN, BinaryOperator.SubtractAssign],
+    [TokenTypes.MULTIPLY_ASSIGN, BinaryOperator.MultiplyAssign],
+    [TokenTypes.DIVIDE_ASSIGN, BinaryOperator.DivideAssign],
+  ]);
+
   // TODO: Operator check
   // Checks if token is a binary operator
  // Updated token checks use peekCheck(offset, type)
@@ -131,156 +196,65 @@ private isBinaryOperator(): boolean {
   ].some(type => this.tokenTable.peekCheck(0, type));
 }
 
-private consumeBinaryOperator(): BinaryOperator {
-  const token = this.tokenTable.eatCurrentToken(); // eatCurrentToken() is valid for known binary ops
-  switch(token.type) {
-    case TokenTypes.PLUS: return BinaryOperator.Add;
-    case TokenTypes.MINUS: return BinaryOperator.Subtract;
-    case TokenTypes.MULTIPLY: return BinaryOperator.Multiply;
-    case TokenTypes.DIVIDE: return BinaryOperator.Divide;
-    case TokenTypes.MODULO: return BinaryOperator.Modulo;
-    case TokenTypes.EXPONENT: return BinaryOperator.Power;
-    case TokenTypes.EQ: return BinaryOperator.Equals;
-    case TokenTypes.NE: return BinaryOperator.NotEquals;
-    case TokenTypes.LT: return BinaryOperator.LessThan;
-    case TokenTypes.GT: return BinaryOperator.GreaterThan;
-    case TokenTypes.AND: return BinaryOperator.And;
-    case TokenTypes.OR: return BinaryOperator.Or;
-    default: throw new Error(`Unknown binary operator: ${token.type}`);
-  }
-}
+
 
 private parseExpression(): Expression {
-  return this.parseAssignment();
+  return this.parseExpressionWithPrecedence();
 }
 
-private parseAssignment(): Expression {
-  const left = this.parseConditional();
+private parseExpressionWithPrecedence(minPrecedence: number = 0): Expression {
+  let left = this.parseUnaryExpression();
   
-  if (this.tokenTable.peekCheck(0, TokenTypes.EQ)) { // Uses peekCheck instead of direct type comparison
-    const op = this.consumeBinaryOperator(); // Will consume '='
-    const right = this.parseAssignment();
-    return new BinaryExpression(left, op, right, left.start, right.end);
-  }
-  
-  return left;
-}
-
-private parseConditional(): Expression {
-  const expr = this.parseLogicalOr();
-  
+  // Handle conditional expression (ternary) as a special case
   if (this.tokenTable.peekCheck(0, TokenTypes.QUESTION_MARK)) {
-    this.tokenTable.eat(TokenTypes.QUESTION_MARK); // Uses explicit eat()
+    this.tokenTable.eat(TokenTypes.QUESTION_MARK);
     const thenBranch = this.parseExpression();
     this.tokenTable.eat(TokenTypes.COLON);
-    const elseBranch = this.parseConditional();
+    const elseBranch = this.parseExpressionWithPrecedence(0);
     return new ConditionalExpression(
-      expr, thenBranch, elseBranch, 
-      expr.start, elseBranch.end
+      left, thenBranch, elseBranch, 
+      left.start, elseBranch.end
     );
   }
   
-  return expr;
-}
-
-private parseLogicalOr(): Expression {
-  let left = this.parseLogicalAnd();
-  
-  while (this.tokenTable.peekCheck(0, TokenTypes.OR)) {
-    const op = this.consumeBinaryOperator();
-    const right = this.parseLogicalAnd();
-    left = new BinaryExpression(left, op, right, left.start, right.end);
-  }
-  
-  return left;
-}
-
-private parseLogicalAnd(): Expression {
-  let left = this.parseEquality();
-  
-  while (this.tokenTable.peekCheck(0, TokenTypes.AND)) {
-    const op = this.consumeBinaryOperator();
-    const right = this.parseEquality();
-    left = new BinaryExpression(left, op, right, left.start, right.end);
-  }
-  
-  return left;
-}
-
-private parseEquality(): Expression {
-  let left = this.parseRelational();
-  
-  while (this.tokenTable.peekCheck(0, TokenTypes.EQ) || 
-         this.tokenTable.peekCheck(0, TokenTypes.NE)) {
-    const op = this.consumeBinaryOperator();
-    const right = this.parseRelational();
-    left = new BinaryExpression(left, op, right, left.start, right.end);
-  }
-  
-  return left;
-}
-
-private parseRelational(): Expression {
-  let left = this.parseAdditive();
-  
-  while (this.tokenTable.peekCheck(0, TokenTypes.LT) ||
-         this.tokenTable.peekCheck(0, TokenTypes.GT)) {
-    const op = this.consumeBinaryOperator();
-    const right = this.parseAdditive();
-    left = new BinaryExpression(left, op, right, left.start, right.end);
-  }
-  
-  return left;
-}
-
-private parseAdditive(): Expression {
-  let left = this.parseMultiplicative();
-  
-  while (this.tokenTable.peekCheck(0, TokenTypes.PLUS) || 
-         this.tokenTable.peekCheck(0, TokenTypes.MINUS)) {
-    const op = this.consumeBinaryOperator();
-    const right = this.parseMultiplicative();
-    left = new BinaryExpression(left, op, right, left.start, right.end);
-  }
-  
-  return left;
-}
-
-private parseMultiplicative(): Expression {
-  let left = this.parseExponentiation();
-  
-  while (this.tokenTable.peekCheck(0, TokenTypes.MULTIPLY) || 
-         this.tokenTable.peekCheck(0, TokenTypes.DIVIDE) || 
-         this.tokenTable.peekCheck(0, TokenTypes.MODULO)) {
-    const op = this.consumeBinaryOperator();
-    const right = this.parseExponentiation();
-    left = new BinaryExpression(left, op, right, left.start, right.end);
-  }
-  
-  return left;
-}
-
-private parseExponentiation(): Expression {
-  let left = this.parseUnary();
-  
-  if (this.tokenTable.peekCheck(0, TokenTypes.EXPONENT)) {
-    const op = this.consumeBinaryOperator();
-    const right = this.parseExponentiation(); // Right-associative
-    return new BinaryExpression(left, op, right, left.start, right.end);
-  }
-  
-  return left;
-}
-
-private parseUnary(): Expression {
-  if (this.tokenTable.peekCheck(0, TokenTypes.MINUS) || 
-      this.tokenTable.peekCheck(0, TokenTypes.NOT) || 
-      this.tokenTable.peekCheck(0, TokenTypes.INC) || 
-      this.tokenTable.peekCheck(0, TokenTypes.DEC)) {
-        
-    const token = this.tokenTable.eatCurrentToken(); // Uses eatCurrentToken() for known unary operators
+  // Process binary operators according to precedence
+  while (true) {
+    const token = this.tokenTable.peek();
+    const opInfo = this.operatorPrecedence.get(token.type);
     
-    const operand = this.parseUnary();
+    // If no operator or precedence is lower than minimum, stop
+    if (!opInfo || opInfo.precedence < minPrecedence) {
+      break;
+    }
+    
+    // Consume the operator token
+    this.tokenTable.advance();
+    
+    // For right-associative operators, use current precedence - 1
+    // For left-associative operators, use current precedence + 1
+    const nextMinPrecedence = opInfo.rightAssociative ? 
+      opInfo.precedence : 
+      opInfo.precedence + 1;
+    
+    // Parse the right side with the appropriate precedence
+    const right = this.parseExpressionWithPrecedence(nextMinPrecedence);
+    
+    // Create binary expression
+    const operator = this.tokenToBinaryOperator.get(token.type);
+    if (!operator) {
+      throw new Error(`Unknown binary operator: ${token}`);
+    }
+    
+    left = new BinaryExpression(left, operator, right, left.start, right.end);
+  }
+  
+  return left;
+}
+
+private parseUnaryExpression(): Expression {
+  if (this.tokenTable.peekCheck(0, TokenTypes.MINUS, TokenTypes.NOT, TokenTypes.INC, TokenTypes.DEC)) {
+    const token = this.tokenTable.eatCurrentToken();
+    const operand = this.parseUnaryExpression();
     
     if (token.type === TokenTypes.MINUS) {
       return new UnaryExpression(
@@ -308,55 +282,34 @@ private parseUnary(): Expression {
   return this.parsePrimaryExpression();
 }
 
-
-private parseCallParameters(): CallParameter[] {
-  const args: CallParameter[] = [];
-
-  while (!this.tokenTable.peekCheck(0, TokenTypes.RPAREN)) {
-    const name = this.parseIdentifier();
-    const value = this.parseExpression();
-
-    args.push(new CallParameter(name, value, name.start, value.end));
-
-    if (this.tokenTable.peek().type === TokenTypes.COMMA) {
-      this.tokenTable.advance();
-    } else {
-      break;
-    }
-  }
-
-
-  return args;
-}
-
-private parseCallExpression(): FunctionCallExpression { 
-  const callee = this.parseIdentifier();
-
-  const args = this.parseCallParameters();
-
-  return new FunctionCallExpression(callee, args, callee.start, callee.end);
-}
-
 private parsePrimaryExpression(): Expression {
   const token = this.tokenTable.peek();
 
   // Literal
-  if ([TokenTypes.INTEGER, TokenTypes.STRING, TokenTypes.BOOL, TokenTypes.FLOAT].includes(token.type)) {
+  if (this.tokenTable.peekCheck(0, TokenTypes.INTEGER, TokenTypes.STRING, TokenTypes.BOOL, TokenTypes.FLOAT)) {
     this.tokenTable.eatCurrentToken();
     return new Literal(token.value, token.sourceLocation, token.sourceLocation);
   }
 
-  // Function Call or Variable
-  if (token.type === TokenTypes.IDENT) {
-    // FUNCTION CALL: Use your existing parseCallStatement
-    if (this.isCallableStart()) {
-      return this.parseCallExpression();
+  // Function Call, Member Access, or Variable
+  if (this.tokenTable.peekCheck(0, TokenTypes.IDENT)) {
+    // Parse identifier first
+    const name = this.parseIdentifier();
+    
+    // Check if it's a function call
+    if (this.tokenTable.peekCheck(0, TokenTypes.LPAREN)) {
+      this.tokenTable.eat(TokenTypes.LPAREN);
+      const args = this.parseCallParameters();
+      this.tokenTable.eat(TokenTypes.RPAREN);
+      return new FunctionCallExpression(name, args, name.start, this.tokenTable.getPreviousSourceLocation());
+    }
+    
+    // Check if it's a member access
+    if (this.tokenTable.peekCheck(0, TokenTypes.DOT)) {
+      return this.parseMemberExpression(name);
     }
 
-    // VARIABLE: Not a function call
-    const name = this.parseIdentifier();
-
-    // POSTFIX: Increment
+    // Check for postfix operators
     if (this.tokenTable.peekCheck(0, TokenTypes.INC)) {
       this.tokenTable.eat(TokenTypes.INC);
       return new UnaryExpression(
@@ -368,7 +321,6 @@ private parsePrimaryExpression(): Expression {
       );
     }
 
-    // POSTFIX: Decrement
     if (this.tokenTable.peekCheck(0, TokenTypes.DEC)) {
       this.tokenTable.eat(TokenTypes.DEC);
       return new UnaryExpression(
@@ -380,18 +332,69 @@ private parsePrimaryExpression(): Expression {
       );
     }
 
+    // Just a variable reference
     return name;
   }
 
   // Parentheses
-  if (token.type === TokenTypes.LPAREN) {
+  if (this.tokenTable.peekCheck(0, TokenTypes.LPAREN)) {
     this.tokenTable.eat(TokenTypes.LPAREN);
     const expr = this.parseExpression();
     this.tokenTable.eat(TokenTypes.RPAREN);
     return expr;
   }
+  
 
-  throw new Error(`Unexpected token in expression: ${token.type}`);
+
+  throw new Error(`Unexpected token in expression: ${token}`);
+}
+
+private parseCallParameters(): CallParameter[] {
+  const args: CallParameter[] = [];
+
+  while (!this.tokenTable.peekCheck(0, TokenTypes.RPAREN)) {
+    let name;
+
+    if (this.tokenTable.peekCheck(0, TokenTypes.IDENT)) {
+      name = this.parseIdentifier()
+      this.tokenTable.eat(TokenTypes.ASSIGN)
+    } else {
+      name = null
+    }
+
+    const value = this.parseExpression();
+
+    args.push(new CallParameter(name, value, name ? name.start : value.start, value.end));
+
+    if (this.tokenTable.peekCheck(0, TokenTypes.COMMA)) {
+      this.tokenTable.advance();
+    } else {
+      break;
+    }
+  }
+
+  return args;
+}
+
+private parseMemberExpression(object: Expression): Expression {
+  this.tokenTable.eat(TokenTypes.DOT);
+  const property = this.parseIdentifier();
+  const memberExpr = new MemberExpression(object, property, object.start, property.end);
+  
+  // Check for further member access (a.b.c)
+  if (this.tokenTable.peekCheck(0, TokenTypes.DOT)) {
+    return this.parseMemberExpression(memberExpr);
+  }
+  
+  // Check for function call on member (a.b())
+  if (this.tokenTable.peekCheck(0, TokenTypes.LPAREN)) {
+    this.tokenTable.eat(TokenTypes.LPAREN);
+    const args = this.parseCallParameters();
+    this.tokenTable.eat(TokenTypes.RPAREN);
+    return new FunctionCallExpression(memberExpr as any, args, object.start, this.tokenTable.getPreviousSourceLocation());
+  }
+  
+  return memberExpr;
 }
   // !SECTION 
 
@@ -405,7 +408,10 @@ private parsePrimaryExpression(): Expression {
     if (this.tokenTable.peekCheck(0, TokenTypes.IF, TokenTypes.ELIF)) {
       const ifToken = this.tokenTable.eat(TokenTypes.IF, TokenTypes.ELIF);
 
+      this.tokenTable.eat(TokenTypes.LPAREN);
       const condition = this.parseExpression();
+      this.tokenTable.eat(TokenTypes.RPAREN)
+
       const block = this.parseBlockStatement();
 
       return new IfBranch(condition, block, ifToken.sourceLocation, block.end);
@@ -452,7 +458,10 @@ private parsePrimaryExpression(): Expression {
   private parseWhileStatement(): WhileStatement { 
     const whileToken = this.tokenTable.eat(TokenTypes.WHILE);
 
+    this.tokenTable.eat(TokenTypes.LPAREN)
     const condition = this.parseExpression();
+    this.tokenTable.eat(TokenTypes.RPAREN)
+
     const block = this.parseBlockStatement();
 
     return new WhileStatement(condition, block, whileToken.sourceLocation, block.end);
@@ -462,8 +471,11 @@ private parsePrimaryExpression(): Expression {
     const returnToken = this.tokenTable.eat(TokenTypes.RETURN);
 
     const expression = this.parseExpression();
+    
+    this.tokenTable.eat(TokenTypes.SEMICOLON);
 
-    return new ReturnStatement(expression, returnToken.sourceLocation, returnToken.sourceLocation);
+
+    return new ReturnStatement(expression, returnToken.sourceLocation, expression.end);
   }    
   // !SECTION 
 
@@ -479,28 +491,34 @@ private parsePrimaryExpression(): Expression {
       case TokenTypes.WHILE:
         return this.parseWhileStatement();
       case TokenTypes.RETURN:
-        return this.parseReturnStatement();
+        const returnStmt = this.parseReturnStatement();
+        return returnStmt;
   
-      default:
-        if (this.isModifier()) {
-          const modifiers = this.parseModifiers();
-          if (this.isVariableDeclarationStart()) {
-            return this.parseVariableDeclaration(modifiers);
+        default:
+          if (this.isModifier()) {
+            const modifiers = this.parseModifiers();
+            if (this.isVariableDeclarationStart()) {
+              const varDecl = this.parseVariableDeclaration(modifiers);
+
+              return varDecl;
+            } else {
+              throw new Error("Unexpected token after modifier");
+            }
+          } else if (this.isVariableDeclarationStart()) {
+            // Variable declaration with implicit 'mut' modifier
+            const modifiers: Modifiers = {
+              access: 'internal',
+              varFlags: ['mut'],
+            } as Modifiers;
+            const varDecl = this.parseVariableDeclaration(modifiers);
+
+            return varDecl;
           } else {
-            throw new Error("Unexpected token after modifier");
+            // Any other valid expression as a standalone statement
+            const expr = this.parseExpression();
+            this.tokenTable.eat(TokenTypes.SEMICOLON);
+            return new ExpressionStatement(expr, expr.start, expr.end);
           }
-        } else if (this.isVariableDeclarationStart()) {
-          // Variable declaration with implicit 'mut' modifier
-          const modifiers: Modifiers = {
-            access: 'internal',
-            varFlags: ['mut'],
-          } as Modifiers;
-          return this.parseVariableDeclaration(modifiers);
-        } else {
-          // Any other valid expression as a standalone statement
-          const expr = this.parseExpression();
-          return new ExpressionStatement(expr, expr.start, expr.end);
-        }
     }
   }
 
@@ -554,11 +572,13 @@ private parsePrimaryExpression(): Expression {
 
     let initializer: Expression | null = null;
     
-    /*if (this.tokenTable.peekCheck(0, TokenTypes.ASSIGN)) {
+    if (this.tokenTable.peekCheck(0, TokenTypes.ASSIGN)) {
       this.tokenTable.eat(TokenTypes.ASSIGN);
       initializer = this.parseExpression();
-    } */
+    } 
       
+    this.tokenTable.eat(TokenTypes.SEMICOLON);
+
     return new VariableDeclaration(name, modifiers, type, initializer, name.start, type.end);
   }
 
@@ -566,8 +586,9 @@ private parsePrimaryExpression(): Expression {
   // REVIEW: Callable check
   // Checks if current token is callable start
   private isCallableStart(): boolean {
-    return this.tokenTable.peekCheck(0, TokenTypes.IDENT) 
-    && this.tokenTable.peekCheck(1, TokenTypes.LPAREN);
+    // Check if we have an identifier followed by a left parenthesis
+    return this.tokenTable.peekCheck(0, TokenTypes.IDENT) && 
+           this.tokenTable.peekCheck(1, TokenTypes.LPAREN);
   }
 
   // REVIEW: Callable declaration parser
@@ -607,6 +628,11 @@ private parsePrimaryExpression(): Expression {
       return new CallableDeclaration(name, modifiers, params, returnType, name.start, returnType.end);
     } 
 
+    // Consume semicolon after callable declaration
+    if (this.tokenTable.peekCheck(0, TokenTypes.SEMICOLON)) {
+      this.tokenTable.eat(TokenTypes.SEMICOLON);
+    }
+
     return new CallableDeclaration(name, modifiers, params, null, name.start, name.end);
   }
 
@@ -634,8 +660,7 @@ private parsePrimaryExpression(): Expression {
   // Helper for parsing definitions in shard and type
   // {<members>}
   // REVIEW
-  private parseDeclarations(): (VariableDeclaration | CallableDeclaration)[]{
-    const members: (VariableDeclaration | CallableDeclaration)[] = [];
+  private parseDeclarations(): (VariableDeclaration | CallableDeclaration)[]{    const members: (VariableDeclaration | CallableDeclaration)[] = [];
 
     this.tokenTable.eat(TokenTypes.LBRACE);
 
@@ -647,13 +672,18 @@ private parsePrimaryExpression(): Expression {
       if (this.isCallableStart()) {
         const method = this.parseCallableDeclaration(memberModifiers);
         members.push(method);
-        continue
+        
+
+        
+        continue;
       } 
 
       if (this.tokenTable.peekCheck(0, TokenTypes.IDENT)) {
         const variable = this.parseVariableDeclaration(memberModifiers);
         members.push(variable);
-        continue
+        
+        
+        continue;
       } 
 
       if (this.tokenTable.peekCheck(0,TokenTypes.RBRACE)) {
@@ -829,7 +859,6 @@ private parsePrimaryExpression(): Expression {
   // Main program parser
   // REVIEW
   private parseProgram(): Program {
-
     const body: Declaration[] = [];
     
     // Parse top-level declarations until EOF
@@ -864,11 +893,13 @@ private parsePrimaryExpression(): Expression {
       }
 
 
-      if (declaration) {
-        body.push(declaration);
-      } else {
-        throw new Error(`Unexpected token in program: ${this.tokenTable.peek().toString()}`);
-      }
+        if (declaration) {
+          body.push(declaration);
+        } else {
+          const token = this.tokenTable.peek();
+          throw new Error(`Unexpected token in program: ${token.toString()}`);
+        }
+
     }
     
     // Create program node with source locations
@@ -882,7 +913,13 @@ private parsePrimaryExpression(): Expression {
   // Main parser entry point
   visit(self: TokenTable): void {
     this.tokenTable = self;
-    this.program = this.parseProgram(); // Parse entire program AST
+    try {
+      this.program = this.parseProgram(); // Parse entire program AST
+    } catch (error) {
+      console.error('Parser error:', error);
+      // Re-throw with more context if needed
+      throw error;
+    }
   }
   // !SECTION
 }

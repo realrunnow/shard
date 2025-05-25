@@ -7,7 +7,6 @@ import {
     PATTERNS
 } from "./patterns"
 
-
 const PATTERNS_KEYS = Object.keys(PATTERNS).sort((a, b) => b.length - a.length)
 
 /**
@@ -54,7 +53,7 @@ export class Lexer implements TokenTableVisitor {
         this.sourceLocation.column = column;
     }
     
-
+    
     ///// lexer pos
     private lexerPosition: number = 0;
     private getChar(): string {
@@ -76,7 +75,8 @@ export class Lexer implements TokenTableVisitor {
     }
     
     private isDigit(): boolean {
-        return this.getChar() >= '0' && this.getChar() <= '9';
+        const ch = this.getChar();
+        return ch >= '0' && ch <= '9';
     }
 
     private isEOL(): boolean {
@@ -154,50 +154,27 @@ export class Lexer implements TokenTableVisitor {
         return this.parseWrappedToken('"', '"', TokenTypes.STRING, true)
     }
 
-    private tokenizeInteger(): boolean {
-        let value = "";
-        if (!this.isDigit()) return false;
-
-        while (this.isDigit()) {
-            value += this.getChar();
-            this.nextColumn();
+    private tokenizeFloat(): boolean {
+        const remainder = this.getRemainingText();
+        const floatMatch = remainder.match(/^[0-9]+\.[0-9]+/);
+        if (!floatMatch) {
+            return false;
         }
-
-        this.addToken(TokenTypes.INTEGER, value);
+        const matchStr = floatMatch[0];
+        this.nextColumn(matchStr.length);
+        this.addToken(TokenTypes.FLOAT, matchStr);
         return true;
     }
 
-    private tokenizeFloat(): boolean {
-        // Must start with a digit
-        if (!this.isDigit()) {
+    private tokenizeInteger(): boolean {
+        const remainder = this.getRemainingText();
+        const intMatch = remainder.match(/^[0-9]+/);
+        if (!intMatch) {
             return false;
         }
-    
-        // 1) Accumulate leading digits
-        let accumulated = "";
-        while (this.isDigit()) {
-            accumulated += this.getChar();
-            this.nextColumn();
-        }
-    
-        // 2) Require a dot and at least one digit after it
-        if (this.getChar() !== ".") {
-            return false;
-        }
-        accumulated += "."; 
-        this.nextColumn();
-    
-        if (!this.isDigit()) {
-            throw new Error("Malformed float: no digits after decimal point");
-        }
-    
-        // 3) Accumulate fractional digits
-        while (this.isDigit()) {
-            accumulated += this.getChar();
-            this.nextColumn();
-        }
-    
-        this.addToken(TokenTypes.FLOAT, accumulated);
+        const matchStr = intMatch[0];
+        this.nextColumn(matchStr.length);
+        this.addToken(TokenTypes.INTEGER, matchStr);
         return true;
     }
 
@@ -280,5 +257,3 @@ export class Lexer implements TokenTableVisitor {
         this.tokenize();
     }
 }
-
-

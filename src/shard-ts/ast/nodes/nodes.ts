@@ -340,7 +340,7 @@ export class ConditionalExpression extends Expression {
 
 export class CallParameter extends Expression { 
   constructor(
-    public name: Identifier,
+    public name: Identifier | null,
     public value: Expression,
     start: SourceLocation,
     end: SourceLocation
@@ -353,6 +353,17 @@ export class FunctionCallExpression extends Expression {
   constructor(
     public name: Identifier,
     public args: Expression[],
+    start: SourceLocation,
+    end: SourceLocation
+  ) {
+    super(start, end);
+  }
+}
+
+export class MemberExpression extends Expression {
+  constructor(
+    public object: Expression,
+    public property: Identifier,
     start: SourceLocation,
     end: SourceLocation
   ) {

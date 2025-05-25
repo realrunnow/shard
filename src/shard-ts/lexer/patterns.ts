@@ -2,15 +2,10 @@ import { TokenTypes } from "../tokens/token_types";
 
 // Compound operators
 export const PATTERNS:  Record<string, TokenTypes> = {
-    '==': TokenTypes.EQ,
-    '!=': TokenTypes.NE,
 
-    'and': TokenTypes.AND, 
-    'or': TokenTypes.OR, 
-
-    '<=': TokenTypes.LE,
-    '>=': TokenTypes.GE,
     '->': TokenTypes.ARROW,
+
+    '=': TokenTypes.ASSIGN,
     '+=': TokenTypes.PLUS_ASSIGN,
     '-=': TokenTypes.MINUS_ASSIGN,
     '*=': TokenTypes.MULTIPLY_ASSIGN,
@@ -54,10 +49,22 @@ export const PATTERNS:  Record<string, TokenTypes> = {
     '-': TokenTypes.MINUS,
     '*': TokenTypes.MULTIPLY,
     '/': TokenTypes.DIVIDE,
-    '=': TokenTypes.ASSIGN,
+
+    // not
     '!': TokenTypes.NOT,
+
+    // logical
     '<': TokenTypes.LT,
     '>': TokenTypes.GT,
+    '<=': TokenTypes.LE,
+    '>=': TokenTypes.GE,
+    '==': TokenTypes.EQ,
+    '!=': TokenTypes.NE,
+    'and': TokenTypes.AND, 
+    'or': TokenTypes.OR, 
+    '&&': TokenTypes.AND, 
+    '||': TokenTypes.OR, 
+
     '(': TokenTypes.LPAREN,
     ')': TokenTypes.RPAREN,
     '{': TokenTypes.LBRACE,
@@ -66,5 +73,11 @@ export const PATTERNS:  Record<string, TokenTypes> = {
     ':': TokenTypes.COLON,
     '.': TokenTypes.DOT,
     ';': TokenTypes.SEMICOLON,
+
+    '?': TokenTypes.QUESTION_MARK,
+
+    '++': TokenTypes.INC,
+    '--': TokenTypes.DEC,
+   
 
 };
