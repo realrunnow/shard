@@ -80,7 +80,7 @@ export class Lexer implements TokenTableVisitor {
     }
 
     private isEOL(): boolean {
-        return this.getChar() == "\n" || this.getChar() == ";";
+        return this.getChar() == "\n" //|| this.getChar() == ";";
     }
 
     private isEOF(): boolean {

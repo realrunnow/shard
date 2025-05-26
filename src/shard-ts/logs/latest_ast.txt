@@ -1,0 +1,1061 @@
+Program:
+  body = [
+    EnumDeclaration:
+      name = Identifier(Mode)
+      modifiers = Object:
+        access = internal
+      variants = [
+        EnumVariant:
+          name = Identifier(Start)
+          value = null
+        EnumVariant:
+          name = Identifier(Run)
+          value = null
+        EnumVariant:
+          name = Identifier(Stop)
+          value = null
+      ]
+    TypeDeclaration:
+      name = Identifier(Engine)
+      modifiers = Object:
+        access = internal
+      members = [
+        VariableDeclaration:
+          name = Identifier(id)
+          modifiers = Object:
+            access = pub
+          typeAnnotation = TypeIdentifier(int)
+          initializer = null
+        VariableDeclaration:
+          name = Identifier(name)
+          modifiers = Object:
+            access = priv
+          typeAnnotation = TypeIdentifier(string)
+          initializer = null
+        VariableDeclaration:
+          name = Identifier(status)
+          modifiers = Object:
+            access = internal
+          typeAnnotation = TypeIdentifier(bool)
+          initializer = Literal:
+            value = true
+        VariableDeclaration:
+          name = Identifier(config)
+          modifiers = Object:
+            access = open
+          typeAnnotation = TypeIdentifier(string)
+          initializer = Literal:
+            value = none
+        VariableDeclaration:
+          name = Identifier(PI)
+          modifiers = Object:
+            access = internal
+            varFlags = [
+              const
+              const
+            ]
+          typeAnnotation = TypeIdentifier(float)
+          initializer = Literal:
+            value = 3.14
+        CallableDeclaration:
+          name = Identifier(init)
+          modifiers = Object:
+            access = internal
+          params = [
+            Parameter:
+              name = Identifier(name)
+              typeAnnotation = TypeIdentifier(string)
+              defaultValue = null
+          ]
+          returnType = null
+        CallableDeclaration:
+          name = Identifier(statusMessage)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              pure
+              pure
+            ]
+          params = [
+            Parameter:
+              name = Identifier(code)
+              typeAnnotation = TypeIdentifier(int)
+              defaultValue = null
+          ]
+          returnType = TypeIdentifier(string)
+        CallableDeclaration:
+          name = Identifier(evaluate)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              impure
+              impure
+            ]
+          params = [
+            Parameter:
+              name = Identifier(mode)
+              typeAnnotation = TypeIdentifier(Mode)
+              defaultValue = null
+          ]
+          returnType = null
+        CallableDeclaration:
+          name = Identifier(loopCounter)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              impure
+              impure
+            ]
+          params = [
+            Parameter:
+              name = Identifier(max)
+              typeAnnotation = TypeIdentifier(int)
+              defaultValue = null
+          ]
+          returnType = null
+        CallableDeclaration:
+          name = Identifier(logicCheck)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              pure
+              pure
+            ]
+          params = [
+            Parameter:
+              name = Identifier(a)
+              typeAnnotation = TypeIdentifier(int)
+              defaultValue = null
+            Parameter:
+              name = Identifier(b)
+              typeAnnotation = TypeIdentifier(int)
+              defaultValue = null
+          ]
+          returnType = TypeIdentifier(bool)
+        CallableDeclaration:
+          name = Identifier(mathOps)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              impure
+              impure
+            ]
+          params = [
+            Parameter:
+              name = Identifier(x)
+              typeAnnotation = TypeIdentifier(float)
+              defaultValue = null
+            Parameter:
+              name = Identifier(y)
+              typeAnnotation = TypeIdentifier(float)
+              defaultValue = null
+          ]
+          returnType = TypeIdentifier(float)
+        CallableDeclaration:
+          name = Identifier(error)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              on
+              on
+            ]
+          params = [
+            Parameter:
+              name = Identifier(message)
+              typeAnnotation = TypeIdentifier(string)
+              defaultValue = null
+          ]
+          returnType = null
+        CallableDeclaration:
+          name = Identifier(transmit)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              bus
+              bus
+            ]
+          params = [
+            Parameter:
+              name = Identifier(data)
+              typeAnnotation = TypeIdentifier(string)
+              defaultValue = null
+          ]
+          returnType = null
+      ]
+    ShardDeclaration:
+      name = Identifier(Display)
+      modifiers = Object:
+        access = internal
+      members = [
+        VariableDeclaration:
+          name = Identifier(text)
+          modifiers = Object:
+            access = pub
+          typeAnnotation = TypeIdentifier(string)
+          initializer = null
+        VariableDeclaration:
+          name = Identifier(brightness)
+          modifiers = Object:
+            access = internal
+            varFlags = [
+              mut
+              mut
+            ]
+          typeAnnotation = TypeIdentifier(int)
+          initializer = Literal:
+            value = 5
+        VariableDeclaration:
+          name = Identifier(ready)
+          modifiers = Object:
+            access = internal
+          typeAnnotation = TypeIdentifier(bool)
+          initializer = Literal:
+            value = false
+        CallableDeclaration:
+          name = Identifier(init)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              meta
+              meta
+              meta
+            ]
+          params = []
+          returnType = null
+        CallableDeclaration:
+          name = Identifier(broadcast)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              bus
+              bus
+            ]
+          params = [
+            Parameter:
+              name = Identifier(signal)
+              typeAnnotation = TypeIdentifier(string)
+              defaultValue = null
+          ]
+          returnType = null
+        CallableDeclaration:
+          name = Identifier(update)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              on
+              on
+            ]
+          params = []
+          returnType = null
+        CallableDeclaration:
+          name = Identifier(toggle)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              impure
+              impure
+            ]
+          params = [
+            Parameter:
+              name = Identifier(state)
+              typeAnnotation = TypeIdentifier(bool)
+              defaultValue = null
+          ]
+          returnType = null
+      ]
+    ShardDeclaration:
+      name = Identifier(Modifiers)
+      modifiers = Object:
+        access = internal
+      members = [
+        VariableDeclaration:
+          name = Identifier(count)
+          modifiers = Object:
+            access = pub
+          typeAnnotation = TypeIdentifier(int)
+          initializer = null
+        VariableDeclaration:
+          name = Identifier(flag)
+          modifiers = Object:
+            access = priv
+          typeAnnotation = TypeIdentifier(bool)
+          initializer = null
+        VariableDeclaration:
+          name = Identifier(state)
+          modifiers = Object:
+            access = internal
+          typeAnnotation = TypeIdentifier(string)
+          initializer = null
+        VariableDeclaration:
+          name = Identifier(message)
+          modifiers = Object:
+            access = open
+          typeAnnotation = TypeIdentifier(string)
+          initializer = Literal:
+            value = Open
+        VariableDeclaration:
+          name = Identifier(LIMIT)
+          modifiers = Object:
+            access = internal
+            varFlags = [
+              const
+              const
+            ]
+          typeAnnotation = TypeIdentifier(int)
+          initializer = Literal:
+            value = 100
+        VariableDeclaration:
+          name = Identifier(step)
+          modifiers = Object:
+            access = internal
+            varFlags = [
+              mut
+              mut
+            ]
+          typeAnnotation = TypeIdentifier(int)
+          initializer = Literal:
+            value = 1
+        CallableDeclaration:
+          name = Identifier(init)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              meta
+              meta
+              meta
+            ]
+          params = []
+          returnType = null
+        CallableDeclaration:
+          name = Identifier(trigger)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              on
+              on
+            ]
+          params = []
+          returnType = null
+        CallableDeclaration:
+          name = Identifier(pulse)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              bus
+              bus
+            ]
+          params = []
+          returnType = null
+      ]
+    ImplDeclaration:
+      name = Identifier(Engine)
+      modifiers = Object:
+        access = internal
+      target = [Circular]
+      forType = null
+      members = [
+        CallableDeclaration:
+          name = Identifier(calibrate)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              meta
+              meta
+            ]
+          params = []
+          returnType = null
+          body = BlockStatement:
+            statements = [
+              ExpressionStatement:
+                expression = FunctionCallExpression:
+                  name = Identifier(print)
+                  args = [
+                    CallParameter:
+                      name = null
+                      value = Literal:
+                        value = Engine calibrated
+                  ]
+            ]
+        CallableDeclaration:
+          name = Identifier(reset)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              impure
+              impure
+              impure
+            ]
+          params = []
+          returnType = null
+          body = BlockStatement:
+            statements = [
+              ExpressionStatement:
+                expression = BinaryExpression:
+                  left = Identifier(id)
+                  operator = 14
+                  right = Literal:
+                    value = 0
+              ExpressionStatement:
+                expression = BinaryExpression:
+                  left = Identifier(name)
+                  operator = 14
+                  right = Literal:
+                    value = reset
+            ]
+        CallableDeclaration:
+          name = Identifier(init)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              impure
+              impure
+              impure
+            ]
+          params = [
+            Parameter:
+              name = Identifier(name)
+              typeAnnotation = TypeIdentifier(string)
+              defaultValue = null
+          ]
+          returnType = null
+          body = BlockStatement:
+            statements = [
+              ExpressionStatement:
+                expression = FunctionCallExpression:
+                  name = Identifier(print)
+                  args = [
+                    CallParameter:
+                      name = null
+                      value = BinaryExpression:
+                        left = Literal:
+                          value = Engine initialized: 
+                        operator = 0
+                        right = Identifier(name)
+                  ]
+            ]
+        CallableDeclaration:
+          name = Identifier(statusMessage)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              pure
+              pure
+              pure
+            ]
+          params = [
+            Parameter:
+              name = Identifier(code)
+              typeAnnotation = TypeIdentifier(int)
+              defaultValue = null
+          ]
+          returnType = TypeIdentifier(string)
+          body = BlockStatement:
+            statements = [
+              ReturnStatement:
+                value = BinaryExpression:
+                  left = Identifier(code)
+                  operator = 6
+                  right = ConditionalExpression:
+                    condition = Literal:
+                      value = 0
+                    thenBranch = Literal:
+                      value = Ready
+                    elseBranch = Literal:
+                      value = Error
+            ]
+        CallableDeclaration:
+          name = Identifier(evaluate)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              impure
+              impure
+              impure
+            ]
+          params = [
+            Parameter:
+              name = Identifier(mode)
+              typeAnnotation = TypeIdentifier(Mode)
+              defaultValue = null
+          ]
+          returnType = null
+          body = BlockStatement:
+            statements = [
+              IfStatement:
+                branches = [
+                  IfBranch:
+                    condition = BinaryExpression:
+                      left = Identifier(mode)
+                      operator = 6
+                      right = MemberExpression:
+                        object = Identifier(Mode)
+                        property = Identifier(Start)
+                    block = BlockStatement:
+                      statements = [
+                        ExpressionStatement:
+                          expression = FunctionCallExpression:
+                            name = Identifier(print)
+                            args = [
+                              CallParameter:
+                                name = null
+                                value = Literal:
+                                  value = Start
+                            ]
+                      ]
+                  IfBranch:
+                    condition = BinaryExpression:
+                      left = Identifier(mode)
+                      operator = 6
+                      right = MemberExpression:
+                        object = Identifier(Mode)
+                        property = Identifier(Run)
+                    block = BlockStatement:
+                      statements = [
+                        ExpressionStatement:
+                          expression = FunctionCallExpression:
+                            name = Identifier(print)
+                            args = [
+                              CallParameter:
+                                name = null
+                                value = Literal:
+                                  value = Run
+                            ]
+                      ]
+                  IfBranch:
+                    condition = null
+                    block = BlockStatement:
+                      statements = [
+                        ExpressionStatement:
+                          expression = FunctionCallExpression:
+                            name = Identifier(print)
+                            args = [
+                              CallParameter:
+                                name = null
+                                value = Literal:
+                                  value = Stop
+                            ]
+                      ]
+                ]
+            ]
+        CallableDeclaration:
+          name = Identifier(loopCounter)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              impure
+              impure
+              impure
+            ]
+          params = [
+            Parameter:
+              name = Identifier(max)
+              typeAnnotation = TypeIdentifier(int)
+              defaultValue = null
+          ]
+          returnType = null
+          body = BlockStatement:
+            statements = [
+              VariableDeclaration:
+                name = Identifier(i)
+                modifiers = Object:
+                  access = internal
+                  varFlags = [
+                    mut
+                  ]
+                typeAnnotation = TypeIdentifier(int)
+                initializer = Literal:
+                  value = 0
+              WhileStatement:
+                condition = BinaryExpression:
+                  left = Identifier(i)
+                  operator = 8
+                  right = Identifier(max)
+                block = BlockStatement:
+                  statements = [
+                    ExpressionStatement:
+                      expression = BinaryExpression:
+                        left = Identifier(i)
+                        operator = 15
+                        right = Literal:
+                          value = 1
+                    ExpressionStatement:
+                      expression = FunctionCallExpression:
+                        name = Identifier(print)
+                        args = [
+                          CallParameter:
+                            name = null
+                            value = Identifier(i)
+                        ]
+                  ]
+            ]
+        CallableDeclaration:
+          name = Identifier(logicCheck)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              pure
+              pure
+              pure
+            ]
+          params = [
+            Parameter:
+              name = Identifier(a)
+              typeAnnotation = TypeIdentifier(int)
+              defaultValue = null
+            Parameter:
+              name = Identifier(b)
+              typeAnnotation = TypeIdentifier(int)
+              defaultValue = null
+          ]
+          returnType = TypeIdentifier(bool)
+          body = BlockStatement:
+            statements = [
+              ReturnStatement:
+                value = BinaryExpression:
+                  left = BinaryExpression:
+                    left = BinaryExpression:
+                      left = Identifier(a)
+                      operator = 9
+                      right = Identifier(b)
+                    operator = 12
+                    right = BinaryExpression:
+                      left = Identifier(b)
+                      operator = 7
+                      right = Literal:
+                        value = 0
+                  operator = 13
+                  right = BinaryExpression:
+                    left = BinaryExpression:
+                      left = Identifier(a)
+                      operator = 8
+                      right = Literal:
+                        value = 0
+                    operator = 13
+                    right = BinaryExpression:
+                      left = Identifier(b)
+                      operator = 8
+                      right = Literal:
+                        value = 0
+            ]
+        CallableDeclaration:
+          name = Identifier(mathOps)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              impure
+              impure
+              impure
+            ]
+          params = [
+            Parameter:
+              name = Identifier(x)
+              typeAnnotation = TypeIdentifier(float)
+              defaultValue = null
+            Parameter:
+              name = Identifier(y)
+              typeAnnotation = TypeIdentifier(float)
+              defaultValue = null
+          ]
+          returnType = TypeIdentifier(float)
+          body = BlockStatement:
+            statements = [
+              ExpressionStatement:
+                expression = BinaryExpression:
+                  left = Identifier(x)
+                  operator = 17
+                  right = Literal:
+                    value = 2
+              ExpressionStatement:
+                expression = BinaryExpression:
+                  left = Identifier(y)
+                  operator = 18
+                  right = Literal:
+                    value = 3
+              ReturnStatement:
+                value = BinaryExpression:
+                  left = BinaryExpression:
+                    left = Identifier(x)
+                    operator = 0
+                    right = Identifier(y)
+                  operator = 1
+                  right = Identifier(PI)
+            ]
+        CallableDeclaration:
+          name = Identifier(error)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              on
+              on
+              on
+            ]
+          params = [
+            Parameter:
+              name = Identifier(message)
+              typeAnnotation = TypeIdentifier(string)
+              defaultValue = null
+          ]
+          returnType = null
+          body = BlockStatement:
+            statements = [
+              ExpressionStatement:
+                expression = FunctionCallExpression:
+                  name = Identifier(print)
+                  args = [
+                    CallParameter:
+                      name = null
+                      value = BinaryExpression:
+                        left = Literal:
+                          value = Error: 
+                        operator = 0
+                        right = Identifier(message)
+                  ]
+            ]
+        CallableDeclaration:
+          name = Identifier(transmit)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              bus
+              bus
+              bus
+            ]
+          params = [
+            Parameter:
+              name = Identifier(data)
+              typeAnnotation = TypeIdentifier(string)
+              defaultValue = null
+          ]
+          returnType = null
+          body = BlockStatement:
+            statements = [
+              ExpressionStatement:
+                expression = FunctionCallExpression:
+                  name = Identifier(print)
+                  args = [
+                    CallParameter:
+                      name = null
+                      value = BinaryExpression:
+                        left = Literal:
+                          value = Transmitting: 
+                        operator = 0
+                        right = Identifier(data)
+                  ]
+            ]
+      ]
+    ImplDeclaration:
+      name = Identifier(Display)
+      modifiers = Object:
+        access = internal
+      target = [Circular]
+      forType = null
+      members = [
+        CallableDeclaration:
+          name = Identifier(init)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              meta
+              meta
+            ]
+          params = []
+          returnType = null
+          body = BlockStatement:
+            statements = [
+              ExpressionStatement:
+                expression = BinaryExpression:
+                  left = Identifier(text)
+                  operator = 14
+                  right = Literal:
+                    value = Hello
+              ExpressionStatement:
+                expression = BinaryExpression:
+                  left = Identifier(brightness)
+                  operator = 14
+                  right = Literal:
+                    value = 10
+            ]
+        CallableDeclaration:
+          name = Identifier(broadcast)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              bus
+              bus
+              bus
+            ]
+          params = [
+            Parameter:
+              name = Identifier(signal)
+              typeAnnotation = TypeIdentifier(string)
+              defaultValue = null
+          ]
+          returnType = null
+          body = BlockStatement:
+            statements = [
+              ExpressionStatement:
+                expression = FunctionCallExpression:
+                  name = Identifier(print)
+                  args = [
+                    CallParameter:
+                      name = null
+                      value = BinaryExpression:
+                        left = Literal:
+                          value = Broadcasting: 
+                        operator = 0
+                        right = Identifier(signal)
+                  ]
+            ]
+        CallableDeclaration:
+          name = Identifier(update)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              on
+              on
+              on
+            ]
+          params = []
+          returnType = null
+          body = BlockStatement:
+            statements = [
+              ExpressionStatement:
+                expression = FunctionCallExpression:
+                  name = Identifier(print)
+                  args = [
+                    CallParameter:
+                      name = null
+                      value = Literal:
+                        value = Display updated
+                  ]
+            ]
+        CallableDeclaration:
+          name = Identifier(toggle)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              impure
+              impure
+              impure
+            ]
+          params = [
+            Parameter:
+              name = Identifier(state)
+              typeAnnotation = TypeIdentifier(bool)
+              defaultValue = null
+          ]
+          returnType = null
+          body = BlockStatement:
+            statements = [
+              ExpressionStatement:
+                expression = BinaryExpression:
+                  left = Identifier(ready)
+                  operator = 14
+                  right = UnaryExpression:
+                    operator = 1
+                    operand = Identifier(state)
+                    isPostfix = false
+            ]
+      ]
+    ImplDeclaration:
+      name = Identifier(Modifiers)
+      modifiers = Object:
+        access = internal
+      target = [Circular]
+      forType = null
+      members = [
+        CallableDeclaration:
+          name = Identifier(init)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              meta
+              meta
+            ]
+          params = []
+          returnType = null
+          body = BlockStatement:
+            statements = [
+              ExpressionStatement:
+                expression = BinaryExpression:
+                  left = Identifier(count)
+                  operator = 14
+                  right = Literal:
+                    value = 0
+              ExpressionStatement:
+                expression = BinaryExpression:
+                  left = Identifier(step)
+                  operator = 14
+                  right = Literal:
+                    value = 10
+            ]
+        CallableDeclaration:
+          name = Identifier(trigger)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              on
+              on
+              on
+            ]
+          params = []
+          returnType = null
+          body = BlockStatement:
+            statements = [
+              ExpressionStatement:
+                expression = BinaryExpression:
+                  left = Identifier(count)
+                  operator = 15
+                  right = Identifier(step)
+            ]
+        CallableDeclaration:
+          name = Identifier(pulse)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              bus
+              bus
+              bus
+            ]
+          params = []
+          returnType = null
+          body = BlockStatement:
+            statements = [
+              ExpressionStatement:
+                expression = FunctionCallExpression:
+                  name = Identifier(print)
+                  args = [
+                    CallParameter:
+                      name = null
+                      value = Literal:
+                        value = Pulse sent
+                  ]
+            ]
+      ]
+    ImplDeclaration:
+      name = Identifier(Display)
+      modifiers = Object:
+        access = internal
+      target = [Circular]
+      forType = Identifier(Engine)
+      members = [
+        CallableDeclaration:
+          name = Identifier(connect)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              meta
+              meta
+            ]
+          params = []
+          returnType = null
+          body = BlockStatement:
+            statements = [
+              ExpressionStatement:
+                expression = BinaryExpression:
+                  left = Identifier(ready)
+                  operator = 14
+                  right = Literal:
+                    value = true
+              ExpressionStatement:
+                expression = FunctionCallExpression:
+                  name = Identifier(print)
+                  args = [
+                    CallParameter:
+                      name = null
+                      value = Literal:
+                        value = Connected display
+                  ]
+            ]
+        CallableDeclaration:
+          name = Identifier(showData)
+          modifiers = Object:
+            access = internal
+            methodFlags = [
+              impure
+              impure
+              impure
+            ]
+          params = [
+            Parameter:
+              name = Identifier(value)
+              typeAnnotation = TypeIdentifier(int)
+              defaultValue = null
+          ]
+          returnType = null
+          body = BlockStatement:
+            statements = [
+              ExpressionStatement:
+                expression = FunctionCallExpression:
+                  name = Identifier(print)
+                  args = [
+                    CallParameter:
+                      name = null
+                      value = BinaryExpression:
+                        left = Literal:
+                          value = Value: 
+                        operator = 0
+                        right = Identifier(value)
+                  ]
+            ]
+      ]
+    CallableDeclaration:
+      name = Identifier(process)
+      modifiers = Object:
+        access = internal
+        methodFlags = [
+          pure
+          pure
+          pure
+          pure
+          pure
+        ]
+      params = [
+        Parameter:
+          name = Identifier(data)
+          typeAnnotation = TypeIdentifier(string)
+          defaultValue = null
+        Parameter:
+          name = Identifier(active)
+          typeAnnotation = TypeIdentifier(bool)
+          defaultValue = Literal:
+            value = true
+      ]
+      returnType = TypeIdentifier(int)
+      body = BlockStatement:
+        statements = [
+          VariableDeclaration:
+            name = Identifier(score)
+            modifiers = Object:
+              access = internal
+              varFlags = [
+                mut
+              ]
+            typeAnnotation = TypeIdentifier(int)
+            initializer = ConditionalExpression:
+              condition = Identifier(active)
+              thenBranch = Literal:
+                value = 100
+              elseBranch = Literal:
+                value = 0
+          ExpressionStatement:
+            expression = BinaryExpression:
+              left = Identifier(score)
+              operator = 15
+              right = BinaryExpression:
+                left = Identifier(data)
+                operator = 6
+                right = ConditionalExpression:
+                  condition = Literal:
+                    value = pass
+                  thenBranch = Literal:
+                    value = 50
+                  elseBranch = UnaryExpression:
+                    operator = 0
+                    operand = Literal:
+                      value = 50
+                    isPostfix = false
+          ReturnStatement:
+            value = Identifier(score)
+        ]
+  ]

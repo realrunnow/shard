@@ -1,0 +1,839 @@
+| Type      | Value               | Line  | Column  | File
+| EOL       |                     | 1     | 1       | 
+| COMMENT   |  === Imports ===    | 2     | 20      | 
+| EOL       |                     | 2     | 21      | 
+| COMMENT   |  import core.math   | 3     | 20      | 
+| EOL       |                     | 3     | 21      | 
+| COMMENT   |  import system.ut...| 4     | 29      | 
+| EOL       |                     | 4     | 30      | 
+| EOL       |                     | 5     | 1       | 
+| COMMENT   |  === Enum with va...| 6     | 29      | 
+| EOL       |                     | 6     | 30      | 
+| ENUM      | enum                | 7     | 1       | 
+| IDENT     | Mode                | 7     | 10      | 
+| LBRACE    | {                   | 7     | 11      | 
+| EOL       |                     | 7     | 12      | 
+| IDENT     | Start               | 8     | 9       | 
+| ASSIGN    | =                   | 8     | 10      | 
+| INTEGER   | 0                   | 8     | 13      | 
+| SEMICOLON | ;                   | 8     | 13      | 
+| EOL       |                     | 8     | 14      | 
+| IDENT     | Run                 | 9     | 7       | 
+| ASSIGN    | =                   | 9     | 8       | 
+| INTEGER   | 1                   | 9     | 11      | 
+| SEMICOLON | ;                   | 9     | 11      | 
+| EOL       |                     | 9     | 12      | 
+| IDENT     | Stop                | 10    | 8       | 
+| ASSIGN    | =                   | 10    | 9       | 
+| INTEGER   | 2                   | 10    | 12      | 
+| SEMICOLON | ;                   | 10    | 12      | 
+| EOL       |                     | 10    | 13      | 
+| RBRACE    | }                   | 11    | 2       | 
+| EOL       |                     | 11    | 3       | 
+| EOL       |                     | 12    | 2       | 
+| COMMENT   |  === Type with al...| 13    | 57      | 
+| EOL       |                     | 13    | 58      | 
+| TYPE      | type                | 14    | 1       | 
+| IDENT     | Engine              | 14    | 12      | 
+| LBRACE    | {                   | 14    | 13      | 
+| EOL       |                     | 14    | 14      | 
+| PUB       | pub                 | 15    | 4       | 
+| IDENT     | id                  | 15    | 10      | 
+| COLON     | :                   | 15    | 10      | 
+| IDENT     | int                 | 15    | 15      | 
+| SEMICOLON | ;                   | 15    | 15      | 
+| EOL       |                     | 15    | 16      | 
+| PRIV      | priv                | 16    | 4       | 
+| IDENT     | name                | 16    | 13      | 
+| COLON     | :                   | 16    | 13      | 
+| IDENT     | string              | 16    | 21      | 
+| SEMICOLON | ;                   | 16    | 21      | 
+| EOL       |                     | 16    | 22      | 
+| INTERNAL  | internal            | 17    | 4       | 
+| IDENT     | status              | 17    | 19      | 
+| COLON     | :                   | 17    | 19      | 
+| IDENT     | bool                | 17    | 25      | 
+| ASSIGN    | =                   | 17    | 26      | 
+| BOOL      | true                | 17    | 28      | 
+| SEMICOLON | ;                   | 17    | 32      | 
+| EOL       |                     | 17    | 33      | 
+| OPEN      | open                | 18    | 4       | 
+| IDENT     | config              | 18    | 15      | 
+| COLON     | :                   | 18    | 15      | 
+| IDENT     | string              | 18    | 23      | 
+| ASSIGN    | =                   | 18    | 24      | 
+| STRING    | none                | 18    | 31      | 
+| SEMICOLON | ;                   | 18    | 32      | 
+| EOL       |                     | 18    | 33      | 
+| CONST     | const               | 19    | 4       | 
+| IDENT     | PI                  | 19    | 12      | 
+| COLON     | :                   | 19    | 12      | 
+| IDENT     | float               | 19    | 19      | 
+| ASSIGN    | =                   | 19    | 20      | 
+| FLOAT     | 3.14                | 19    | 26      | 
+| SEMICOLON | ;                   | 19    | 26      | 
+| EOL       |                     | 19    | 27      | 
+| EOL       |                     | 20    | 2       | 
+| IDENT     | init                | 21    | 8       | 
+| LPAREN    | (                   | 21    | 8       | 
+| IDENT     | name                | 21    | 13      | 
+| COLON     | :                   | 21    | 13      | 
+| IDENT     | string              | 21    | 21      | 
+| RPAREN    | )                   | 21    | 21      | 
+| SEMICOLON | ;                   | 21    | 22      | 
+| EOL       |                     | 21    | 23      | 
+| PURE      | pure                | 22    | 4       | 
+| IDENT     | statusMessage       | 22    | 22      | 
+| LPAREN    | (                   | 22    | 22      | 
+| IDENT     | code                | 22    | 27      | 
+| COLON     | :                   | 22    | 27      | 
+| IDENT     | int                 | 22    | 32      | 
+| RPAREN    | )                   | 22    | 32      | 
+| ARROW     | ->                  | 22    | 34      | 
+| IDENT     | string              | 22    | 43      | 
+| SEMICOLON | ;                   | 22    | 43      | 
+| EOL       |                     | 22    | 44      | 
+| IMPURE    | impure              | 23    | 4       | 
+| IDENT     | evaluate            | 23    | 19      | 
+| LPAREN    | (                   | 23    | 19      | 
+| IDENT     | mode                | 23    | 24      | 
+| COLON     | :                   | 23    | 24      | 
+| IDENT     | Mode                | 23    | 30      | 
+| RPAREN    | )                   | 23    | 30      | 
+| SEMICOLON | ;                   | 23    | 31      | 
+| EOL       |                     | 23    | 32      | 
+| IMPURE    | impure              | 24    | 4       | 
+| IDENT     | loopCounter         | 24    | 22      | 
+| LPAREN    | (                   | 24    | 22      | 
+| IDENT     | max                 | 24    | 26      | 
+| COLON     | :                   | 24    | 26      | 
+| IDENT     | int                 | 24    | 31      | 
+| RPAREN    | )                   | 24    | 31      | 
+| SEMICOLON | ;                   | 24    | 32      | 
+| EOL       |                     | 24    | 33      | 
+| PURE      | pure                | 25    | 4       | 
+| IDENT     | logicCheck          | 25    | 19      | 
+| LPAREN    | (                   | 25    | 19      | 
+| IDENT     | a                   | 25    | 21      | 
+| COLON     | :                   | 25    | 21      | 
+| IDENT     | int                 | 25    | 26      | 
+| COMMA     | ,                   | 25    | 26      | 
+| IDENT     | b                   | 25    | 29      | 
+| COLON     | :                   | 25    | 29      | 
+| IDENT     | int                 | 25    | 34      | 
+| RPAREN    | )                   | 25    | 34      | 
+| ARROW     | ->                  | 25    | 36      | 
+| IDENT     | bool                | 25    | 43      | 
+| SEMICOLON | ;                   | 25    | 43      | 
+| EOL       |                     | 25    | 44      | 
+| IMPURE    | impure              | 26    | 4       | 
+| IDENT     | mathOps             | 26    | 18      | 
+| LPAREN    | (                   | 26    | 18      | 
+| IDENT     | x                   | 26    | 20      | 
+| COLON     | :                   | 26    | 20      | 
+| IDENT     | float               | 26    | 27      | 
+| COMMA     | ,                   | 26    | 27      | 
+| IDENT     | y                   | 26    | 30      | 
+| COLON     | :                   | 26    | 30      | 
+| IDENT     | float               | 26    | 37      | 
+| RPAREN    | )                   | 26    | 37      | 
+| ARROW     | ->                  | 26    | 39      | 
+| IDENT     | float               | 26    | 47      | 
+| SEMICOLON | ;                   | 26    | 47      | 
+| EOL       |                     | 26    | 48      | 
+| ON        | on                  | 27    | 4       | 
+| IDENT     | error               | 27    | 12      | 
+| LPAREN    | (                   | 27    | 12      | 
+| IDENT     | message             | 27    | 20      | 
+| COLON     | :                   | 27    | 20      | 
+| IDENT     | string              | 27    | 28      | 
+| RPAREN    | )                   | 27    | 28      | 
+| SEMICOLON | ;                   | 27    | 29      | 
+| EOL       |                     | 27    | 30      | 
+| BUS       | bus                 | 28    | 4       | 
+| IDENT     | transmit            | 28    | 16      | 
+| LPAREN    | (                   | 28    | 16      | 
+| IDENT     | data                | 28    | 21      | 
+| COLON     | :                   | 28    | 21      | 
+| IDENT     | string              | 28    | 29      | 
+| RPAREN    | )                   | 28    | 29      | 
+| SEMICOLON | ;                   | 28    | 30      | 
+| EOL       |                     | 28    | 31      | 
+| RBRACE    | }                   | 29    | 2       | 
+| EOL       |                     | 29    | 3       | 
+| EOL       |                     | 30    | 2       | 
+| COMMENT   |  === Shard compon...| 31    | 50      | 
+| EOL       |                     | 31    | 51      | 
+| SHARD     | shard               | 32    | 1       | 
+| IDENT     | Display             | 32    | 14      | 
+| LBRACE    | {                   | 32    | 15      | 
+| EOL       |                     | 32    | 16      | 
+| PUB       | pub                 | 33    | 4       | 
+| IDENT     | text                | 33    | 12      | 
+| COLON     | :                   | 33    | 12      | 
+| IDENT     | string              | 33    | 20      | 
+| SEMICOLON | ;                   | 33    | 20      | 
+| EOL       |                     | 33    | 21      | 
+| MUT       | mut                 | 34    | 4       | 
+| IDENT     | brightness          | 34    | 18      | 
+| COLON     | :                   | 34    | 18      | 
+| IDENT     | int                 | 34    | 23      | 
+| ASSIGN    | =                   | 34    | 24      | 
+| INTEGER   | 5                   | 34    | 27      | 
+| SEMICOLON | ;                   | 34    | 27      | 
+| EOL       |                     | 34    | 28      | 
+| INTERNAL  | internal            | 35    | 4       | 
+| IDENT     | ready               | 35    | 18      | 
+| COLON     | :                   | 35    | 18      | 
+| IDENT     | bool                | 35    | 24      | 
+| ASSIGN    | =                   | 35    | 25      | 
+| BOOL      | false               | 35    | 27      | 
+| SEMICOLON | ;                   | 35    | 32      | 
+| EOL       |                     | 35    | 33      | 
+| EOL       |                     | 36    | 2       | 
+| META      | meta                | 37    | 4       | 
+| IDENT     | init                | 37    | 13      | 
+| LPAREN    | (                   | 37    | 13      | 
+| RPAREN    | )                   | 37    | 14      | 
+| SEMICOLON | ;                   | 37    | 15      | 
+| EOL       |                     | 37    | 16      | 
+| BUS       | bus                 | 38    | 4       | 
+| IDENT     | broadcast           | 38    | 17      | 
+| LPAREN    | (                   | 38    | 17      | 
+| IDENT     | signal              | 38    | 24      | 
+| COLON     | :                   | 38    | 24      | 
+| IDENT     | string              | 38    | 32      | 
+| RPAREN    | )                   | 38    | 32      | 
+| SEMICOLON | ;                   | 38    | 33      | 
+| EOL       |                     | 38    | 34      | 
+| ON        | on                  | 39    | 4       | 
+| IDENT     | update              | 39    | 13      | 
+| LPAREN    | (                   | 39    | 13      | 
+| RPAREN    | )                   | 39    | 14      | 
+| SEMICOLON | ;                   | 39    | 15      | 
+| EOL       |                     | 39    | 16      | 
+| IMPURE    | impure              | 40    | 4       | 
+| IDENT     | toggle              | 40    | 17      | 
+| LPAREN    | (                   | 40    | 17      | 
+| IDENT     | state               | 40    | 23      | 
+| COLON     | :                   | 40    | 23      | 
+| IDENT     | bool                | 40    | 29      | 
+| RPAREN    | )                   | 40    | 29      | 
+| SEMICOLON | ;                   | 40    | 30      | 
+| EOL       |                     | 40    | 31      | 
+| RBRACE    | }                   | 41    | 2       | 
+| EOL       |                     | 41    | 3       | 
+| EOL       |                     | 42    | 2       | 
+| COMMENT   |  === Another shar...| 43    | 64      | 
+| EOL       |                     | 43    | 65      | 
+| SHARD     | shard               | 44    | 1       | 
+| IDENT     | Modifiers           | 44    | 16      | 
+| LBRACE    | {                   | 44    | 17      | 
+| EOL       |                     | 44    | 18      | 
+| PUB       | pub                 | 45    | 4       | 
+| IDENT     | count               | 45    | 13      | 
+| COLON     | :                   | 45    | 13      | 
+| IDENT     | int                 | 45    | 18      | 
+| SEMICOLON | ;                   | 45    | 18      | 
+| EOL       |                     | 45    | 19      | 
+| PRIV      | priv                | 46    | 4       | 
+| IDENT     | flag                | 46    | 13      | 
+| COLON     | :                   | 46    | 13      | 
+| IDENT     | bool                | 46    | 19      | 
+| SEMICOLON | ;                   | 46    | 19      | 
+| EOL       |                     | 46    | 20      | 
+| INTERNAL  | internal            | 47    | 4       | 
+| IDENT     | state               | 47    | 18      | 
+| COLON     | :                   | 47    | 18      | 
+| IDENT     | string              | 47    | 26      | 
+| SEMICOLON | ;                   | 47    | 26      | 
+| EOL       |                     | 47    | 27      | 
+| OPEN      | open                | 48    | 4       | 
+| IDENT     | message             | 48    | 16      | 
+| COLON     | :                   | 48    | 16      | 
+| IDENT     | string              | 48    | 24      | 
+| ASSIGN    | =                   | 48    | 25      | 
+| STRING    | Open                | 48    | 32      | 
+| SEMICOLON | ;                   | 48    | 33      | 
+| EOL       |                     | 48    | 34      | 
+| CONST     | const               | 49    | 4       | 
+| IDENT     | LIMIT               | 49    | 15      | 
+| COLON     | :                   | 49    | 15      | 
+| IDENT     | int                 | 49    | 20      | 
+| ASSIGN    | =                   | 49    | 21      | 
+| INTEGER   | 100                 | 49    | 26      | 
+| SEMICOLON | ;                   | 49    | 26      | 
+| EOL       |                     | 49    | 27      | 
+| MUT       | mut                 | 50    | 4       | 
+| IDENT     | step                | 50    | 12      | 
+| COLON     | :                   | 50    | 12      | 
+| IDENT     | int                 | 50    | 17      | 
+| ASSIGN    | =                   | 50    | 18      | 
+| INTEGER   | 1                   | 50    | 21      | 
+| SEMICOLON | ;                   | 50    | 21      | 
+| EOL       |                     | 50    | 22      | 
+| EOL       |                     | 51    | 2       | 
+| META      | meta                | 52    | 4       | 
+| IDENT     | init                | 52    | 13      | 
+| LPAREN    | (                   | 52    | 13      | 
+| RPAREN    | )                   | 52    | 14      | 
+| SEMICOLON | ;                   | 52    | 15      | 
+| EOL       |                     | 52    | 16      | 
+| ON        | on                  | 53    | 4       | 
+| IDENT     | trigger             | 53    | 14      | 
+| LPAREN    | (                   | 53    | 14      | 
+| RPAREN    | )                   | 53    | 15      | 
+| SEMICOLON | ;                   | 53    | 16      | 
+| EOL       |                     | 53    | 17      | 
+| BUS       | bus                 | 54    | 4       | 
+| IDENT     | pulse               | 54    | 13      | 
+| LPAREN    | (                   | 54    | 13      | 
+| RPAREN    | )                   | 54    | 14      | 
+| SEMICOLON | ;                   | 54    | 15      | 
+| EOL       |                     | 54    | 16      | 
+| RBRACE    | }                   | 55    | 2       | 
+| EOL       |                     | 55    | 3       | 
+| EOL       |                     | 56    | 2       | 
+| COMMENT   |  === Implementati...| 57    | 49      | 
+| EOL       |                     | 57    | 50      | 
+| IMPL      | impl                | 58    | 1       | 
+| IDENT     | Engine              | 58    | 12      | 
+| LBRACE    | {                   | 58    | 13      | 
+| EOL       |                     | 58    | 14      | 
+| META      | meta                | 59    | 4       | 
+| IDENT     | calibrate           | 59    | 18      | 
+| LPAREN    | (                   | 59    | 18      | 
+| RPAREN    | )                   | 59    | 19      | 
+| LBRACE    | {                   | 59    | 21      | 
+| EOL       |                     | 59    | 22      | 
+| IDENT     | print               | 60    | 11      | 
+| LPAREN    | (                   | 60    | 11      | 
+| STRING    | Engine calibrated   | 60    | 30      | 
+| RPAREN    | )                   | 60    | 31      | 
+| SEMICOLON | ;                   | 60    | 32      | 
+| EOL       |                     | 60    | 33      | 
+| RBRACE    | }                   | 61    | 4       | 
+| EOL       |                     | 61    | 5       | 
+| EOL       |                     | 62    | 2       | 
+| IMPURE    | impure              | 63    | 4       | 
+| IDENT     | reset               | 63    | 16      | 
+| LPAREN    | (                   | 63    | 16      | 
+| RPAREN    | )                   | 63    | 17      | 
+| LBRACE    | {                   | 63    | 19      | 
+| EOL       |                     | 63    | 20      | 
+| IDENT     | id                  | 64    | 8       | 
+| ASSIGN    | =                   | 64    | 9       | 
+| INTEGER   | 0                   | 64    | 12      | 
+| SEMICOLON | ;                   | 64    | 12      | 
+| EOL       |                     | 64    | 13      | 
+| IDENT     | name                | 65    | 10      | 
+| ASSIGN    | =                   | 65    | 11      | 
+| STRING    | reset               | 65    | 19      | 
+| SEMICOLON | ;                   | 65    | 20      | 
+| EOL       |                     | 65    | 21      | 
+| RBRACE    | }                   | 66    | 4       | 
+| EOL       |                     | 66    | 5       | 
+| EOL       |                     | 67    | 2       | 
+| IMPURE    | impure              | 68    | 4       | 
+| IDENT     | init                | 68    | 15      | 
+| LPAREN    | (                   | 68    | 15      | 
+| IDENT     | name                | 68    | 20      | 
+| COLON     | :                   | 68    | 20      | 
+| IDENT     | string              | 68    | 28      | 
+| RPAREN    | )                   | 68    | 28      | 
+| LBRACE    | {                   | 68    | 30      | 
+| EOL       |                     | 68    | 31      | 
+| IDENT     | print               | 69    | 11      | 
+| LPAREN    | (                   | 69    | 11      | 
+| STRING    | Engine initialized: | 69    | 33      | 
+| PLUS      | +                   | 69    | 35      | 
+| IDENT     | name                | 69    | 41      | 
+| RPAREN    | )                   | 69    | 41      | 
+| SEMICOLON | ;                   | 69    | 42      | 
+| EOL       |                     | 69    | 43      | 
+| RBRACE    | }                   | 70    | 4       | 
+| EOL       |                     | 70    | 5       | 
+| EOL       |                     | 71    | 2       | 
+| PURE      | pure                | 72    | 4       | 
+| IDENT     | statusMessage       | 72    | 22      | 
+| LPAREN    | (                   | 72    | 22      | 
+| IDENT     | code                | 72    | 27      | 
+| COLON     | :                   | 72    | 27      | 
+| IDENT     | int                 | 72    | 32      | 
+| RPAREN    | )                   | 72    | 32      | 
+| ARROW     | ->                  | 72    | 34      | 
+| IDENT     | string              | 72    | 43      | 
+| LBRACE    | {                   | 72    | 44      | 
+| EOL       |                     | 72    | 45      | 
+| RETURN    | return              | 73    | 6       | 
+| IDENT     | code                | 73    | 17      | 
+| EQ        | ==                  | 73    | 18      | 
+| INTEGER   | 0                   | 73    | 22      | 
+| QUESTION_MARK| ?                   | 73    | 23      | 
+| STRING    | Ready               | 73    | 31      | 
+| COLON     | :                   | 73    | 33      | 
+| STRING    | Error               | 73    | 41      | 
+| SEMICOLON | ;                   | 73    | 42      | 
+| EOL       |                     | 73    | 43      | 
+| RBRACE    | }                   | 74    | 4       | 
+| EOL       |                     | 74    | 5       | 
+| EOL       |                     | 75    | 2       | 
+| IMPURE    | impure              | 76    | 4       | 
+| IDENT     | evaluate            | 76    | 19      | 
+| LPAREN    | (                   | 76    | 19      | 
+| IDENT     | mode                | 76    | 24      | 
+| COLON     | :                   | 76    | 24      | 
+| IDENT     | Mode                | 76    | 30      | 
+| RPAREN    | )                   | 76    | 30      | 
+| LBRACE    | {                   | 76    | 32      | 
+| EOL       |                     | 76    | 33      | 
+| IF        | if                  | 77    | 6       | 
+| LPAREN    | (                   | 77    | 9       | 
+| IDENT     | mode                | 77    | 14      | 
+| EQ        | ==                  | 77    | 15      | 
+| IDENT     | Mode                | 77    | 22      | 
+| DOT       | .                   | 77    | 22      | 
+| IDENT     | Start               | 77    | 28      | 
+| RPAREN    | )                   | 77    | 28      | 
+| LBRACE    | {                   | 77    | 30      | 
+| EOL       |                     | 77    | 31      | 
+| IDENT     | print               | 78    | 13      | 
+| LPAREN    | (                   | 78    | 13      | 
+| STRING    | Start               | 78    | 20      | 
+| RPAREN    | )                   | 78    | 21      | 
+| SEMICOLON | ;                   | 78    | 22      | 
+| EOL       |                     | 78    | 23      | 
+| RBRACE    | }                   | 79    | 6       | 
+| ELIF      | elif                | 79    | 8       | 
+| LPAREN    | (                   | 79    | 13      | 
+| IDENT     | mode                | 79    | 18      | 
+| EQ        | ==                  | 79    | 19      | 
+| IDENT     | Mode                | 79    | 26      | 
+| DOT       | .                   | 79    | 26      | 
+| IDENT     | Run                 | 79    | 30      | 
+| RPAREN    | )                   | 79    | 30      | 
+| LBRACE    | {                   | 79    | 32      | 
+| EOL       |                     | 79    | 33      | 
+| IDENT     | print               | 80    | 13      | 
+| LPAREN    | (                   | 80    | 13      | 
+| STRING    | Run                 | 80    | 18      | 
+| RPAREN    | )                   | 80    | 19      | 
+| SEMICOLON | ;                   | 80    | 20      | 
+| EOL       |                     | 80    | 21      | 
+| RBRACE    | }                   | 81    | 6       | 
+| ELSE      | else                | 81    | 8       | 
+| LBRACE    | {                   | 81    | 13      | 
+| EOL       |                     | 81    | 14      | 
+| IDENT     | print               | 82    | 13      | 
+| LPAREN    | (                   | 82    | 13      | 
+| STRING    | Stop                | 82    | 19      | 
+| RPAREN    | )                   | 82    | 20      | 
+| SEMICOLON | ;                   | 82    | 21      | 
+| EOL       |                     | 82    | 22      | 
+| RBRACE    | }                   | 83    | 6       | 
+| EOL       |                     | 83    | 7       | 
+| RBRACE    | }                   | 84    | 4       | 
+| EOL       |                     | 84    | 5       | 
+| EOL       |                     | 85    | 2       | 
+| IMPURE    | impure              | 86    | 4       | 
+| IDENT     | loopCounter         | 86    | 22      | 
+| LPAREN    | (                   | 86    | 22      | 
+| IDENT     | max                 | 86    | 26      | 
+| COLON     | :                   | 86    | 26      | 
+| IDENT     | int                 | 86    | 31      | 
+| RPAREN    | )                   | 86    | 31      | 
+| LBRACE    | {                   | 86    | 33      | 
+| EOL       |                     | 86    | 34      | 
+| IDENT     | i                   | 87    | 7       | 
+| COLON     | :                   | 87    | 7       | 
+| IDENT     | int                 | 87    | 12      | 
+| ASSIGN    | =                   | 87    | 13      | 
+| INTEGER   | 0                   | 87    | 16      | 
+| SEMICOLON | ;                   | 87    | 16      | 
+| EOL       |                     | 87    | 17      | 
+| WHILE     | while               | 88    | 6       | 
+| LPAREN    | (                   | 88    | 12      | 
+| IDENT     | i                   | 88    | 14      | 
+| LT        | <                   | 88    | 15      | 
+| IDENT     | max                 | 88    | 20      | 
+| RPAREN    | )                   | 88    | 20      | 
+| LBRACE    | {                   | 88    | 22      | 
+| EOL       |                     | 88    | 23      | 
+| IDENT     | i                   | 89    | 9       | 
+| PLUS_ASSIGN| +=                  | 89    | 10      | 
+| INTEGER   | 1                   | 89    | 14      | 
+| SEMICOLON | ;                   | 89    | 14      | 
+| EOL       |                     | 89    | 15      | 
+| IDENT     | print               | 90    | 13      | 
+| LPAREN    | (                   | 90    | 13      | 
+| IDENT     | i                   | 90    | 15      | 
+| RPAREN    | )                   | 90    | 15      | 
+| SEMICOLON | ;                   | 90    | 16      | 
+| EOL       |                     | 90    | 17      | 
+| RBRACE    | }                   | 91    | 6       | 
+| EOL       |                     | 91    | 7       | 
+| RBRACE    | }                   | 92    | 4       | 
+| EOL       |                     | 92    | 5       | 
+| EOL       |                     | 93    | 2       | 
+| PURE      | pure                | 94    | 4       | 
+| IDENT     | logicCheck          | 94    | 19      | 
+| LPAREN    | (                   | 94    | 19      | 
+| IDENT     | a                   | 94    | 21      | 
+| COLON     | :                   | 94    | 21      | 
+| IDENT     | int                 | 94    | 26      | 
+| COMMA     | ,                   | 94    | 26      | 
+| IDENT     | b                   | 94    | 29      | 
+| COLON     | :                   | 94    | 29      | 
+| IDENT     | int                 | 94    | 34      | 
+| RPAREN    | )                   | 94    | 34      | 
+| ARROW     | ->                  | 94    | 36      | 
+| IDENT     | bool                | 94    | 43      | 
+| LBRACE    | {                   | 94    | 44      | 
+| EOL       |                     | 94    | 45      | 
+| RETURN    | return              | 95    | 6       | 
+| LPAREN    | (                   | 95    | 13      | 
+| IDENT     | a                   | 95    | 15      | 
+| GT        | >                   | 95    | 16      | 
+| IDENT     | b                   | 95    | 19      | 
+| AND       | and                 | 95    | 20      | 
+| IDENT     | b                   | 95    | 25      | 
+| NE        | !=                  | 95    | 26      | 
+| INTEGER   | 0                   | 95    | 30      | 
+| RPAREN    | )                   | 95    | 30      | 
+| OR        | or                  | 95    | 32      | 
+| LPAREN    | (                   | 95    | 35      | 
+| IDENT     | a                   | 95    | 37      | 
+| LT        | <                   | 95    | 38      | 
+| INTEGER   | 0                   | 95    | 41      | 
+| OR        | ||                  | 95    | 42      | 
+| IDENT     | b                   | 95    | 46      | 
+| LT        | <                   | 95    | 47      | 
+| INTEGER   | 0                   | 95    | 50      | 
+| RPAREN    | )                   | 95    | 50      | 
+| SEMICOLON | ;                   | 95    | 51      | 
+| EOL       |                     | 95    | 52      | 
+| RBRACE    | }                   | 96    | 4       | 
+| EOL       |                     | 96    | 5       | 
+| EOL       |                     | 97    | 2       | 
+| IMPURE    | impure              | 98    | 4       | 
+| IDENT     | mathOps             | 98    | 18      | 
+| LPAREN    | (                   | 98    | 18      | 
+| IDENT     | x                   | 98    | 20      | 
+| COLON     | :                   | 98    | 20      | 
+| IDENT     | float               | 98    | 27      | 
+| COMMA     | ,                   | 98    | 27      | 
+| IDENT     | y                   | 98    | 30      | 
+| COLON     | :                   | 98    | 30      | 
+| IDENT     | float               | 98    | 37      | 
+| RPAREN    | )                   | 98    | 37      | 
+| ARROW     | ->                  | 98    | 39      | 
+| IDENT     | float               | 98    | 47      | 
+| LBRACE    | {                   | 98    | 48      | 
+| EOL       |                     | 98    | 49      | 
+| IDENT     | x                   | 99    | 7       | 
+| MULTIPLY_ASSIGN| *=                  | 99    | 8       | 
+| INTEGER   | 2                   | 99    | 12      | 
+| SEMICOLON | ;                   | 99    | 12      | 
+| EOL       |                     | 99    | 13      | 
+| IDENT     | y                   | 100   | 7       | 
+| DIVIDE_ASSIGN| /=                  | 100   | 8       | 
+| INTEGER   | 3                   | 100   | 12      | 
+| SEMICOLON | ;                   | 100   | 12      | 
+| EOL       |                     | 100   | 13      | 
+| RETURN    | return              | 101   | 6       | 
+| IDENT     | x                   | 101   | 14      | 
+| PLUS      | +                   | 101   | 15      | 
+| IDENT     | y                   | 101   | 18      | 
+| MINUS     | -                   | 101   | 19      | 
+| IDENT     | PI                  | 101   | 23      | 
+| SEMICOLON | ;                   | 101   | 23      | 
+| EOL       |                     | 101   | 24      | 
+| RBRACE    | }                   | 102   | 4       | 
+| EOL       |                     | 102   | 5       | 
+| EOL       |                     | 103   | 2       | 
+| ON        | on                  | 104   | 4       | 
+| IDENT     | error               | 104   | 12      | 
+| LPAREN    | (                   | 104   | 12      | 
+| IDENT     | message             | 104   | 20      | 
+| COLON     | :                   | 104   | 20      | 
+| IDENT     | string              | 104   | 28      | 
+| RPAREN    | )                   | 104   | 28      | 
+| LBRACE    | {                   | 104   | 30      | 
+| EOL       |                     | 104   | 31      | 
+| IDENT     | print               | 105   | 11      | 
+| LPAREN    | (                   | 105   | 11      | 
+| STRING    | Error:              | 105   | 20      | 
+| PLUS      | +                   | 105   | 22      | 
+| IDENT     | message             | 105   | 31      | 
+| RPAREN    | )                   | 105   | 31      | 
+| SEMICOLON | ;                   | 105   | 32      | 
+| EOL       |                     | 105   | 33      | 
+| RBRACE    | }                   | 106   | 4       | 
+| EOL       |                     | 106   | 5       | 
+| EOL       |                     | 107   | 2       | 
+| BUS       | bus                 | 108   | 4       | 
+| IDENT     | transmit            | 108   | 16      | 
+| LPAREN    | (                   | 108   | 16      | 
+| IDENT     | data                | 108   | 21      | 
+| COLON     | :                   | 108   | 21      | 
+| IDENT     | string              | 108   | 29      | 
+| RPAREN    | )                   | 108   | 29      | 
+| LBRACE    | {                   | 108   | 31      | 
+| EOL       |                     | 108   | 32      | 
+| IDENT     | print               | 109   | 11      | 
+| LPAREN    | (                   | 109   | 11      | 
+| STRING    | Transmitting:       | 109   | 27      | 
+| PLUS      | +                   | 109   | 29      | 
+| IDENT     | data                | 109   | 35      | 
+| RPAREN    | )                   | 109   | 35      | 
+| SEMICOLON | ;                   | 109   | 36      | 
+| EOL       |                     | 109   | 37      | 
+| RBRACE    | }                   | 110   | 4       | 
+| EOL       |                     | 110   | 5       | 
+| RBRACE    | }                   | 111   | 2       | 
+| EOL       |                     | 111   | 3       | 
+| EOL       |                     | 112   | 2       | 
+| COMMENT   |  === Implementati...| 113   | 51      | 
+| EOL       |                     | 113   | 52      | 
+| IMPL      | impl                | 114   | 1       | 
+| IDENT     | Display             | 114   | 13      | 
+| LBRACE    | {                   | 114   | 14      | 
+| EOL       |                     | 114   | 15      | 
+| META      | meta                | 115   | 4       | 
+| IDENT     | init                | 115   | 13      | 
+| LPAREN    | (                   | 115   | 13      | 
+| RPAREN    | )                   | 115   | 14      | 
+| LBRACE    | {                   | 115   | 16      | 
+| EOL       |                     | 115   | 17      | 
+| IDENT     | text                | 116   | 10      | 
+| ASSIGN    | =                   | 116   | 11      | 
+| STRING    | Hello               | 116   | 19      | 
+| SEMICOLON | ;                   | 116   | 20      | 
+| EOL       |                     | 116   | 21      | 
+| IDENT     | brightness          | 117   | 16      | 
+| ASSIGN    | =                   | 117   | 17      | 
+| INTEGER   | 10                  | 117   | 21      | 
+| SEMICOLON | ;                   | 117   | 21      | 
+| EOL       |                     | 117   | 22      | 
+| RBRACE    | }                   | 118   | 4       | 
+| EOL       |                     | 118   | 5       | 
+| EOL       |                     | 119   | 2       | 
+| BUS       | bus                 | 120   | 4       | 
+| IDENT     | broadcast           | 120   | 17      | 
+| LPAREN    | (                   | 120   | 17      | 
+| IDENT     | signal              | 120   | 24      | 
+| COLON     | :                   | 120   | 24      | 
+| IDENT     | string              | 120   | 32      | 
+| RPAREN    | )                   | 120   | 32      | 
+| LBRACE    | {                   | 120   | 34      | 
+| EOL       |                     | 120   | 35      | 
+| IDENT     | print               | 121   | 11      | 
+| LPAREN    | (                   | 121   | 11      | 
+| STRING    | Broadcasting:       | 121   | 27      | 
+| PLUS      | +                   | 121   | 29      | 
+| IDENT     | signal              | 121   | 37      | 
+| RPAREN    | )                   | 121   | 37      | 
+| SEMICOLON | ;                   | 121   | 38      | 
+| EOL       |                     | 121   | 39      | 
+| RBRACE    | }                   | 122   | 4       | 
+| EOL       |                     | 122   | 5       | 
+| EOL       |                     | 123   | 2       | 
+| ON        | on                  | 124   | 4       | 
+| IDENT     | update              | 124   | 13      | 
+| LPAREN    | (                   | 124   | 13      | 
+| RPAREN    | )                   | 124   | 14      | 
+| LBRACE    | {                   | 124   | 16      | 
+| EOL       |                     | 124   | 17      | 
+| IDENT     | print               | 125   | 11      | 
+| LPAREN    | (                   | 125   | 11      | 
+| STRING    | Display updated     | 125   | 28      | 
+| RPAREN    | )                   | 125   | 29      | 
+| SEMICOLON | ;                   | 125   | 30      | 
+| EOL       |                     | 125   | 31      | 
+| RBRACE    | }                   | 126   | 4       | 
+| EOL       |                     | 126   | 5       | 
+| EOL       |                     | 127   | 2       | 
+| IMPURE    | impure              | 128   | 4       | 
+| IDENT     | toggle              | 128   | 17      | 
+| LPAREN    | (                   | 128   | 17      | 
+| IDENT     | state               | 128   | 23      | 
+| COLON     | :                   | 128   | 23      | 
+| IDENT     | bool                | 128   | 29      | 
+| RPAREN    | )                   | 128   | 29      | 
+| LBRACE    | {                   | 128   | 31      | 
+| EOL       |                     | 128   | 32      | 
+| IDENT     | ready               | 129   | 11      | 
+| ASSIGN    | =                   | 129   | 12      | 
+| NOT       | !                   | 129   | 14      | 
+| IDENT     | state               | 129   | 20      | 
+| SEMICOLON | ;                   | 129   | 20      | 
+| EOL       |                     | 129   | 21      | 
+| RBRACE    | }                   | 130   | 4       | 
+| EOL       |                     | 130   | 5       | 
+| RBRACE    | }                   | 131   | 2       | 
+| EOL       |                     | 131   | 3       | 
+| EOL       |                     | 132   | 2       | 
+| COMMENT   |  === Implementati...| 133   | 53      | 
+| EOL       |                     | 133   | 54      | 
+| IMPL      | impl                | 134   | 1       | 
+| IDENT     | Modifiers           | 134   | 15      | 
+| LBRACE    | {                   | 134   | 16      | 
+| EOL       |                     | 134   | 17      | 
+| META      | meta                | 135   | 4       | 
+| IDENT     | init                | 135   | 13      | 
+| LPAREN    | (                   | 135   | 13      | 
+| RPAREN    | )                   | 135   | 14      | 
+| LBRACE    | {                   | 135   | 16      | 
+| EOL       |                     | 135   | 17      | 
+| IDENT     | count               | 136   | 11      | 
+| ASSIGN    | =                   | 136   | 12      | 
+| INTEGER   | 0                   | 136   | 15      | 
+| SEMICOLON | ;                   | 136   | 15      | 
+| EOL       |                     | 136   | 16      | 
+| IDENT     | step                | 137   | 10      | 
+| ASSIGN    | =                   | 137   | 11      | 
+| INTEGER   | 10                  | 137   | 15      | 
+| SEMICOLON | ;                   | 137   | 15      | 
+| EOL       |                     | 137   | 16      | 
+| RBRACE    | }                   | 138   | 4       | 
+| EOL       |                     | 138   | 5       | 
+| EOL       |                     | 139   | 2       | 
+| ON        | on                  | 140   | 4       | 
+| IDENT     | trigger             | 140   | 14      | 
+| LPAREN    | (                   | 140   | 14      | 
+| RPAREN    | )                   | 140   | 15      | 
+| LBRACE    | {                   | 140   | 17      | 
+| EOL       |                     | 140   | 18      | 
+| IDENT     | count               | 141   | 11      | 
+| PLUS_ASSIGN| +=                  | 141   | 12      | 
+| IDENT     | step                | 141   | 19      | 
+| SEMICOLON | ;                   | 141   | 19      | 
+| EOL       |                     | 141   | 20      | 
+| RBRACE    | }                   | 142   | 4       | 
+| EOL       |                     | 142   | 5       | 
+| EOL       |                     | 143   | 2       | 
+| BUS       | bus                 | 144   | 4       | 
+| IDENT     | pulse               | 144   | 13      | 
+| LPAREN    | (                   | 144   | 13      | 
+| RPAREN    | )                   | 144   | 14      | 
+| LBRACE    | {                   | 144   | 16      | 
+| EOL       |                     | 144   | 17      | 
+| IDENT     | print               | 145   | 11      | 
+| LPAREN    | (                   | 145   | 11      | 
+| STRING    | Pulse sent          | 145   | 23      | 
+| RPAREN    | )                   | 145   | 24      | 
+| SEMICOLON | ;                   | 145   | 25      | 
+| EOL       |                     | 145   | 26      | 
+| RBRACE    | }                   | 146   | 4       | 
+| EOL       |                     | 146   | 5       | 
+| RBRACE    | }                   | 147   | 2       | 
+| EOL       |                     | 147   | 3       | 
+| EOL       |                     | 148   | 2       | 
+| COMMENT   |  === Implementati...| 149   | 68      | 
+| EOL       |                     | 149   | 69      | 
+| IMPL      | impl                | 150   | 1       | 
+| IDENT     | Display             | 150   | 13      | 
+| FOR       | for                 | 150   | 14      | 
+| IDENT     | Engine              | 150   | 24      | 
+| LBRACE    | {                   | 150   | 25      | 
+| EOL       |                     | 150   | 26      | 
+| META      | meta                | 151   | 4       | 
+| IDENT     | connect             | 151   | 16      | 
+| LPAREN    | (                   | 151   | 16      | 
+| RPAREN    | )                   | 151   | 17      | 
+| LBRACE    | {                   | 151   | 19      | 
+| EOL       |                     | 151   | 20      | 
+| IDENT     | ready               | 152   | 11      | 
+| ASSIGN    | =                   | 152   | 12      | 
+| BOOL      | true                | 152   | 14      | 
+| SEMICOLON | ;                   | 152   | 18      | 
+| EOL       |                     | 152   | 19      | 
+| IDENT     | print               | 153   | 11      | 
+| LPAREN    | (                   | 153   | 11      | 
+| STRING    | Connected display   | 153   | 30      | 
+| RPAREN    | )                   | 153   | 31      | 
+| SEMICOLON | ;                   | 153   | 32      | 
+| EOL       |                     | 153   | 33      | 
+| RBRACE    | }                   | 154   | 4       | 
+| EOL       |                     | 154   | 5       | 
+| EOL       |                     | 155   | 2       | 
+| IMPURE    | impure              | 156   | 4       | 
+| IDENT     | showData            | 156   | 19      | 
+| LPAREN    | (                   | 156   | 19      | 
+| IDENT     | value               | 156   | 25      | 
+| COLON     | :                   | 156   | 25      | 
+| IDENT     | int                 | 156   | 30      | 
+| RPAREN    | )                   | 156   | 30      | 
+| LBRACE    | {                   | 156   | 32      | 
+| EOL       |                     | 156   | 33      | 
+| IDENT     | print               | 157   | 11      | 
+| LPAREN    | (                   | 157   | 11      | 
+| STRING    | Value:              | 157   | 20      | 
+| PLUS      | +                   | 157   | 22      | 
+| IDENT     | value               | 157   | 29      | 
+| RPAREN    | )                   | 157   | 29      | 
+| SEMICOLON | ;                   | 157   | 30      | 
+| EOL       |                     | 157   | 31      | 
+| RBRACE    | }                   | 158   | 4       | 
+| EOL       |                     | 158   | 5       | 
+| RBRACE    | }                   | 159   | 2       | 
+| EOL       |                     | 159   | 3       | 
+| EOL       |                     | 160   | 2       | 
+| COMMENT   |  === Function wit...| 161   | 48      | 
+| EOL       |                     | 161   | 49      | 
+| PURE      | pure                | 162   | 1       | 
+| IDENT     | process             | 162   | 13      | 
+| LPAREN    | (                   | 162   | 13      | 
+| IDENT     | data                | 162   | 18      | 
+| COLON     | :                   | 162   | 18      | 
+| IDENT     | string              | 162   | 26      | 
+| COMMA     | ,                   | 162   | 26      | 
+| IDENT     | active              | 162   | 34      | 
+| COLON     | :                   | 162   | 34      | 
+| IDENT     | bool                | 162   | 40      | 
+| ASSIGN    | =                   | 162   | 41      | 
+| BOOL      | true                | 162   | 43      | 
+| RPAREN    | )                   | 162   | 47      | 
+| ARROW     | ->                  | 162   | 49      | 
+| IDENT     | int                 | 162   | 55      | 
+| LBRACE    | {                   | 162   | 56      | 
+| EOL       |                     | 162   | 57      | 
+| IDENT     | score               | 163   | 9       | 
+| COLON     | :                   | 163   | 9       | 
+| IDENT     | int                 | 163   | 14      | 
+| ASSIGN    | =                   | 163   | 15      | 
+| IDENT     | active              | 163   | 23      | 
+| QUESTION_MARK| ?                   | 163   | 24      | 
+| INTEGER   | 100                 | 163   | 29      | 
+| COLON     | :                   | 163   | 30      | 
+| INTEGER   | 0                   | 163   | 33      | 
+| SEMICOLON | ;                   | 163   | 33      | 
+| EOL       |                     | 163   | 34      | 
+| IDENT     | score               | 164   | 9       | 
+| PLUS_ASSIGN| +=                  | 164   | 10      | 
+| IDENT     | data                | 164   | 17      | 
+| EQ        | ==                  | 164   | 18      | 
+| STRING    | pass                | 164   | 26      | 
+| QUESTION_MARK| ?                   | 164   | 28      | 
+| INTEGER   | 50                  | 164   | 32      | 
+| COLON     | :                   | 164   | 33      | 
+| MINUS     | -                   | 164   | 35      | 
+| INTEGER   | 50                  | 164   | 38      | 
+| SEMICOLON | ;                   | 164   | 38      | 
+| EOL       |                     | 164   | 39      | 
+| RETURN    | return              | 165   | 4       | 
+| IDENT     | score               | 165   | 16      | 
+| SEMICOLON | ;                   | 165   | 16      | 
+| EOL       |                     | 165   | 17      | 
+| RBRACE    | }                   | 166   | 2       | 
+| EOL       |                     | 166   | 3       | 
+| EOL       |                     | 167   | 2       | 
+| COMMENT   |  === Component in...| 168   | 36      | 
+| EOL       |                     | 168   | 37      | 
+| COMMENT   |  Engine("Main") a...| 169   | 33      | 
+| EOL       |                     | 169   | 34      | 
+| COMMENT   |  Display(text = "...| 170   | 58      | 
+| EOL       |                     | 170   | 59      | 
+| COMMENT   |  Modifiers() as m...| 171   | 28      | 
+| EOL       |                     | 171   | 29      | 
+| EOF       |                     | 172   | 1       | 

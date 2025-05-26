@@ -1,0 +1,3132 @@
+{
+  "className": "Program",
+  "start": "7:1:",
+  "end": "166:2:",
+  "body": [
+    {
+      "className": "EnumDeclaration",
+      "start": "7:1:",
+      "end": "11:2:",
+      "name": {
+        "className": "Identifier",
+        "start": "7:10:",
+        "end": "7:10:",
+        "name": "Mode"
+      },
+      "modifiers": {
+        "access": "internal"
+      },
+      "variants": [
+        {
+          "className": "EnumVariant",
+          "name": {
+            "className": "Identifier",
+            "start": "8:9:",
+            "end": "8:9:",
+            "name": "Start"
+          },
+          "value": null
+        },
+        {
+          "className": "EnumVariant",
+          "name": {
+            "className": "Identifier",
+            "start": "9:7:",
+            "end": "9:7:",
+            "name": "Run"
+          },
+          "value": null
+        },
+        {
+          "className": "EnumVariant",
+          "name": {
+            "className": "Identifier",
+            "start": "10:8:",
+            "end": "10:8:",
+            "name": "Stop"
+          },
+          "value": null
+        }
+      ]
+    },
+    {
+      "className": "TypeDeclaration",
+      "start": "14:1:",
+      "end": "29:2:",
+      "name": {
+        "className": "Identifier",
+        "start": "14:12:",
+        "end": "14:12:",
+        "name": "Engine"
+      },
+      "modifiers": {
+        "access": "internal"
+      },
+      "members": [
+        {
+          "className": "VariableDeclaration",
+          "start": "15:10:",
+          "end": "15:15:",
+          "name": {
+            "className": "Identifier",
+            "start": "15:10:",
+            "end": "15:10:",
+            "name": "id"
+          },
+          "modifiers": {
+            "access": "pub"
+          },
+          "typeAnnotation": {
+            "className": "TypeIdentifier",
+            "start": "15:15:",
+            "end": "15:15:",
+            "name": "int"
+          },
+          "initializer": null
+        },
+        {
+          "className": "VariableDeclaration",
+          "start": "16:13:",
+          "end": "16:21:",
+          "name": {
+            "className": "Identifier",
+            "start": "16:13:",
+            "end": "16:13:",
+            "name": "name"
+          },
+          "modifiers": {
+            "access": "priv"
+          },
+          "typeAnnotation": {
+            "className": "TypeIdentifier",
+            "start": "16:21:",
+            "end": "16:21:",
+            "name": "string"
+          },
+          "initializer": null
+        },
+        {
+          "className": "VariableDeclaration",
+          "start": "17:19:",
+          "end": "17:25:",
+          "name": {
+            "className": "Identifier",
+            "start": "17:19:",
+            "end": "17:19:",
+            "name": "status"
+          },
+          "modifiers": {
+            "access": "internal"
+          },
+          "typeAnnotation": {
+            "className": "TypeIdentifier",
+            "start": "17:25:",
+            "end": "17:25:",
+            "name": "bool"
+          },
+          "initializer": {
+            "className": "Literal",
+            "start": "17:28:",
+            "end": "17:28:",
+            "value": "true"
+          }
+        },
+        {
+          "className": "VariableDeclaration",
+          "start": "18:15:",
+          "end": "18:23:",
+          "name": {
+            "className": "Identifier",
+            "start": "18:15:",
+            "end": "18:15:",
+            "name": "config"
+          },
+          "modifiers": {
+            "access": "open"
+          },
+          "typeAnnotation": {
+            "className": "TypeIdentifier",
+            "start": "18:23:",
+            "end": "18:23:",
+            "name": "string"
+          },
+          "initializer": {
+            "className": "Literal",
+            "start": "18:31:",
+            "end": "18:31:",
+            "value": "none"
+          }
+        },
+        {
+          "className": "VariableDeclaration",
+          "start": "19:12:",
+          "end": "19:19:",
+          "name": {
+            "className": "Identifier",
+            "start": "19:12:",
+            "end": "19:12:",
+            "name": "PI"
+          },
+          "modifiers": {
+            "access": "internal",
+            "varFlags": [
+              "const",
+              "const"
+            ]
+          },
+          "typeAnnotation": {
+            "className": "TypeIdentifier",
+            "start": "19:19:",
+            "end": "19:19:",
+            "name": "float"
+          },
+          "initializer": {
+            "className": "Literal",
+            "start": "19:26:",
+            "end": "19:26:",
+            "value": "3.14"
+          }
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "21:8:",
+          "end": "21:8:",
+          "name": {
+            "className": "Identifier",
+            "start": "21:8:",
+            "end": "21:8:",
+            "name": "init"
+          },
+          "modifiers": {
+            "access": "internal"
+          },
+          "params": [
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "21:13:",
+                "end": "21:13:",
+                "name": "name"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "21:21:",
+                "end": "21:21:",
+                "name": "string"
+              },
+              "defaultValue": null,
+              "start": "21:13:",
+              "end": "21:21:"
+            }
+          ],
+          "returnType": null
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "22:22:",
+          "end": "22:43:",
+          "name": {
+            "className": "Identifier",
+            "start": "22:22:",
+            "end": "22:22:",
+            "name": "statusMessage"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "pure",
+              "pure"
+            ]
+          },
+          "params": [
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "22:27:",
+                "end": "22:27:",
+                "name": "code"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "22:32:",
+                "end": "22:32:",
+                "name": "int"
+              },
+              "defaultValue": null,
+              "start": "22:27:",
+              "end": "22:32:"
+            }
+          ],
+          "returnType": {
+            "className": "TypeIdentifier",
+            "start": "22:43:",
+            "end": "22:43:",
+            "name": "string"
+          }
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "23:19:",
+          "end": "23:19:",
+          "name": {
+            "className": "Identifier",
+            "start": "23:19:",
+            "end": "23:19:",
+            "name": "evaluate"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "impure",
+              "impure"
+            ]
+          },
+          "params": [
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "23:24:",
+                "end": "23:24:",
+                "name": "mode"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "23:30:",
+                "end": "23:30:",
+                "name": "Mode"
+              },
+              "defaultValue": null,
+              "start": "23:24:",
+              "end": "23:30:"
+            }
+          ],
+          "returnType": null
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "24:22:",
+          "end": "24:22:",
+          "name": {
+            "className": "Identifier",
+            "start": "24:22:",
+            "end": "24:22:",
+            "name": "loopCounter"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "impure",
+              "impure"
+            ]
+          },
+          "params": [
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "24:26:",
+                "end": "24:26:",
+                "name": "max"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "24:31:",
+                "end": "24:31:",
+                "name": "int"
+              },
+              "defaultValue": null,
+              "start": "24:26:",
+              "end": "24:31:"
+            }
+          ],
+          "returnType": null
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "25:19:",
+          "end": "25:43:",
+          "name": {
+            "className": "Identifier",
+            "start": "25:19:",
+            "end": "25:19:",
+            "name": "logicCheck"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "pure",
+              "pure"
+            ]
+          },
+          "params": [
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "25:21:",
+                "end": "25:21:",
+                "name": "a"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "25:26:",
+                "end": "25:26:",
+                "name": "int"
+              },
+              "defaultValue": null,
+              "start": "25:21:",
+              "end": "25:26:"
+            },
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "25:29:",
+                "end": "25:29:",
+                "name": "b"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "25:34:",
+                "end": "25:34:",
+                "name": "int"
+              },
+              "defaultValue": null,
+              "start": "25:29:",
+              "end": "25:34:"
+            }
+          ],
+          "returnType": {
+            "className": "TypeIdentifier",
+            "start": "25:43:",
+            "end": "25:43:",
+            "name": "bool"
+          }
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "26:18:",
+          "end": "26:47:",
+          "name": {
+            "className": "Identifier",
+            "start": "26:18:",
+            "end": "26:18:",
+            "name": "mathOps"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "impure",
+              "impure"
+            ]
+          },
+          "params": [
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "26:20:",
+                "end": "26:20:",
+                "name": "x"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "26:27:",
+                "end": "26:27:",
+                "name": "float"
+              },
+              "defaultValue": null,
+              "start": "26:20:",
+              "end": "26:27:"
+            },
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "26:30:",
+                "end": "26:30:",
+                "name": "y"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "26:37:",
+                "end": "26:37:",
+                "name": "float"
+              },
+              "defaultValue": null,
+              "start": "26:30:",
+              "end": "26:37:"
+            }
+          ],
+          "returnType": {
+            "className": "TypeIdentifier",
+            "start": "26:47:",
+            "end": "26:47:",
+            "name": "float"
+          }
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "27:12:",
+          "end": "27:12:",
+          "name": {
+            "className": "Identifier",
+            "start": "27:12:",
+            "end": "27:12:",
+            "name": "error"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "on",
+              "on"
+            ]
+          },
+          "params": [
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "27:20:",
+                "end": "27:20:",
+                "name": "message"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "27:28:",
+                "end": "27:28:",
+                "name": "string"
+              },
+              "defaultValue": null,
+              "start": "27:20:",
+              "end": "27:28:"
+            }
+          ],
+          "returnType": null
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "28:16:",
+          "end": "28:16:",
+          "name": {
+            "className": "Identifier",
+            "start": "28:16:",
+            "end": "28:16:",
+            "name": "transmit"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "bus",
+              "bus"
+            ]
+          },
+          "params": [
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "28:21:",
+                "end": "28:21:",
+                "name": "data"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "28:29:",
+                "end": "28:29:",
+                "name": "string"
+              },
+              "defaultValue": null,
+              "start": "28:21:",
+              "end": "28:29:"
+            }
+          ],
+          "returnType": null
+        }
+      ]
+    },
+    {
+      "className": "ShardDeclaration",
+      "start": "32:1:",
+      "end": "41:2:",
+      "name": {
+        "className": "Identifier",
+        "start": "32:14:",
+        "end": "32:14:",
+        "name": "Display"
+      },
+      "modifiers": {
+        "access": "internal"
+      },
+      "members": [
+        {
+          "className": "VariableDeclaration",
+          "start": "33:12:",
+          "end": "33:20:",
+          "name": {
+            "className": "Identifier",
+            "start": "33:12:",
+            "end": "33:12:",
+            "name": "text"
+          },
+          "modifiers": {
+            "access": "pub"
+          },
+          "typeAnnotation": {
+            "className": "TypeIdentifier",
+            "start": "33:20:",
+            "end": "33:20:",
+            "name": "string"
+          },
+          "initializer": null
+        },
+        {
+          "className": "VariableDeclaration",
+          "start": "34:18:",
+          "end": "34:23:",
+          "name": {
+            "className": "Identifier",
+            "start": "34:18:",
+            "end": "34:18:",
+            "name": "brightness"
+          },
+          "modifiers": {
+            "access": "internal",
+            "varFlags": [
+              "mut",
+              "mut"
+            ]
+          },
+          "typeAnnotation": {
+            "className": "TypeIdentifier",
+            "start": "34:23:",
+            "end": "34:23:",
+            "name": "int"
+          },
+          "initializer": {
+            "className": "Literal",
+            "start": "34:27:",
+            "end": "34:27:",
+            "value": "5"
+          }
+        },
+        {
+          "className": "VariableDeclaration",
+          "start": "35:18:",
+          "end": "35:24:",
+          "name": {
+            "className": "Identifier",
+            "start": "35:18:",
+            "end": "35:18:",
+            "name": "ready"
+          },
+          "modifiers": {
+            "access": "internal"
+          },
+          "typeAnnotation": {
+            "className": "TypeIdentifier",
+            "start": "35:24:",
+            "end": "35:24:",
+            "name": "bool"
+          },
+          "initializer": {
+            "className": "Literal",
+            "start": "35:27:",
+            "end": "35:27:",
+            "value": "false"
+          }
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "37:13:",
+          "end": "37:13:",
+          "name": {
+            "className": "Identifier",
+            "start": "37:13:",
+            "end": "37:13:",
+            "name": "init"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "meta",
+              "meta",
+              "meta"
+            ]
+          },
+          "params": [],
+          "returnType": null
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "38:17:",
+          "end": "38:17:",
+          "name": {
+            "className": "Identifier",
+            "start": "38:17:",
+            "end": "38:17:",
+            "name": "broadcast"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "bus",
+              "bus"
+            ]
+          },
+          "params": [
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "38:24:",
+                "end": "38:24:",
+                "name": "signal"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "38:32:",
+                "end": "38:32:",
+                "name": "string"
+              },
+              "defaultValue": null,
+              "start": "38:24:",
+              "end": "38:32:"
+            }
+          ],
+          "returnType": null
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "39:13:",
+          "end": "39:13:",
+          "name": {
+            "className": "Identifier",
+            "start": "39:13:",
+            "end": "39:13:",
+            "name": "update"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "on",
+              "on"
+            ]
+          },
+          "params": [],
+          "returnType": null
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "40:17:",
+          "end": "40:17:",
+          "name": {
+            "className": "Identifier",
+            "start": "40:17:",
+            "end": "40:17:",
+            "name": "toggle"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "impure",
+              "impure"
+            ]
+          },
+          "params": [
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "40:23:",
+                "end": "40:23:",
+                "name": "state"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "40:29:",
+                "end": "40:29:",
+                "name": "bool"
+              },
+              "defaultValue": null,
+              "start": "40:23:",
+              "end": "40:29:"
+            }
+          ],
+          "returnType": null
+        }
+      ]
+    },
+    {
+      "className": "ShardDeclaration",
+      "start": "44:1:",
+      "end": "55:2:",
+      "name": {
+        "className": "Identifier",
+        "start": "44:16:",
+        "end": "44:16:",
+        "name": "Modifiers"
+      },
+      "modifiers": {
+        "access": "internal"
+      },
+      "members": [
+        {
+          "className": "VariableDeclaration",
+          "start": "45:13:",
+          "end": "45:18:",
+          "name": {
+            "className": "Identifier",
+            "start": "45:13:",
+            "end": "45:13:",
+            "name": "count"
+          },
+          "modifiers": {
+            "access": "pub"
+          },
+          "typeAnnotation": {
+            "className": "TypeIdentifier",
+            "start": "45:18:",
+            "end": "45:18:",
+            "name": "int"
+          },
+          "initializer": null
+        },
+        {
+          "className": "VariableDeclaration",
+          "start": "46:13:",
+          "end": "46:19:",
+          "name": {
+            "className": "Identifier",
+            "start": "46:13:",
+            "end": "46:13:",
+            "name": "flag"
+          },
+          "modifiers": {
+            "access": "priv"
+          },
+          "typeAnnotation": {
+            "className": "TypeIdentifier",
+            "start": "46:19:",
+            "end": "46:19:",
+            "name": "bool"
+          },
+          "initializer": null
+        },
+        {
+          "className": "VariableDeclaration",
+          "start": "47:18:",
+          "end": "47:26:",
+          "name": {
+            "className": "Identifier",
+            "start": "47:18:",
+            "end": "47:18:",
+            "name": "state"
+          },
+          "modifiers": {
+            "access": "internal"
+          },
+          "typeAnnotation": {
+            "className": "TypeIdentifier",
+            "start": "47:26:",
+            "end": "47:26:",
+            "name": "string"
+          },
+          "initializer": null
+        },
+        {
+          "className": "VariableDeclaration",
+          "start": "48:16:",
+          "end": "48:24:",
+          "name": {
+            "className": "Identifier",
+            "start": "48:16:",
+            "end": "48:16:",
+            "name": "message"
+          },
+          "modifiers": {
+            "access": "open"
+          },
+          "typeAnnotation": {
+            "className": "TypeIdentifier",
+            "start": "48:24:",
+            "end": "48:24:",
+            "name": "string"
+          },
+          "initializer": {
+            "className": "Literal",
+            "start": "48:32:",
+            "end": "48:32:",
+            "value": "Open"
+          }
+        },
+        {
+          "className": "VariableDeclaration",
+          "start": "49:15:",
+          "end": "49:20:",
+          "name": {
+            "className": "Identifier",
+            "start": "49:15:",
+            "end": "49:15:",
+            "name": "LIMIT"
+          },
+          "modifiers": {
+            "access": "internal",
+            "varFlags": [
+              "const",
+              "const"
+            ]
+          },
+          "typeAnnotation": {
+            "className": "TypeIdentifier",
+            "start": "49:20:",
+            "end": "49:20:",
+            "name": "int"
+          },
+          "initializer": {
+            "className": "Literal",
+            "start": "49:26:",
+            "end": "49:26:",
+            "value": "100"
+          }
+        },
+        {
+          "className": "VariableDeclaration",
+          "start": "50:12:",
+          "end": "50:17:",
+          "name": {
+            "className": "Identifier",
+            "start": "50:12:",
+            "end": "50:12:",
+            "name": "step"
+          },
+          "modifiers": {
+            "access": "internal",
+            "varFlags": [
+              "mut",
+              "mut"
+            ]
+          },
+          "typeAnnotation": {
+            "className": "TypeIdentifier",
+            "start": "50:17:",
+            "end": "50:17:",
+            "name": "int"
+          },
+          "initializer": {
+            "className": "Literal",
+            "start": "50:21:",
+            "end": "50:21:",
+            "value": "1"
+          }
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "52:13:",
+          "end": "52:13:",
+          "name": {
+            "className": "Identifier",
+            "start": "52:13:",
+            "end": "52:13:",
+            "name": "init"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "meta",
+              "meta",
+              "meta"
+            ]
+          },
+          "params": [],
+          "returnType": null
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "53:14:",
+          "end": "53:14:",
+          "name": {
+            "className": "Identifier",
+            "start": "53:14:",
+            "end": "53:14:",
+            "name": "trigger"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "on",
+              "on"
+            ]
+          },
+          "params": [],
+          "returnType": null
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "54:13:",
+          "end": "54:13:",
+          "name": {
+            "className": "Identifier",
+            "start": "54:13:",
+            "end": "54:13:",
+            "name": "pulse"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "bus",
+              "bus"
+            ]
+          },
+          "params": [],
+          "returnType": null
+        }
+      ]
+    },
+    {
+      "className": "ImplDeclaration",
+      "start": "58:1:",
+      "end": "111:2:",
+      "name": {
+        "className": "Identifier",
+        "start": "58:12:",
+        "end": "58:12:",
+        "name": "Engine"
+      },
+      "modifiers": {
+        "access": "internal"
+      },
+      "target": {
+        "className": "Identifier",
+        "start": "58:12:",
+        "end": "58:12:",
+        "name": "Engine"
+      },
+      "forType": null,
+      "members": [
+        {
+          "className": "CallableDeclaration",
+          "start": "59:18:",
+          "end": "59:18:",
+          "name": {
+            "className": "Identifier",
+            "start": "59:18:",
+            "end": "59:18:",
+            "name": "calibrate"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "meta",
+              "meta"
+            ]
+          },
+          "params": [],
+          "returnType": null,
+          "body": {
+            "className": "BlockStatement",
+            "start": "59:21:",
+            "end": "61:4:",
+            "statements": [
+              {
+                "className": "ExpressionStatement",
+                "start": "60:11:",
+                "end": "60:31:",
+                "expression": {
+                  "className": "FunctionCallExpression",
+                  "start": "60:11:",
+                  "end": "60:31:",
+                  "name": {
+                    "className": "Identifier",
+                    "start": "60:11:",
+                    "end": "60:11:",
+                    "name": "print"
+                  },
+                  "args": [
+                    {
+                      "className": "CallParameter",
+                      "start": "60:30:",
+                      "end": "60:30:",
+                      "name": null,
+                      "value": {
+                        "className": "Literal",
+                        "start": "60:30:",
+                        "end": "60:30:",
+                        "value": "Engine calibrated"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "63:16:",
+          "end": "63:16:",
+          "name": {
+            "className": "Identifier",
+            "start": "63:16:",
+            "end": "63:16:",
+            "name": "reset"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "impure",
+              "impure",
+              "impure"
+            ]
+          },
+          "params": [],
+          "returnType": null,
+          "body": {
+            "className": "BlockStatement",
+            "start": "63:19:",
+            "end": "66:4:",
+            "statements": [
+              {
+                "className": "ExpressionStatement",
+                "start": "64:8:",
+                "end": "64:12:",
+                "expression": {
+                  "className": "BinaryExpression",
+                  "start": "64:8:",
+                  "end": "64:12:",
+                  "left": {
+                    "className": "Identifier",
+                    "start": "64:8:",
+                    "end": "64:8:",
+                    "name": "id"
+                  },
+                  "operator": 14,
+                  "right": {
+                    "className": "Literal",
+                    "start": "64:12:",
+                    "end": "64:12:",
+                    "value": "0"
+                  }
+                }
+              },
+              {
+                "className": "ExpressionStatement",
+                "start": "65:10:",
+                "end": "65:19:",
+                "expression": {
+                  "className": "BinaryExpression",
+                  "start": "65:10:",
+                  "end": "65:19:",
+                  "left": {
+                    "className": "Identifier",
+                    "start": "65:10:",
+                    "end": "65:10:",
+                    "name": "name"
+                  },
+                  "operator": 14,
+                  "right": {
+                    "className": "Literal",
+                    "start": "65:19:",
+                    "end": "65:19:",
+                    "value": "reset"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "68:15:",
+          "end": "68:15:",
+          "name": {
+            "className": "Identifier",
+            "start": "68:15:",
+            "end": "68:15:",
+            "name": "init"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "impure",
+              "impure",
+              "impure"
+            ]
+          },
+          "params": [
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "68:20:",
+                "end": "68:20:",
+                "name": "name"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "68:28:",
+                "end": "68:28:",
+                "name": "string"
+              },
+              "defaultValue": null,
+              "start": "68:20:",
+              "end": "68:28:"
+            }
+          ],
+          "returnType": null,
+          "body": {
+            "className": "BlockStatement",
+            "start": "68:30:",
+            "end": "70:4:",
+            "statements": [
+              {
+                "className": "ExpressionStatement",
+                "start": "69:11:",
+                "end": "69:41:",
+                "expression": {
+                  "className": "FunctionCallExpression",
+                  "start": "69:11:",
+                  "end": "69:41:",
+                  "name": {
+                    "className": "Identifier",
+                    "start": "69:11:",
+                    "end": "69:11:",
+                    "name": "print"
+                  },
+                  "args": [
+                    {
+                      "className": "CallParameter",
+                      "start": "69:33:",
+                      "end": "69:41:",
+                      "name": null,
+                      "value": {
+                        "className": "BinaryExpression",
+                        "start": "69:33:",
+                        "end": "69:41:",
+                        "left": {
+                          "className": "Literal",
+                          "start": "69:33:",
+                          "end": "69:33:",
+                          "value": "Engine initialized: "
+                        },
+                        "operator": 0,
+                        "right": {
+                          "className": "Identifier",
+                          "start": "69:41:",
+                          "end": "69:41:",
+                          "name": "name"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "72:22:",
+          "end": "72:43:",
+          "name": {
+            "className": "Identifier",
+            "start": "72:22:",
+            "end": "72:22:",
+            "name": "statusMessage"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "pure",
+              "pure",
+              "pure"
+            ]
+          },
+          "params": [
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "72:27:",
+                "end": "72:27:",
+                "name": "code"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "72:32:",
+                "end": "72:32:",
+                "name": "int"
+              },
+              "defaultValue": null,
+              "start": "72:27:",
+              "end": "72:32:"
+            }
+          ],
+          "returnType": {
+            "className": "TypeIdentifier",
+            "start": "72:43:",
+            "end": "72:43:",
+            "name": "string"
+          },
+          "body": {
+            "className": "BlockStatement",
+            "start": "72:44:",
+            "end": "74:4:",
+            "statements": [
+              {
+                "className": "ReturnStatement",
+                "start": "73:6:",
+                "end": "73:41:",
+                "value": {
+                  "className": "BinaryExpression",
+                  "start": "73:17:",
+                  "end": "73:41:",
+                  "left": {
+                    "className": "Identifier",
+                    "start": "73:17:",
+                    "end": "73:17:",
+                    "name": "code"
+                  },
+                  "operator": 6,
+                  "right": {
+                    "className": "ConditionalExpression",
+                    "start": "73:22:",
+                    "end": "73:41:",
+                    "condition": {
+                      "className": "Literal",
+                      "start": "73:22:",
+                      "end": "73:22:",
+                      "value": "0"
+                    },
+                    "thenBranch": {
+                      "className": "Literal",
+                      "start": "73:31:",
+                      "end": "73:31:",
+                      "value": "Ready"
+                    },
+                    "elseBranch": {
+                      "className": "Literal",
+                      "start": "73:41:",
+                      "end": "73:41:",
+                      "value": "Error"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "76:19:",
+          "end": "76:19:",
+          "name": {
+            "className": "Identifier",
+            "start": "76:19:",
+            "end": "76:19:",
+            "name": "evaluate"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "impure",
+              "impure",
+              "impure"
+            ]
+          },
+          "params": [
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "76:24:",
+                "end": "76:24:",
+                "name": "mode"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "76:30:",
+                "end": "76:30:",
+                "name": "Mode"
+              },
+              "defaultValue": null,
+              "start": "76:24:",
+              "end": "76:30:"
+            }
+          ],
+          "returnType": null,
+          "body": {
+            "className": "BlockStatement",
+            "start": "76:32:",
+            "end": "84:4:",
+            "statements": [
+              {
+                "className": "IfStatement",
+                "start": "77:6:",
+                "end": "83:6:",
+                "branches": [
+                  {
+                    "className": "IfBranch",
+                    "start": "77:6:",
+                    "end": "79:6:",
+                    "condition": {
+                      "className": "BinaryExpression",
+                      "start": "77:14:",
+                      "end": "77:28:",
+                      "left": {
+                        "className": "Identifier",
+                        "start": "77:14:",
+                        "end": "77:14:",
+                        "name": "mode"
+                      },
+                      "operator": 6,
+                      "right": {
+                        "className": "MemberExpression",
+                        "start": "77:22:",
+                        "end": "77:28:",
+                        "object": {
+                          "className": "Identifier",
+                          "start": "77:22:",
+                          "end": "77:22:",
+                          "name": "Mode"
+                        },
+                        "property": {
+                          "className": "Identifier",
+                          "start": "77:28:",
+                          "end": "77:28:",
+                          "name": "Start"
+                        }
+                      }
+                    },
+                    "block": {
+                      "className": "BlockStatement",
+                      "start": "77:30:",
+                      "end": "79:6:",
+                      "statements": [
+                        {
+                          "className": "ExpressionStatement",
+                          "start": "78:13:",
+                          "end": "78:21:",
+                          "expression": {
+                            "className": "FunctionCallExpression",
+                            "start": "78:13:",
+                            "end": "78:21:",
+                            "name": {
+                              "className": "Identifier",
+                              "start": "78:13:",
+                              "end": "78:13:",
+                              "name": "print"
+                            },
+                            "args": [
+                              {
+                                "className": "CallParameter",
+                                "start": "78:20:",
+                                "end": "78:20:",
+                                "name": null,
+                                "value": {
+                                  "className": "Literal",
+                                  "start": "78:20:",
+                                  "end": "78:20:",
+                                  "value": "Start"
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "className": "IfBranch",
+                    "start": "79:8:",
+                    "end": "81:6:",
+                    "condition": {
+                      "className": "BinaryExpression",
+                      "start": "79:18:",
+                      "end": "79:30:",
+                      "left": {
+                        "className": "Identifier",
+                        "start": "79:18:",
+                        "end": "79:18:",
+                        "name": "mode"
+                      },
+                      "operator": 6,
+                      "right": {
+                        "className": "MemberExpression",
+                        "start": "79:26:",
+                        "end": "79:30:",
+                        "object": {
+                          "className": "Identifier",
+                          "start": "79:26:",
+                          "end": "79:26:",
+                          "name": "Mode"
+                        },
+                        "property": {
+                          "className": "Identifier",
+                          "start": "79:30:",
+                          "end": "79:30:",
+                          "name": "Run"
+                        }
+                      }
+                    },
+                    "block": {
+                      "className": "BlockStatement",
+                      "start": "79:32:",
+                      "end": "81:6:",
+                      "statements": [
+                        {
+                          "className": "ExpressionStatement",
+                          "start": "80:13:",
+                          "end": "80:19:",
+                          "expression": {
+                            "className": "FunctionCallExpression",
+                            "start": "80:13:",
+                            "end": "80:19:",
+                            "name": {
+                              "className": "Identifier",
+                              "start": "80:13:",
+                              "end": "80:13:",
+                              "name": "print"
+                            },
+                            "args": [
+                              {
+                                "className": "CallParameter",
+                                "start": "80:18:",
+                                "end": "80:18:",
+                                "name": null,
+                                "value": {
+                                  "className": "Literal",
+                                  "start": "80:18:",
+                                  "end": "80:18:",
+                                  "value": "Run"
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "className": "IfBranch",
+                    "start": "81:8:",
+                    "end": "83:6:",
+                    "condition": null,
+                    "block": {
+                      "className": "BlockStatement",
+                      "start": "81:13:",
+                      "end": "83:6:",
+                      "statements": [
+                        {
+                          "className": "ExpressionStatement",
+                          "start": "82:13:",
+                          "end": "82:20:",
+                          "expression": {
+                            "className": "FunctionCallExpression",
+                            "start": "82:13:",
+                            "end": "82:20:",
+                            "name": {
+                              "className": "Identifier",
+                              "start": "82:13:",
+                              "end": "82:13:",
+                              "name": "print"
+                            },
+                            "args": [
+                              {
+                                "className": "CallParameter",
+                                "start": "82:19:",
+                                "end": "82:19:",
+                                "name": null,
+                                "value": {
+                                  "className": "Literal",
+                                  "start": "82:19:",
+                                  "end": "82:19:",
+                                  "value": "Stop"
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "86:22:",
+          "end": "86:22:",
+          "name": {
+            "className": "Identifier",
+            "start": "86:22:",
+            "end": "86:22:",
+            "name": "loopCounter"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "impure",
+              "impure",
+              "impure"
+            ]
+          },
+          "params": [
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "86:26:",
+                "end": "86:26:",
+                "name": "max"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "86:31:",
+                "end": "86:31:",
+                "name": "int"
+              },
+              "defaultValue": null,
+              "start": "86:26:",
+              "end": "86:31:"
+            }
+          ],
+          "returnType": null,
+          "body": {
+            "className": "BlockStatement",
+            "start": "86:33:",
+            "end": "92:4:",
+            "statements": [
+              {
+                "className": "VariableDeclaration",
+                "start": "87:7:",
+                "end": "87:12:",
+                "name": {
+                  "className": "Identifier",
+                  "start": "87:7:",
+                  "end": "87:7:",
+                  "name": "i"
+                },
+                "modifiers": {
+                  "access": "internal",
+                  "varFlags": [
+                    "mut"
+                  ]
+                },
+                "typeAnnotation": {
+                  "className": "TypeIdentifier",
+                  "start": "87:12:",
+                  "end": "87:12:",
+                  "name": "int"
+                },
+                "initializer": {
+                  "className": "Literal",
+                  "start": "87:16:",
+                  "end": "87:16:",
+                  "value": "0"
+                }
+              },
+              {
+                "className": "WhileStatement",
+                "start": "88:6:",
+                "end": "91:6:",
+                "condition": {
+                  "className": "BinaryExpression",
+                  "start": "88:14:",
+                  "end": "88:20:",
+                  "left": {
+                    "className": "Identifier",
+                    "start": "88:14:",
+                    "end": "88:14:",
+                    "name": "i"
+                  },
+                  "operator": 8,
+                  "right": {
+                    "className": "Identifier",
+                    "start": "88:20:",
+                    "end": "88:20:",
+                    "name": "max"
+                  }
+                },
+                "block": {
+                  "className": "BlockStatement",
+                  "start": "88:22:",
+                  "end": "91:6:",
+                  "statements": [
+                    {
+                      "className": "ExpressionStatement",
+                      "start": "89:9:",
+                      "end": "89:14:",
+                      "expression": {
+                        "className": "BinaryExpression",
+                        "start": "89:9:",
+                        "end": "89:14:",
+                        "left": {
+                          "className": "Identifier",
+                          "start": "89:9:",
+                          "end": "89:9:",
+                          "name": "i"
+                        },
+                        "operator": 15,
+                        "right": {
+                          "className": "Literal",
+                          "start": "89:14:",
+                          "end": "89:14:",
+                          "value": "1"
+                        }
+                      }
+                    },
+                    {
+                      "className": "ExpressionStatement",
+                      "start": "90:13:",
+                      "end": "90:15:",
+                      "expression": {
+                        "className": "FunctionCallExpression",
+                        "start": "90:13:",
+                        "end": "90:15:",
+                        "name": {
+                          "className": "Identifier",
+                          "start": "90:13:",
+                          "end": "90:13:",
+                          "name": "print"
+                        },
+                        "args": [
+                          {
+                            "className": "CallParameter",
+                            "start": "90:15:",
+                            "end": "90:15:",
+                            "name": null,
+                            "value": {
+                              "className": "Identifier",
+                              "start": "90:15:",
+                              "end": "90:15:",
+                              "name": "i"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "94:19:",
+          "end": "94:43:",
+          "name": {
+            "className": "Identifier",
+            "start": "94:19:",
+            "end": "94:19:",
+            "name": "logicCheck"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "pure",
+              "pure",
+              "pure"
+            ]
+          },
+          "params": [
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "94:21:",
+                "end": "94:21:",
+                "name": "a"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "94:26:",
+                "end": "94:26:",
+                "name": "int"
+              },
+              "defaultValue": null,
+              "start": "94:21:",
+              "end": "94:26:"
+            },
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "94:29:",
+                "end": "94:29:",
+                "name": "b"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "94:34:",
+                "end": "94:34:",
+                "name": "int"
+              },
+              "defaultValue": null,
+              "start": "94:29:",
+              "end": "94:34:"
+            }
+          ],
+          "returnType": {
+            "className": "TypeIdentifier",
+            "start": "94:43:",
+            "end": "94:43:",
+            "name": "bool"
+          },
+          "body": {
+            "className": "BlockStatement",
+            "start": "94:44:",
+            "end": "96:4:",
+            "statements": [
+              {
+                "className": "ReturnStatement",
+                "start": "95:6:",
+                "end": "95:50:",
+                "value": {
+                  "className": "BinaryExpression",
+                  "start": "95:15:",
+                  "end": "95:50:",
+                  "left": {
+                    "className": "BinaryExpression",
+                    "start": "95:15:",
+                    "end": "95:30:",
+                    "left": {
+                      "className": "BinaryExpression",
+                      "start": "95:15:",
+                      "end": "95:19:",
+                      "left": {
+                        "className": "Identifier",
+                        "start": "95:15:",
+                        "end": "95:15:",
+                        "name": "a"
+                      },
+                      "operator": 9,
+                      "right": {
+                        "className": "Identifier",
+                        "start": "95:19:",
+                        "end": "95:19:",
+                        "name": "b"
+                      }
+                    },
+                    "operator": 12,
+                    "right": {
+                      "className": "BinaryExpression",
+                      "start": "95:25:",
+                      "end": "95:30:",
+                      "left": {
+                        "className": "Identifier",
+                        "start": "95:25:",
+                        "end": "95:25:",
+                        "name": "b"
+                      },
+                      "operator": 7,
+                      "right": {
+                        "className": "Literal",
+                        "start": "95:30:",
+                        "end": "95:30:",
+                        "value": "0"
+                      }
+                    }
+                  },
+                  "operator": 13,
+                  "right": {
+                    "className": "BinaryExpression",
+                    "start": "95:37:",
+                    "end": "95:50:",
+                    "left": {
+                      "className": "BinaryExpression",
+                      "start": "95:37:",
+                      "end": "95:41:",
+                      "left": {
+                        "className": "Identifier",
+                        "start": "95:37:",
+                        "end": "95:37:",
+                        "name": "a"
+                      },
+                      "operator": 8,
+                      "right": {
+                        "className": "Literal",
+                        "start": "95:41:",
+                        "end": "95:41:",
+                        "value": "0"
+                      }
+                    },
+                    "operator": 13,
+                    "right": {
+                      "className": "BinaryExpression",
+                      "start": "95:46:",
+                      "end": "95:50:",
+                      "left": {
+                        "className": "Identifier",
+                        "start": "95:46:",
+                        "end": "95:46:",
+                        "name": "b"
+                      },
+                      "operator": 8,
+                      "right": {
+                        "className": "Literal",
+                        "start": "95:50:",
+                        "end": "95:50:",
+                        "value": "0"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "98:18:",
+          "end": "98:47:",
+          "name": {
+            "className": "Identifier",
+            "start": "98:18:",
+            "end": "98:18:",
+            "name": "mathOps"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "impure",
+              "impure",
+              "impure"
+            ]
+          },
+          "params": [
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "98:20:",
+                "end": "98:20:",
+                "name": "x"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "98:27:",
+                "end": "98:27:",
+                "name": "float"
+              },
+              "defaultValue": null,
+              "start": "98:20:",
+              "end": "98:27:"
+            },
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "98:30:",
+                "end": "98:30:",
+                "name": "y"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "98:37:",
+                "end": "98:37:",
+                "name": "float"
+              },
+              "defaultValue": null,
+              "start": "98:30:",
+              "end": "98:37:"
+            }
+          ],
+          "returnType": {
+            "className": "TypeIdentifier",
+            "start": "98:47:",
+            "end": "98:47:",
+            "name": "float"
+          },
+          "body": {
+            "className": "BlockStatement",
+            "start": "98:48:",
+            "end": "102:4:",
+            "statements": [
+              {
+                "className": "ExpressionStatement",
+                "start": "99:7:",
+                "end": "99:12:",
+                "expression": {
+                  "className": "BinaryExpression",
+                  "start": "99:7:",
+                  "end": "99:12:",
+                  "left": {
+                    "className": "Identifier",
+                    "start": "99:7:",
+                    "end": "99:7:",
+                    "name": "x"
+                  },
+                  "operator": 17,
+                  "right": {
+                    "className": "Literal",
+                    "start": "99:12:",
+                    "end": "99:12:",
+                    "value": "2"
+                  }
+                }
+              },
+              {
+                "className": "ExpressionStatement",
+                "start": "100:7:",
+                "end": "100:12:",
+                "expression": {
+                  "className": "BinaryExpression",
+                  "start": "100:7:",
+                  "end": "100:12:",
+                  "left": {
+                    "className": "Identifier",
+                    "start": "100:7:",
+                    "end": "100:7:",
+                    "name": "y"
+                  },
+                  "operator": 18,
+                  "right": {
+                    "className": "Literal",
+                    "start": "100:12:",
+                    "end": "100:12:",
+                    "value": "3"
+                  }
+                }
+              },
+              {
+                "className": "ReturnStatement",
+                "start": "101:6:",
+                "end": "101:23:",
+                "value": {
+                  "className": "BinaryExpression",
+                  "start": "101:14:",
+                  "end": "101:23:",
+                  "left": {
+                    "className": "BinaryExpression",
+                    "start": "101:14:",
+                    "end": "101:18:",
+                    "left": {
+                      "className": "Identifier",
+                      "start": "101:14:",
+                      "end": "101:14:",
+                      "name": "x"
+                    },
+                    "operator": 0,
+                    "right": {
+                      "className": "Identifier",
+                      "start": "101:18:",
+                      "end": "101:18:",
+                      "name": "y"
+                    }
+                  },
+                  "operator": 1,
+                  "right": {
+                    "className": "Identifier",
+                    "start": "101:23:",
+                    "end": "101:23:",
+                    "name": "PI"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "104:12:",
+          "end": "104:12:",
+          "name": {
+            "className": "Identifier",
+            "start": "104:12:",
+            "end": "104:12:",
+            "name": "error"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "on",
+              "on",
+              "on"
+            ]
+          },
+          "params": [
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "104:20:",
+                "end": "104:20:",
+                "name": "message"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "104:28:",
+                "end": "104:28:",
+                "name": "string"
+              },
+              "defaultValue": null,
+              "start": "104:20:",
+              "end": "104:28:"
+            }
+          ],
+          "returnType": null,
+          "body": {
+            "className": "BlockStatement",
+            "start": "104:30:",
+            "end": "106:4:",
+            "statements": [
+              {
+                "className": "ExpressionStatement",
+                "start": "105:11:",
+                "end": "105:31:",
+                "expression": {
+                  "className": "FunctionCallExpression",
+                  "start": "105:11:",
+                  "end": "105:31:",
+                  "name": {
+                    "className": "Identifier",
+                    "start": "105:11:",
+                    "end": "105:11:",
+                    "name": "print"
+                  },
+                  "args": [
+                    {
+                      "className": "CallParameter",
+                      "start": "105:20:",
+                      "end": "105:31:",
+                      "name": null,
+                      "value": {
+                        "className": "BinaryExpression",
+                        "start": "105:20:",
+                        "end": "105:31:",
+                        "left": {
+                          "className": "Literal",
+                          "start": "105:20:",
+                          "end": "105:20:",
+                          "value": "Error: "
+                        },
+                        "operator": 0,
+                        "right": {
+                          "className": "Identifier",
+                          "start": "105:31:",
+                          "end": "105:31:",
+                          "name": "message"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "108:16:",
+          "end": "108:16:",
+          "name": {
+            "className": "Identifier",
+            "start": "108:16:",
+            "end": "108:16:",
+            "name": "transmit"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "bus",
+              "bus",
+              "bus"
+            ]
+          },
+          "params": [
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "108:21:",
+                "end": "108:21:",
+                "name": "data"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "108:29:",
+                "end": "108:29:",
+                "name": "string"
+              },
+              "defaultValue": null,
+              "start": "108:21:",
+              "end": "108:29:"
+            }
+          ],
+          "returnType": null,
+          "body": {
+            "className": "BlockStatement",
+            "start": "108:31:",
+            "end": "110:4:",
+            "statements": [
+              {
+                "className": "ExpressionStatement",
+                "start": "109:11:",
+                "end": "109:35:",
+                "expression": {
+                  "className": "FunctionCallExpression",
+                  "start": "109:11:",
+                  "end": "109:35:",
+                  "name": {
+                    "className": "Identifier",
+                    "start": "109:11:",
+                    "end": "109:11:",
+                    "name": "print"
+                  },
+                  "args": [
+                    {
+                      "className": "CallParameter",
+                      "start": "109:27:",
+                      "end": "109:35:",
+                      "name": null,
+                      "value": {
+                        "className": "BinaryExpression",
+                        "start": "109:27:",
+                        "end": "109:35:",
+                        "left": {
+                          "className": "Literal",
+                          "start": "109:27:",
+                          "end": "109:27:",
+                          "value": "Transmitting: "
+                        },
+                        "operator": 0,
+                        "right": {
+                          "className": "Identifier",
+                          "start": "109:35:",
+                          "end": "109:35:",
+                          "name": "data"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "className": "ImplDeclaration",
+      "start": "114:1:",
+      "end": "131:2:",
+      "name": {
+        "className": "Identifier",
+        "start": "114:13:",
+        "end": "114:13:",
+        "name": "Display"
+      },
+      "modifiers": {
+        "access": "internal"
+      },
+      "target": {
+        "className": "Identifier",
+        "start": "114:13:",
+        "end": "114:13:",
+        "name": "Display"
+      },
+      "forType": null,
+      "members": [
+        {
+          "className": "CallableDeclaration",
+          "start": "115:13:",
+          "end": "115:13:",
+          "name": {
+            "className": "Identifier",
+            "start": "115:13:",
+            "end": "115:13:",
+            "name": "init"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "meta",
+              "meta"
+            ]
+          },
+          "params": [],
+          "returnType": null,
+          "body": {
+            "className": "BlockStatement",
+            "start": "115:16:",
+            "end": "118:4:",
+            "statements": [
+              {
+                "className": "ExpressionStatement",
+                "start": "116:10:",
+                "end": "116:19:",
+                "expression": {
+                  "className": "BinaryExpression",
+                  "start": "116:10:",
+                  "end": "116:19:",
+                  "left": {
+                    "className": "Identifier",
+                    "start": "116:10:",
+                    "end": "116:10:",
+                    "name": "text"
+                  },
+                  "operator": 14,
+                  "right": {
+                    "className": "Literal",
+                    "start": "116:19:",
+                    "end": "116:19:",
+                    "value": "Hello"
+                  }
+                }
+              },
+              {
+                "className": "ExpressionStatement",
+                "start": "117:16:",
+                "end": "117:21:",
+                "expression": {
+                  "className": "BinaryExpression",
+                  "start": "117:16:",
+                  "end": "117:21:",
+                  "left": {
+                    "className": "Identifier",
+                    "start": "117:16:",
+                    "end": "117:16:",
+                    "name": "brightness"
+                  },
+                  "operator": 14,
+                  "right": {
+                    "className": "Literal",
+                    "start": "117:21:",
+                    "end": "117:21:",
+                    "value": "10"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "120:17:",
+          "end": "120:17:",
+          "name": {
+            "className": "Identifier",
+            "start": "120:17:",
+            "end": "120:17:",
+            "name": "broadcast"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "bus",
+              "bus",
+              "bus"
+            ]
+          },
+          "params": [
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "120:24:",
+                "end": "120:24:",
+                "name": "signal"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "120:32:",
+                "end": "120:32:",
+                "name": "string"
+              },
+              "defaultValue": null,
+              "start": "120:24:",
+              "end": "120:32:"
+            }
+          ],
+          "returnType": null,
+          "body": {
+            "className": "BlockStatement",
+            "start": "120:34:",
+            "end": "122:4:",
+            "statements": [
+              {
+                "className": "ExpressionStatement",
+                "start": "121:11:",
+                "end": "121:37:",
+                "expression": {
+                  "className": "FunctionCallExpression",
+                  "start": "121:11:",
+                  "end": "121:37:",
+                  "name": {
+                    "className": "Identifier",
+                    "start": "121:11:",
+                    "end": "121:11:",
+                    "name": "print"
+                  },
+                  "args": [
+                    {
+                      "className": "CallParameter",
+                      "start": "121:27:",
+                      "end": "121:37:",
+                      "name": null,
+                      "value": {
+                        "className": "BinaryExpression",
+                        "start": "121:27:",
+                        "end": "121:37:",
+                        "left": {
+                          "className": "Literal",
+                          "start": "121:27:",
+                          "end": "121:27:",
+                          "value": "Broadcasting: "
+                        },
+                        "operator": 0,
+                        "right": {
+                          "className": "Identifier",
+                          "start": "121:37:",
+                          "end": "121:37:",
+                          "name": "signal"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "124:13:",
+          "end": "124:13:",
+          "name": {
+            "className": "Identifier",
+            "start": "124:13:",
+            "end": "124:13:",
+            "name": "update"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "on",
+              "on",
+              "on"
+            ]
+          },
+          "params": [],
+          "returnType": null,
+          "body": {
+            "className": "BlockStatement",
+            "start": "124:16:",
+            "end": "126:4:",
+            "statements": [
+              {
+                "className": "ExpressionStatement",
+                "start": "125:11:",
+                "end": "125:29:",
+                "expression": {
+                  "className": "FunctionCallExpression",
+                  "start": "125:11:",
+                  "end": "125:29:",
+                  "name": {
+                    "className": "Identifier",
+                    "start": "125:11:",
+                    "end": "125:11:",
+                    "name": "print"
+                  },
+                  "args": [
+                    {
+                      "className": "CallParameter",
+                      "start": "125:28:",
+                      "end": "125:28:",
+                      "name": null,
+                      "value": {
+                        "className": "Literal",
+                        "start": "125:28:",
+                        "end": "125:28:",
+                        "value": "Display updated"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "128:17:",
+          "end": "128:17:",
+          "name": {
+            "className": "Identifier",
+            "start": "128:17:",
+            "end": "128:17:",
+            "name": "toggle"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "impure",
+              "impure",
+              "impure"
+            ]
+          },
+          "params": [
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "128:23:",
+                "end": "128:23:",
+                "name": "state"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "128:29:",
+                "end": "128:29:",
+                "name": "bool"
+              },
+              "defaultValue": null,
+              "start": "128:23:",
+              "end": "128:29:"
+            }
+          ],
+          "returnType": null,
+          "body": {
+            "className": "BlockStatement",
+            "start": "128:31:",
+            "end": "130:4:",
+            "statements": [
+              {
+                "className": "ExpressionStatement",
+                "start": "129:11:",
+                "end": "129:20:",
+                "expression": {
+                  "className": "BinaryExpression",
+                  "start": "129:11:",
+                  "end": "129:20:",
+                  "left": {
+                    "className": "Identifier",
+                    "start": "129:11:",
+                    "end": "129:11:",
+                    "name": "ready"
+                  },
+                  "operator": 14,
+                  "right": {
+                    "className": "UnaryExpression",
+                    "start": "129:14:",
+                    "end": "129:20:",
+                    "operator": 1,
+                    "operand": {
+                      "className": "Identifier",
+                      "start": "129:20:",
+                      "end": "129:20:",
+                      "name": "state"
+                    },
+                    "isPostfix": false
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "className": "ImplDeclaration",
+      "start": "134:1:",
+      "end": "147:2:",
+      "name": {
+        "className": "Identifier",
+        "start": "134:15:",
+        "end": "134:15:",
+        "name": "Modifiers"
+      },
+      "modifiers": {
+        "access": "internal"
+      },
+      "target": {
+        "className": "Identifier",
+        "start": "134:15:",
+        "end": "134:15:",
+        "name": "Modifiers"
+      },
+      "forType": null,
+      "members": [
+        {
+          "className": "CallableDeclaration",
+          "start": "135:13:",
+          "end": "135:13:",
+          "name": {
+            "className": "Identifier",
+            "start": "135:13:",
+            "end": "135:13:",
+            "name": "init"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "meta",
+              "meta"
+            ]
+          },
+          "params": [],
+          "returnType": null,
+          "body": {
+            "className": "BlockStatement",
+            "start": "135:16:",
+            "end": "138:4:",
+            "statements": [
+              {
+                "className": "ExpressionStatement",
+                "start": "136:11:",
+                "end": "136:15:",
+                "expression": {
+                  "className": "BinaryExpression",
+                  "start": "136:11:",
+                  "end": "136:15:",
+                  "left": {
+                    "className": "Identifier",
+                    "start": "136:11:",
+                    "end": "136:11:",
+                    "name": "count"
+                  },
+                  "operator": 14,
+                  "right": {
+                    "className": "Literal",
+                    "start": "136:15:",
+                    "end": "136:15:",
+                    "value": "0"
+                  }
+                }
+              },
+              {
+                "className": "ExpressionStatement",
+                "start": "137:10:",
+                "end": "137:15:",
+                "expression": {
+                  "className": "BinaryExpression",
+                  "start": "137:10:",
+                  "end": "137:15:",
+                  "left": {
+                    "className": "Identifier",
+                    "start": "137:10:",
+                    "end": "137:10:",
+                    "name": "step"
+                  },
+                  "operator": 14,
+                  "right": {
+                    "className": "Literal",
+                    "start": "137:15:",
+                    "end": "137:15:",
+                    "value": "10"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "140:14:",
+          "end": "140:14:",
+          "name": {
+            "className": "Identifier",
+            "start": "140:14:",
+            "end": "140:14:",
+            "name": "trigger"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "on",
+              "on",
+              "on"
+            ]
+          },
+          "params": [],
+          "returnType": null,
+          "body": {
+            "className": "BlockStatement",
+            "start": "140:17:",
+            "end": "142:4:",
+            "statements": [
+              {
+                "className": "ExpressionStatement",
+                "start": "141:11:",
+                "end": "141:19:",
+                "expression": {
+                  "className": "BinaryExpression",
+                  "start": "141:11:",
+                  "end": "141:19:",
+                  "left": {
+                    "className": "Identifier",
+                    "start": "141:11:",
+                    "end": "141:11:",
+                    "name": "count"
+                  },
+                  "operator": 15,
+                  "right": {
+                    "className": "Identifier",
+                    "start": "141:19:",
+                    "end": "141:19:",
+                    "name": "step"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "144:13:",
+          "end": "144:13:",
+          "name": {
+            "className": "Identifier",
+            "start": "144:13:",
+            "end": "144:13:",
+            "name": "pulse"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "bus",
+              "bus",
+              "bus"
+            ]
+          },
+          "params": [],
+          "returnType": null,
+          "body": {
+            "className": "BlockStatement",
+            "start": "144:16:",
+            "end": "146:4:",
+            "statements": [
+              {
+                "className": "ExpressionStatement",
+                "start": "145:11:",
+                "end": "145:24:",
+                "expression": {
+                  "className": "FunctionCallExpression",
+                  "start": "145:11:",
+                  "end": "145:24:",
+                  "name": {
+                    "className": "Identifier",
+                    "start": "145:11:",
+                    "end": "145:11:",
+                    "name": "print"
+                  },
+                  "args": [
+                    {
+                      "className": "CallParameter",
+                      "start": "145:23:",
+                      "end": "145:23:",
+                      "name": null,
+                      "value": {
+                        "className": "Literal",
+                        "start": "145:23:",
+                        "end": "145:23:",
+                        "value": "Pulse sent"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "className": "ImplDeclaration",
+      "start": "150:1:",
+      "end": "159:2:",
+      "name": {
+        "className": "Identifier",
+        "start": "150:13:",
+        "end": "150:13:",
+        "name": "Display"
+      },
+      "modifiers": {
+        "access": "internal"
+      },
+      "target": {
+        "className": "Identifier",
+        "start": "150:13:",
+        "end": "150:13:",
+        "name": "Display"
+      },
+      "forType": {
+        "className": "Identifier",
+        "start": "150:24:",
+        "end": "150:24:",
+        "name": "Engine"
+      },
+      "members": [
+        {
+          "className": "CallableDeclaration",
+          "start": "151:16:",
+          "end": "151:16:",
+          "name": {
+            "className": "Identifier",
+            "start": "151:16:",
+            "end": "151:16:",
+            "name": "connect"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "meta",
+              "meta"
+            ]
+          },
+          "params": [],
+          "returnType": null,
+          "body": {
+            "className": "BlockStatement",
+            "start": "151:19:",
+            "end": "154:4:",
+            "statements": [
+              {
+                "className": "ExpressionStatement",
+                "start": "152:11:",
+                "end": "152:14:",
+                "expression": {
+                  "className": "BinaryExpression",
+                  "start": "152:11:",
+                  "end": "152:14:",
+                  "left": {
+                    "className": "Identifier",
+                    "start": "152:11:",
+                    "end": "152:11:",
+                    "name": "ready"
+                  },
+                  "operator": 14,
+                  "right": {
+                    "className": "Literal",
+                    "start": "152:14:",
+                    "end": "152:14:",
+                    "value": "true"
+                  }
+                }
+              },
+              {
+                "className": "ExpressionStatement",
+                "start": "153:11:",
+                "end": "153:31:",
+                "expression": {
+                  "className": "FunctionCallExpression",
+                  "start": "153:11:",
+                  "end": "153:31:",
+                  "name": {
+                    "className": "Identifier",
+                    "start": "153:11:",
+                    "end": "153:11:",
+                    "name": "print"
+                  },
+                  "args": [
+                    {
+                      "className": "CallParameter",
+                      "start": "153:30:",
+                      "end": "153:30:",
+                      "name": null,
+                      "value": {
+                        "className": "Literal",
+                        "start": "153:30:",
+                        "end": "153:30:",
+                        "value": "Connected display"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "className": "CallableDeclaration",
+          "start": "156:19:",
+          "end": "156:19:",
+          "name": {
+            "className": "Identifier",
+            "start": "156:19:",
+            "end": "156:19:",
+            "name": "showData"
+          },
+          "modifiers": {
+            "access": "internal",
+            "methodFlags": [
+              "impure",
+              "impure",
+              "impure"
+            ]
+          },
+          "params": [
+            {
+              "className": "Parameter",
+              "name": {
+                "className": "Identifier",
+                "start": "156:25:",
+                "end": "156:25:",
+                "name": "value"
+              },
+              "typeAnnotation": {
+                "className": "TypeIdentifier",
+                "start": "156:30:",
+                "end": "156:30:",
+                "name": "int"
+              },
+              "defaultValue": null,
+              "start": "156:25:",
+              "end": "156:30:"
+            }
+          ],
+          "returnType": null,
+          "body": {
+            "className": "BlockStatement",
+            "start": "156:32:",
+            "end": "158:4:",
+            "statements": [
+              {
+                "className": "ExpressionStatement",
+                "start": "157:11:",
+                "end": "157:29:",
+                "expression": {
+                  "className": "FunctionCallExpression",
+                  "start": "157:11:",
+                  "end": "157:29:",
+                  "name": {
+                    "className": "Identifier",
+                    "start": "157:11:",
+                    "end": "157:11:",
+                    "name": "print"
+                  },
+                  "args": [
+                    {
+                      "className": "CallParameter",
+                      "start": "157:20:",
+                      "end": "157:29:",
+                      "name": null,
+                      "value": {
+                        "className": "BinaryExpression",
+                        "start": "157:20:",
+                        "end": "157:29:",
+                        "left": {
+                          "className": "Literal",
+                          "start": "157:20:",
+                          "end": "157:20:",
+                          "value": "Value: "
+                        },
+                        "operator": 0,
+                        "right": {
+                          "className": "Identifier",
+                          "start": "157:29:",
+                          "end": "157:29:",
+                          "name": "value"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "className": "CallableDeclaration",
+      "start": "162:13:",
+      "end": "162:55:",
+      "name": {
+        "className": "Identifier",
+        "start": "162:13:",
+        "end": "162:13:",
+        "name": "process"
+      },
+      "modifiers": {
+        "access": "internal",
+        "methodFlags": [
+          "pure",
+          "pure",
+          "pure",
+          "pure",
+          "pure"
+        ]
+      },
+      "params": [
+        {
+          "className": "Parameter",
+          "name": {
+            "className": "Identifier",
+            "start": "162:18:",
+            "end": "162:18:",
+            "name": "data"
+          },
+          "typeAnnotation": {
+            "className": "TypeIdentifier",
+            "start": "162:26:",
+            "end": "162:26:",
+            "name": "string"
+          },
+          "defaultValue": null,
+          "start": "162:18:",
+          "end": "162:26:"
+        },
+        {
+          "className": "Parameter",
+          "name": {
+            "className": "Identifier",
+            "start": "162:34:",
+            "end": "162:34:",
+            "name": "active"
+          },
+          "typeAnnotation": {
+            "className": "TypeIdentifier",
+            "start": "162:40:",
+            "end": "162:40:",
+            "name": "bool"
+          },
+          "defaultValue": {
+            "className": "Literal",
+            "start": "162:43:",
+            "end": "162:43:",
+            "value": "true"
+          },
+          "start": "162:34:",
+          "end": "162:40:"
+        }
+      ],
+      "returnType": {
+        "className": "TypeIdentifier",
+        "start": "162:55:",
+        "end": "162:55:",
+        "name": "int"
+      },
+      "body": {
+        "className": "BlockStatement",
+        "start": "162:56:",
+        "end": "166:2:",
+        "statements": [
+          {
+            "className": "VariableDeclaration",
+            "start": "163:9:",
+            "end": "163:14:",
+            "name": {
+              "className": "Identifier",
+              "start": "163:9:",
+              "end": "163:9:",
+              "name": "score"
+            },
+            "modifiers": {
+              "access": "internal",
+              "varFlags": [
+                "mut"
+              ]
+            },
+            "typeAnnotation": {
+              "className": "TypeIdentifier",
+              "start": "163:14:",
+              "end": "163:14:",
+              "name": "int"
+            },
+            "initializer": {
+              "className": "ConditionalExpression",
+              "start": "163:23:",
+              "end": "163:33:",
+              "condition": {
+                "className": "Identifier",
+                "start": "163:23:",
+                "end": "163:23:",
+                "name": "active"
+              },
+              "thenBranch": {
+                "className": "Literal",
+                "start": "163:29:",
+                "end": "163:29:",
+                "value": "100"
+              },
+              "elseBranch": {
+                "className": "Literal",
+                "start": "163:33:",
+                "end": "163:33:",
+                "value": "0"
+              }
+            }
+          },
+          {
+            "className": "ExpressionStatement",
+            "start": "164:9:",
+            "end": "164:38:",
+            "expression": {
+              "className": "BinaryExpression",
+              "start": "164:9:",
+              "end": "164:38:",
+              "left": {
+                "className": "Identifier",
+                "start": "164:9:",
+                "end": "164:9:",
+                "name": "score"
+              },
+              "operator": 15,
+              "right": {
+                "className": "BinaryExpression",
+                "start": "164:17:",
+                "end": "164:38:",
+                "left": {
+                  "className": "Identifier",
+                  "start": "164:17:",
+                  "end": "164:17:",
+                  "name": "data"
+                },
+                "operator": 6,
+                "right": {
+                  "className": "ConditionalExpression",
+                  "start": "164:26:",
+                  "end": "164:38:",
+                  "condition": {
+                    "className": "Literal",
+                    "start": "164:26:",
+                    "end": "164:26:",
+                    "value": "pass"
+                  },
+                  "thenBranch": {
+                    "className": "Literal",
+                    "start": "164:32:",
+                    "end": "164:32:",
+                    "value": "50"
+                  },
+                  "elseBranch": {
+                    "className": "UnaryExpression",
+                    "start": "164:35:",
+                    "end": "164:38:",
+                    "operator": 0,
+                    "operand": {
+                      "className": "Literal",
+                      "start": "164:38:",
+                      "end": "164:38:",
+                      "value": "50"
+                    },
+                    "isPostfix": false
+                  }
+                }
+              }
+            }
+          },
+          {
+            "className": "ReturnStatement",
+            "start": "165:4:",
+            "end": "165:16:",
+            "value": {
+              "className": "Identifier",
+              "start": "165:16:",
+              "end": "165:16:",
+              "name": "score"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

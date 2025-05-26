@@ -130,7 +130,7 @@ export class Parser implements TokenTableVisitor {
     [TokenTypes.DIVIDE_ASSIGN, { precedence: 1, rightAssociative: true }],
     
     // Conditional
-    [TokenTypes.QUESTION_MARK, { precedence: 2, rightAssociative: true }],
+    //[TokenTypes.QUESTION_MARK, { precedence: 2, rightAssociative: true }],
     
     // Logical OR
     [TokenTypes.OR, { precedence: 3, rightAssociative: false }],
@@ -198,6 +198,8 @@ private isBinaryOperator(): boolean {
 
 
 
+
+
 private parseExpression(): Expression {
   return this.parseExpressionWithPrecedence();
 }
@@ -207,6 +209,8 @@ private parseExpressionWithPrecedence(minPrecedence: number = 0): Expression {
   
   // Handle conditional expression (ternary) as a special case
   if (this.tokenTable.peekCheck(0, TokenTypes.QUESTION_MARK)) {
+    console.log("CONDITIONAL")
+    
     this.tokenTable.eat(TokenTypes.QUESTION_MARK);
     const thenBranch = this.parseExpression();
     this.tokenTable.eat(TokenTypes.COLON);
@@ -217,6 +221,15 @@ private parseExpressionWithPrecedence(minPrecedence: number = 0): Expression {
     );
   }
   
+  // TODO: add better checking for this entire method.
+  if (this.tokenTable.peek().type === TokenTypes.IDENT) {
+    const bad = this.tokenTable.peek();
+    throw new Error(
+      `Unexpected identifier '${bad.value}' at ${bad.sourceLocation.line}. ` +
+      `Did you mean to insert an operator or separator?`
+    );
+  }
+
   // Process binary operators according to precedence
   while (true) {
     const token = this.tokenTable.peek();
@@ -226,9 +239,10 @@ private parseExpressionWithPrecedence(minPrecedence: number = 0): Expression {
     if (!opInfo || opInfo.precedence < minPrecedence) {
       break;
     }
-    
+
+    console.log(token.value, opInfo, token.sourceLocation)
     // Consume the operator token
-    this.tokenTable.advance();
+    this.tokenTable.eat(token.type);
     
     // For right-associative operators, use current precedence - 1
     // For left-associative operators, use current precedence + 1
@@ -238,11 +252,14 @@ private parseExpressionWithPrecedence(minPrecedence: number = 0): Expression {
     
     // Parse the right side with the appropriate precedence
     const right = this.parseExpressionWithPrecedence(nextMinPrecedence);
-    
-    // Create binary expression
-    const operator = this.tokenToBinaryOperator.get(token.type);
-    if (!operator) {
-      throw new Error(`Unknown binary operator: ${token}`);
+
+
+
+
+    const operator = this.tokenToBinaryOperator.get(token.type as TokenTypes);
+
+    if (operator === undefined) {
+        throw new Error(`Unknown binary operator: ${token}`);
     }
     
     left = new BinaryExpression(left, operator, right, left.start, right.end);
@@ -298,6 +315,7 @@ private parsePrimaryExpression(): Expression {
     
     // Check if it's a function call
     if (this.tokenTable.peekCheck(0, TokenTypes.LPAREN)) {
+      console.log("Parsing parameter")
       this.tokenTable.eat(TokenTypes.LPAREN);
       const args = this.parseCallParameters();
       this.tokenTable.eat(TokenTypes.RPAREN);
@@ -311,6 +329,7 @@ private parsePrimaryExpression(): Expression {
 
     // Check for postfix operators
     if (this.tokenTable.peekCheck(0, TokenTypes.INC)) {
+
       this.tokenTable.eat(TokenTypes.INC);
       return new UnaryExpression(
         UnaryOperator.IncPostfix,
@@ -332,12 +351,15 @@ private parsePrimaryExpression(): Expression {
       );
     }
 
+    console.log("just VARIABLE", name)
+
     // Just a variable reference
     return name;
   }
 
   // Parentheses
   if (this.tokenTable.peekCheck(0, TokenTypes.LPAREN)) {
+    console.log("PAREN")
     this.tokenTable.eat(TokenTypes.LPAREN);
     const expr = this.parseExpression();
     this.tokenTable.eat(TokenTypes.RPAREN);
@@ -355,7 +377,7 @@ private parseCallParameters(): CallParameter[] {
   while (!this.tokenTable.peekCheck(0, TokenTypes.RPAREN)) {
     let name;
 
-    if (this.tokenTable.peekCheck(0, TokenTypes.IDENT)) {
+    if (this.tokenTable.peekCheck(0, TokenTypes.IDENT) && this.tokenTable.peekCheck(1, TokenTypes.ASSIGN)) {
       name = this.parseIdentifier()
       this.tokenTable.eat(TokenTypes.ASSIGN)
     } else {
@@ -367,7 +389,7 @@ private parseCallParameters(): CallParameter[] {
     args.push(new CallParameter(name, value, name ? name.start : value.start, value.end));
 
     if (this.tokenTable.peekCheck(0, TokenTypes.COMMA)) {
-      this.tokenTable.advance();
+      this.tokenTable.eat(TokenTypes.COMMA);
     } else {
       break;
     }
@@ -485,40 +507,52 @@ private parseMemberExpression(object: Expression): Expression {
   // ─────────────────────────────────────────────────────────────────────────────
   // TODO: Statement parser
   private parseStatement(): Statement {
+    console.log("PARSE STATEMENT")
+    console.log(this.tokenTable.peek())
     switch (this.tokenTable.peek().type) {
       case TokenTypes.IF:
+        console.log("IF")
         return this.parseIfStatement();
       case TokenTypes.WHILE:
+        console.log("WHILE")
         return this.parseWhileStatement();
       case TokenTypes.RETURN:
+        console.log("RETURN")
         const returnStmt = this.parseReturnStatement();
         return returnStmt;
   
-        default:
-          if (this.isModifier()) {
-            const modifiers = this.parseModifiers();
-            if (this.isVariableDeclarationStart()) {
-              const varDecl = this.parseVariableDeclaration(modifiers);
+      default:
+        
+        if (this.isModifier()) {
 
-              return varDecl;
-            } else {
-              throw new Error("Unexpected token after modifier");
-            }
-          } else if (this.isVariableDeclarationStart()) {
-            // Variable declaration with implicit 'mut' modifier
-            const modifiers: Modifiers = {
-              access: 'internal',
-              varFlags: ['mut'],
-            } as Modifiers;
+          const modifiers = this.parseModifiers();
+          if (this.isVariableDeclarationStart()) {
+            console.log("VAR DECL")
             const varDecl = this.parseVariableDeclaration(modifiers);
 
             return varDecl;
           } else {
-            // Any other valid expression as a standalone statement
-            const expr = this.parseExpression();
-            this.tokenTable.eat(TokenTypes.SEMICOLON);
-            return new ExpressionStatement(expr, expr.start, expr.end);
+            console.log(this.tokenTable.peek())
+            throw new Error("Only variable declaration expected");
           }
+        } else if (this.isVariableDeclarationStart()) {
+          console.log("VAR DECL")
+
+          // Variable declaration with implicit 'mut' modifier
+          const modifiers: Modifiers = {
+            access: 'internal',
+            varFlags: ['mut'],
+          } as Modifiers;
+          const varDecl = this.parseVariableDeclaration(modifiers);
+
+          return varDecl;
+        } else {
+          console.log("EXPRESSION")
+          // Any other valid expression as a standalone statement
+          const expr = this.parseExpression();
+          this.tokenTable.eat(TokenTypes.SEMICOLON);
+          return new ExpressionStatement(expr, expr.start, expr.end);
+        }
     }
   }
 
@@ -537,6 +571,8 @@ private parseMemberExpression(object: Expression): Expression {
 
   // TODO: Block parser
   private parseBlockStatement(): BlockStatement {
+        console.log("PARSE BLOCK")
+
     const leftBraceToken = this.tokenTable.eat(TokenTypes.LBRACE);
     const statements = this.parseStatementListUntil(TokenTypes.RBRACE);
     const rightBraceToken = this.tokenTable.eat(TokenTypes.RBRACE);
@@ -595,6 +631,7 @@ private parseMemberExpression(object: Expression): Expression {
   // Parses callable declaration (functions/methods)
   // Example: "myFunc(a: i32) -> i32"
   private parseCallableDeclaration(modifiers: Modifiers): CallableDeclaration {
+    console.log("identifier")
     // name
     const name = this.parseIdentifier();
 
@@ -602,23 +639,30 @@ private parseMemberExpression(object: Expression): Expression {
     const params: Parameter[] = [];
     this.tokenTable.eat(TokenTypes.LPAREN);
     while (!this.tokenTable.peekCheck(0, TokenTypes.RPAREN)) {
+      console.log("param")
+
       if(params.length > 0) {
         this.tokenTable.eat(TokenTypes.COMMA)
       }
-      const paramModifiers = this.parseModifiers();
+      //const paramModifiers = this.parseModifiers();
       
+      console.log("name")
       const name = this.parseIdentifier();
       this.tokenTable.eat(TokenTypes.COLON)
+      console.log("type")
       const type = this.parseTypeIdentifier();
+
+      let initializer: Expression | null = null;
+
+      if (this.tokenTable.peekCheck(0, TokenTypes.ASSIGN)) {
+        this.tokenTable.eat(TokenTypes.ASSIGN);
+        initializer = this.parseExpression();
+      } 
+
+      params.push(new Parameter(name, type, initializer, name.start, type.end));
+
       
 
-      params.push(new Parameter(name, type, null, name.start, type.end));
-
-      // TODO Add parameter default values
-      /*if (this.tokenTable.peekCheck(0, TokenTypes.ASSIGN)) {
-      this.tokenTable.eat(TokenTypes.ASSIGN);
-      initializer = this.parseExpression();
-      } */
     }
     this.tokenTable.eat(TokenTypes.RPAREN);
 
@@ -628,10 +672,6 @@ private parseMemberExpression(object: Expression): Expression {
       return new CallableDeclaration(name, modifiers, params, returnType, name.start, returnType.end);
     } 
 
-    // Consume semicolon after callable declaration
-    if (this.tokenTable.peekCheck(0, TokenTypes.SEMICOLON)) {
-      this.tokenTable.eat(TokenTypes.SEMICOLON);
-    }
 
     return new CallableDeclaration(name, modifiers, params, null, name.start, name.end);
   }
@@ -639,13 +679,29 @@ private parseMemberExpression(object: Expression): Expression {
   // REVIEW: Callable definition parser
   // Parses callable definitions (functions/methods)
   // Example: "myFunc(a: i32) -> i32 { return a + 1; }"
-  private parseCallableDefinition(modifiers: Modifiers): CallableDefinition {
-    const declaration = this.parseCallableDeclaration(modifiers) as CallableDefinition;
-  
-    declaration.body = this.parseBlockStatement();
-  
-    return declaration;
-  }
+private parseCallableDefinition(modifiers: Modifiers): CallableDefinition {
+  const declaration = this.parseCallableDeclaration(modifiers) as CallableDefinition;
+
+  // === add this debug ===
+  const before = this.tokenTable.peek();
+  console.log(
+    `⏱️ entering block for ${declaration.name.name} at`, 
+    this.tokenTable.peek().sourceLocation
+  );
+  // =======================
+
+  const block = this.parseBlockStatement();
+
+  // === and this debug ===
+  console.log(
+    `✅ exited block for ${declaration.name.name} at`, 
+    this.tokenTable.getPreviousSourceLocation()
+  );
+  // ========================
+
+  declaration.body = block;
+  return declaration;
+}
 
   //!SECTION
 
@@ -662,6 +718,7 @@ private parseMemberExpression(object: Expression): Expression {
   // REVIEW
   private parseDeclarations(): (VariableDeclaration | CallableDeclaration)[]{    const members: (VariableDeclaration | CallableDeclaration)[] = [];
 
+    console.log("declarations")
     this.tokenTable.eat(TokenTypes.LBRACE);
 
     // Keep parsing until we hit RBRACE
@@ -671,6 +728,13 @@ private parseMemberExpression(object: Expression): Expression {
   
       if (this.isCallableStart()) {
         const method = this.parseCallableDeclaration(memberModifiers);
+
+        // Consume semicolon after callable declaration
+        if (this.tokenTable.peekCheck(0, TokenTypes.SEMICOLON)) {
+          this.tokenTable.eat(TokenTypes.SEMICOLON);
+        }
+
+
         members.push(method);
         
 
@@ -803,7 +867,6 @@ private parseMemberExpression(object: Expression): Expression {
   // enum Color { Red, Green, Blue = 255 }
   // REVIEW
   private parseEnum(modifiers: Modifiers): EnumDeclaration {
-    console.log("parsing enum")
     // enum
     const enumToken = this.tokenTable.eat(TokenTypes.ENUM);
 
@@ -829,7 +892,7 @@ private parseMemberExpression(object: Expression): Expression {
         const variantName = this.parseIdentifier();
         
         if (this.tokenTable.peekCheck(0, TokenTypes.EQ)) {
-          this.tokenTable.advance();
+          this.tokenTable.eat(TokenTypes.EQ);
           value = this.parseExpression();
         }
 
@@ -871,29 +934,35 @@ private parseMemberExpression(object: Expression): Expression {
       // Determine declaration type
       switch(this.tokenTable.peek().type) {
         case(TokenTypes.TYPE):
+          console.log("parsing type")
           declaration = this.parseType(modifiers);
           break;
         case(TokenTypes.SHARD):
+          console.log("parsing shard")
           declaration = this.parseShard(modifiers);
           break;
         case(TokenTypes.IMPL):
+          console.log("parsing impl")
           declaration = this.parseImpl(modifiers);
           break;
         case(TokenTypes.ENUM):
+          console.log("parsing enum")
           declaration = this.parseEnum(modifiers);
           break;
       }
       
       if (!declaration && this.isCallableStart()) {
+        console.log("parsing callable definition")
         declaration = this.parseCallableDefinition(modifiers);
 
       }  
-      if (!declaration && this.tokenTable.peekCheck(0, TokenTypes.IDENT)) {
+      if (!declaration && this.isVariableDeclarationStart()) {
         declaration = this.parseVariableDeclaration(modifiers);
       }
 
 
         if (declaration) {
+          //console.log(declaration)
           body.push(declaration);
         } else {
           const token = this.tokenTable.peek();
